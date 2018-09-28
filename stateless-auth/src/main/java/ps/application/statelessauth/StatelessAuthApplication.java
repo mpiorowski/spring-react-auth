@@ -10,5 +10,4 @@ public class StatelessAuthApplication {
     SpringApplication.run(StatelessAuthApplication.class, args);
   }
 
-  // test
 }
