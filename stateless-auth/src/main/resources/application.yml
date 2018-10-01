@@ -3,3 +3,6 @@ spring:
     url: jdbc:postgresql://localhost:5436/auth
     password: admin
     username: admin
+  security:
+    user:
+      password: pass
