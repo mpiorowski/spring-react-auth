@@ -16,3 +16,6 @@ buildNumber.properties
 .mvn/timing.properties
 .mvn/wrapper/maven-wrapper.jar
 
+src/docker/_postgres/
+src/main/java/ps/application/statelessauth/config/
+src/main/resources/mapper/
