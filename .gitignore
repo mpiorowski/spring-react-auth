@@ -15,7 +15,3 @@ dependency-reduced-pom.xml
 buildNumber.properties
 .mvn/timing.properties
 .mvn/wrapper/maven-wrapper.jar
-
-stateless-auth/src/docker/_postgres/
-stateless-auth/src/main/java/ps/application/statelessauth/config/
-stateless-auth/src/main/resources/mapper/
