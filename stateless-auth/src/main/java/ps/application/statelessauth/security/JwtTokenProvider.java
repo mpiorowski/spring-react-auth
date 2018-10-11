@@ -1,11 +1,13 @@
 package ps.application.statelessauth.security;
 
 import io.jsonwebtoken.*;
+import io.jsonwebtoken.security.Keys;
 import io.jsonwebtoken.security.SignatureException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import java.security.Key;
@@ -15,31 +17,32 @@ import java.util.Date;
 public class JwtTokenProvider {
   private static final Logger logger = LoggerFactory.getLogger(JwtTokenProvider.class);
 
-  private SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.HS512;
+  private Key key = Keys.secretKeyFor(SignatureAlgorithm.HS512);
 
-  @Value("${app.jwtSecret}")
-  private Key jwtSecret;
+//  not used
+//  @Value("${app.jwtSecret}")
+//  private Key jwtSecret;
 
-  @Value("${app.jwtExpirationInMs}")
-  private int jwtExpirationInMs;
+//  @Value("${jwtExpirationInMs}")
+  private int jwtExpirationInMs = 604800000;
 
   public String generateToken(Authentication authentication) {
-    UserPrincipal userPrincipal = (UserPrincipal) authentication.getPrincipal();
+    UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 
     Date now = new Date();
-    Date expiryDate = new Date(now.getTime() - jwtExpirationInMs);
+    Date expiryDate = new Date(now.getTime() + jwtExpirationInMs);
 
     return Jwts.builder()
-        .setSubject(Long.toString(userPrincipal.getId()))
+        .setSubject(userDetails.getUsername())
         .setIssuedAt(new Date())
         .setExpiration(expiryDate)
-        .signWith(jwtSecret, signatureAlgorithm)
+        .signWith(key)
         .compact();
   }
 
   public boolean validateToken(String authToken) {
     try {
-      Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(authToken);
+      Jwts.parser().setSigningKey(key).parseClaimsJws(authToken);
       return true;
     } catch (SignatureException ex) {
       logger.error("Invalid JWT signature");
@@ -55,8 +58,8 @@ public class JwtTokenProvider {
     return false;
   }
 
-  public Long getUserIdFromJwt(String authToken) {
-    Claims claims = Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(authToken).getBody();
-    return Long.parseLong(claims.getSubject());
+  public String getUsernameFromJwt(String authToken) {
+    Claims claims = Jwts.parser().setSigningKey(key).parseClaimsJws(authToken).getBody();
+    return claims.getSubject();
   }
 }

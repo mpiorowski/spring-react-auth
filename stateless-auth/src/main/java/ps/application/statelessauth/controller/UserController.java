@@ -16,7 +16,7 @@ public class UserController {
     this.userMapper = userMapper;
   }
 
-  @GetMapping("user")
+  @GetMapping("/user")
   public User user() {
     return userMapper.selectAllUsers();
   }

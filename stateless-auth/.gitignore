@@ -1,4 +1,4 @@
-src/docker/_postgres/
+../docker/_postgres/
 /target/
 .mvn
 
