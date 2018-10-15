@@ -18,6 +18,6 @@ public class UserController {
 
   @GetMapping("/user")
   public User user() {
-    return userMapper.selectAllUsers();
+    return userMapper.findByUserUsername("mat");
   }
 }

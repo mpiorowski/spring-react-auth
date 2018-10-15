@@ -5,6 +5,7 @@ create table users
     constraint users_pk
     primary key,
   name varchar(60),
+  password varchar(60),
   role varchar(60)
 );
 

@@ -1,5 +1,7 @@
 package ps.application.statelessauth.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -14,20 +16,29 @@ import ps.application.statelessauth.security.JwtTokenProvider;
 @RestController
 public class AuthController {
 
-  @Autowired
-  JwtTokenProvider jwtTokenProvider;
+  private static final Logger LOGGER = LoggerFactory.getLogger(AuthController.class);
+
+  private final JwtTokenProvider jwtTokenProvider;
+
+  private final AuthenticationManager authenticationManager;
 
   @Autowired
-  AuthenticationManager authenticationManager;
+  public AuthController(
+      JwtTokenProvider jwtTokenProvider, AuthenticationManager authenticationManager) {
+    this.jwtTokenProvider = jwtTokenProvider;
+    this.authenticationManager = authenticationManager;
+  }
 
   @GetMapping("/auth")
   public ResponseEntity auth() {
 
-    Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken("user", "pass"));
+    LOGGER.info("here");
+
+    Authentication authentication =
+        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken("mat", "pass"));
 
     SecurityContextHolder.getContext().setAuthentication(authentication);
     String jwt = jwtTokenProvider.generateToken(authentication);
     return ResponseEntity.ok(new JwtAuthenticationResponse(jwt));
   }
-
 }

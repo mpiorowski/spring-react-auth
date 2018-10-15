@@ -12,10 +12,16 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import ps.application.statelessauth.security.CustomUserDetailsService;
 import ps.application.statelessauth.security.JwtAuthenticationFilter;
 
 @Configuration
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+
+  @Autowired
+  public WebSecurityConfig(CustomUserDetailsService customUserDetailsService) {
+    this.customUserDetailsService = customUserDetailsService;
+  }
 
   @Bean
   public JwtAuthenticationFilter jwtAuthenticationFilter() {
@@ -27,6 +33,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     return new BCryptPasswordEncoder();
   }
 
+  private final CustomUserDetailsService customUserDetailsService;
+
   @Bean(BeanIds.AUTHENTICATION_MANAGER)
   @Override
   public AuthenticationManager authenticationManagerBean() throws Exception {
@@ -37,10 +45,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
   public void configure(AuthenticationManagerBuilder authenticationManagerBuilder)
       throws Exception {
     authenticationManagerBuilder
-        .inMemoryAuthentication()
-        .withUser("user")
-        .password(passwordEncoder().encode("pass"))
-        .roles("USER");
+        .userDetailsService(customUserDetailsService)
+        .passwordEncoder(passwordEncoder());
   }
 
   @Override

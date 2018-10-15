@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -25,6 +24,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
   private static final Logger LOGGER = LoggerFactory.getLogger(JwtAuthenticationFilter.class);
 
   @Autowired public JwtTokenProvider jwtTokenProvider;
+
+  @Autowired
+  private CustomUserDetailsService customUserDetailsService;
 
   @Bean
   public PasswordEncoder passwordEncoder() {
@@ -45,7 +47,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         LOGGER.info(username);
 
-        UserDetails userDetails = User.withUsername("user").authorities("USER").password(passwordEncoder().encode("pass")).roles("USER").build();
+        UserDetails userDetails = customUserDetailsService.loadUserByUsername(username);
 
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken (
             userDetails, null, userDetails.getAuthorities()
