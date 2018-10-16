@@ -3,5 +3,9 @@ spring:
     url: jdbc:postgresql://localhost:5436/auth
     password: admin
     username: admin
+server:
+  port: 9000
 
-jwtExpirationInMs: 604800000
+app:
+  jwtExpirationInMs: 604800000
+

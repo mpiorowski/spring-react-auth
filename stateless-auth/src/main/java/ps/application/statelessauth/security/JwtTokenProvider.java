@@ -23,8 +23,8 @@ public class JwtTokenProvider {
 //  @Value("${app.jwtSecret}")
 //  private Key jwtSecret;
 
-//  @Value("${jwtExpirationInMs}")
-  private int jwtExpirationInMs = 604800000;
+  @Value("${app.jwtExpirationInMs}")
+  private int jwtExpirationInMs;
 
   public String generateToken(Authentication authentication) {
     UserDetails userDetails = (UserDetails) authentication.getPrincipal();

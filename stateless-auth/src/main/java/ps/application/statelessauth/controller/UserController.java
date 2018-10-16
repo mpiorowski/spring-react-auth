@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.RestController;
 import ps.application.statelessauth.dao.User;
 import ps.application.statelessauth.mapper.UserMapper;
 
+import java.security.Principal;
+
 @RestController
 public class UserController {
 
@@ -16,8 +18,13 @@ public class UserController {
     this.userMapper = userMapper;
   }
 
-  @GetMapping("/user")
-  public User user() {
+  @GetMapping("/alluser")
+  public User alluser() {
     return userMapper.findByUserUsername("mat");
+  }
+
+  @GetMapping("/user")
+  public Principal user(Principal user) {
+    return user;
   }
 }
