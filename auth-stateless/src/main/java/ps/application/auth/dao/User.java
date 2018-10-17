@@ -1,4 +1,4 @@
-package ps.application.statelessauth.dao;
+package ps.application.auth.dao;
 
 public class User {
 

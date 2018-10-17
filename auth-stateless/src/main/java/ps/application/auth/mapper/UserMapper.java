@@ -1,11 +1,11 @@
-package ps.application.statelessauth.mapper;
+package ps.application.auth.mapper;
 
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.SelectKey;
 import org.springframework.stereotype.Component;
-import ps.application.statelessauth.dao.User;
+import ps.application.auth.dao.User;
 
 @Mapper
 @Component

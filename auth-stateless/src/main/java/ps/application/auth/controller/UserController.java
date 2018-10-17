@@ -1,10 +1,10 @@
-package ps.application.statelessauth.controller;
+package ps.application.auth.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
-import ps.application.statelessauth.dao.User;
-import ps.application.statelessauth.mapper.UserMapper;
+import ps.application.auth.dao.User;
+import ps.application.auth.mapper.UserMapper;
 
 import java.security.Principal;
 

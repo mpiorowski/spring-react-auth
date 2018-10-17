@@ -1,4 +1,4 @@
-package ps.application.statelessauth.security;
+package ps.application.auth.security;
 
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;

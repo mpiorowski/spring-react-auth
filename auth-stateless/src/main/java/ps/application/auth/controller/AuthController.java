@@ -1,4 +1,4 @@
-package ps.application.statelessauth.controller;
+package ps.application.auth.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -9,8 +9,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import ps.application.statelessauth.payload.JwtAuthenticationResponse;
-import ps.application.statelessauth.security.JwtTokenProvider;
+import ps.application.auth.payload.JwtAuthenticationResponse;
+import ps.application.auth.security.JwtTokenProvider;
 
 import javax.validation.Valid;
 

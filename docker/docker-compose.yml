@@ -4,7 +4,6 @@ services:
   postgres:
     container_name: postgres-auth
     image: postgres
-    restart: always
     environment:
       POSTGRES_PASSWORD: admin
       POSTGRES_USER: admin

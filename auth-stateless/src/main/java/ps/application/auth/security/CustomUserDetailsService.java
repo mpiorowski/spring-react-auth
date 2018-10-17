@@ -1,12 +1,12 @@
-package ps.application.statelessauth.security;
+package ps.application.auth.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
-import ps.application.statelessauth.dao.User;
-import ps.application.statelessauth.mapper.UserMapper;
+import ps.application.auth.mapper.UserMapper;
+import ps.application.auth.dao.User;
 
 @Component
 public class CustomUserDetailsService implements UserDetailsService {

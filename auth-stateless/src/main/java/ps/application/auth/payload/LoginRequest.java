@@ -1,4 +1,4 @@
-package ps.application.statelessauth.payload;
+package ps.application.auth.payload;
 
 import javax.validation.constraints.NotBlank;
 
