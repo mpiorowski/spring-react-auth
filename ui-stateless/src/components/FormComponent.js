@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Form, Icon, Input, Button} from 'antd';
+import {Button, Form, Icon, Input} from 'antd';
 
 const FormItem = Form.Item;
 
@@ -11,12 +11,9 @@ class FormComponentClass extends Component {
 
   constructor(props) {
     super(props);
-
     this.state = {
       firstSubmit: false,
     }
-
-    // this.setSubmit = this.setSubmit.bind(this);
   }
 
   componentDidMount() {
@@ -28,7 +25,7 @@ class FormComponentClass extends Component {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        console.log('Recevied values of form: ', values);
+        this.props.handleSubmit();
       } else {
         console.log(err);
         this.setState({
