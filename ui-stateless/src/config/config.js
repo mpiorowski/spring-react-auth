@@ -1,0 +1,2 @@
+export const API_BASE_URL = 'http://localhost:9000'
+export const ACCESS_TOKEN = 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtYXQiLCJpYXQiOjE1Mzk3NzQ0NzksImV4cCI6MTU0MDM3OTI3OX0.c4-AfBOcuUyF0aZH7UkyRR0Qr4r1dISw7F265FYtbfGYVUJrBt99ttwzeLYs7dO7Dth1Qn-_I7tq5YKDuwAYbQ';
