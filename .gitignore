@@ -17,4 +17,3 @@ buildNumber.properties
 .mvn/wrapper/maven-wrapper.jar
 
 docker/_postgres
-react-boilerplate
