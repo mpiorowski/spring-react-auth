@@ -29,7 +29,10 @@ class App extends Component {
     this.checkAuth();
   }
 
-  checkAuth = () => {
+  checkAuth = (from) => {
+    this.setState({
+      loading:true,
+    });
     serviceGetUser()
         .then(response => {
           if (response.name) {
@@ -38,8 +41,7 @@ class App extends Component {
               loading: false,
               isAuth: true,
             });
-
-            this.props.history.push("/hello");
+            this.props.history.push(from);
           }
         })
         .catch(error => {
@@ -90,7 +92,7 @@ class App extends Component {
               <Switch>
                 <Route exact path="/login"
                        render={(props) => <LoginComponent
-                           handleSubmit={this.handleSubmit}
+                           {...props}
                            checkAuth={this.checkAuth}
                        />}/>
 

@@ -5,11 +5,19 @@ import {ACCESS_TOKEN} from "../config/config";
 
 class LoginComponent extends Component {
 
+  constructor(props) {
+    super(props);
+    const { from } = this.props.location.state || {from: {pathname: '/hello'}};
+    this.state = {
+      from : from,
+    }
+  }
+
   handleSubmit = (values) => {
     serviceLogIn(values)
         .then(response => {
           localStorage.setItem(ACCESS_TOKEN, response.jwtToken);
-          this.props.checkAuth();
+          this.props.checkAuth(this.state.from);
         })
         .catch(error => {
           console.log(error);
@@ -17,6 +25,7 @@ class LoginComponent extends Component {
   };
 
   render() {
+
     return (
         <div>
           <WrappedFormComponent handleSubmit={this.handleSubmit}/>
