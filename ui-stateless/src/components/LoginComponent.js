@@ -2,16 +2,29 @@ import React, {Component} from 'react';
 import {Button, Form, Icon, Input} from 'antd';
 import {serviceLogIn} from "../service/AuthService";
 import {ACCESS_TOKEN} from "../config/config";
+import {loginError} from "../error/LoginError";
 
 class LoginComponent extends Component {
+
+  constructor(props) {
+    super(props);
+    const { from } = this.props.location.state || {from: {pathname: '/hello'}};
+    this.state = {
+      from : from,
+    }
+  }
 
   handleSubmit = (values) => {
     serviceLogIn(values)
         .then(response => {
-          localStorage.setItem(ACCESS_TOKEN, response.jwtToken);
-          this.props.checkAuth();
+          if (response.jwtToken) {
+            localStorage.setItem(ACCESS_TOKEN, response.jwtToken);
+            this.props.checkAuth();
+            this.props.history.push(this.state.from);
+          }
         })
         .catch(error => {
+          loginError('credential');
           console.log(error);
         });
   };

@@ -1,5 +1,7 @@
 package ps.application.auth.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -17,8 +19,9 @@ import javax.validation.Valid;
 @RestController
 public class AuthController {
 
-  private final JwtTokenProvider jwtTokenProvider;
+  private static final Logger logger = LoggerFactory.getLogger(AuthController.class);
 
+  private final JwtTokenProvider jwtTokenProvider;
   private final AuthenticationManager authenticationManager;
 
   @Autowired

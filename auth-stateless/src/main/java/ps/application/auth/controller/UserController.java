@@ -20,11 +20,22 @@ public class UserController {
 
   @GetMapping("/alluser")
   public User alluser() {
-    return userMapper.findByUserUsername("mat");
+    return userMapper.findAll();
   }
 
   @GetMapping("/user")
   public Principal user(Principal user) {
     return user;
+  }
+
+  @GetMapping("/checkuser")
+  public String checkUser() {
+    User user = userMapper.findByUserUsername("ww");
+    if (user == null) {
+      return "EMPTY";
+    } else {
+      return user.getUsername();
+    }
+
   }
 }

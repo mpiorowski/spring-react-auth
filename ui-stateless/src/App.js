@@ -7,6 +7,7 @@ import HelloComponent from "./components/HelloComponent";
 import {ACCESS_TOKEN} from "./config/config";
 import {Icon, Spin} from "antd";
 import Test from "./components/Test";
+import {loginError} from "./error/LoginError";
 
 export const AuthContext = React.createContext('tak');
 
@@ -16,11 +17,10 @@ class App extends Component {
     super(props);
 
     this.state = {
-      currentUser: null,
       loading: true,
+      currentUser: null,
       jwtToken: null,
       isAuth: false,
-      test: 'test'
     };
 
   }
@@ -30,6 +30,10 @@ class App extends Component {
   }
 
   checkAuth = () => {
+    console.log(this.props.location);
+    this.setState({
+      loading:true,
+    });
     serviceGetUser()
         .then(response => {
           if (response.name) {
@@ -38,11 +42,10 @@ class App extends Component {
               loading: false,
               isAuth: true,
             });
-
-            this.props.history.push("/hello");
           }
         })
         .catch(error => {
+          this.props.location.pathname !== '/login' ? loginError('unauthorized') : null;
           this.setState({
             loading: false,
           });
@@ -90,7 +93,7 @@ class App extends Component {
               <Switch>
                 <Route exact path="/login"
                        render={(props) => <LoginComponent
-                           handleSubmit={this.handleSubmit}
+                           {...props}
                            checkAuth={this.checkAuth}
                        />}/>
 
