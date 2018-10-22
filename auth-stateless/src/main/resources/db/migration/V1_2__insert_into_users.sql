@@ -1,0 +1,1 @@
+INSERT into users (name, password, role) VALUES ('mat', 'pass', 'admin');
