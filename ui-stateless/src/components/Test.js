@@ -9,6 +9,7 @@ class Test extends Component {
           <AuthContext.Consumer>
             {auth => <div>{auth}</div>}
           </AuthContext.Consumer>
+          <a onClick={this.props.handleLogout}>wyloguj</a>
         </div>
     );
   }

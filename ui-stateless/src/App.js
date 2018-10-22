@@ -7,6 +7,7 @@ import HelloComponent from "./components/HelloComponent";
 import {ACCESS_TOKEN} from "./config/config";
 import {Icon, Spin} from "antd";
 import Test from "./components/Test";
+import {loginError} from "./error/LoginError";
 
 export const AuthContext = React.createContext('tak');
 
@@ -16,11 +17,10 @@ class App extends Component {
     super(props);
 
     this.state = {
-      currentUser: null,
       loading: true,
+      currentUser: null,
       jwtToken: null,
       isAuth: false,
-      test: 'test'
     };
 
   }
@@ -29,7 +29,8 @@ class App extends Component {
     this.checkAuth();
   }
 
-  checkAuth = (from) => {
+  checkAuth = () => {
+    console.log(this.props.location);
     this.setState({
       loading:true,
     });
@@ -41,10 +42,10 @@ class App extends Component {
               loading: false,
               isAuth: true,
             });
-            this.props.history.push(from);
           }
         })
         .catch(error => {
+          this.props.location.pathname !== '/login' ? loginError('unauthorized') : null;
           this.setState({
             loading: false,
           });

@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {Button, Form, Icon, Input} from 'antd';
 import {serviceLogIn} from "../service/AuthService";
 import {ACCESS_TOKEN} from "../config/config";
+import {loginError} from "../error/LoginError";
 
 class LoginComponent extends Component {
 
@@ -16,16 +17,19 @@ class LoginComponent extends Component {
   handleSubmit = (values) => {
     serviceLogIn(values)
         .then(response => {
-          localStorage.setItem(ACCESS_TOKEN, response.jwtToken);
-          this.props.checkAuth(this.state.from);
+          if (response.jwtToken) {
+            localStorage.setItem(ACCESS_TOKEN, response.jwtToken);
+            this.props.checkAuth();
+            this.props.history.push(this.state.from);
+          }
         })
         .catch(error => {
+          loginError('credential');
           console.log(error);
         });
   };
 
   render() {
-
     return (
         <div>
           <WrappedFormComponent handleSubmit={this.handleSubmit}/>
