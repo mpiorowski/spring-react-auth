@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import {AuthContext} from "../../App";
 
 class HelloComponent extends Component {
 
@@ -9,8 +10,10 @@ class HelloComponent extends Component {
   render() {
     return (
         <div>
-          <h1>HELLO {this.props.userName}</h1>
-          <a onClick={this.handleLogout}>wyloguj</a>
+          <h1>Hello {this.props.userName}</h1>
+          <AuthContext.Consumer>
+            {auth => <div>authContext : {auth}</div>}
+          </AuthContext.Consumer>
         </div>
     );
   }

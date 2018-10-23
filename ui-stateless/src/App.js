@@ -1,13 +1,16 @@
 import React, {Component} from 'react';
 import './App.css';
-import LoginComponent from './components/LoginComponent';
+import LoginComponent from './components/login/LoginComponent';
 import {serviceGetUser} from "./service/AuthService";
 import {Redirect, Route, Switch, withRouter} from "react-router-dom";
-import HelloComponent from "./components/HelloComponent";
+import HelloComponent from "./components/hello/HelloComponent";
 import {ACCESS_TOKEN} from "./config/config";
-import {Icon, Spin} from "antd";
-import Test from "./components/Test";
+import {Icon, Layout, Spin} from "antd";
 import {loginError} from "./error/LoginError";
+import AppHeader from "./AppHeader";
+import FormComponent from "./components/form/FormComponent";
+
+const {Content} = Layout;
 
 export const AuthContext = React.createContext('tak');
 
@@ -21,6 +24,7 @@ class App extends Component {
       currentUser: null,
       jwtToken: null,
       isAuth: false,
+      test: 'test'
     };
 
   }
@@ -30,9 +34,8 @@ class App extends Component {
   }
 
   checkAuth = () => {
-    console.log(this.props.location);
     this.setState({
-      loading:true,
+      loading: true,
     });
     serviceGetUser()
         .then(response => {
@@ -42,15 +45,21 @@ class App extends Component {
               loading: false,
               isAuth: true,
             });
+            if (this.props.location.pathname === '/login') {
+              this.props.history.push('/hello');
+            }
           }
         })
         .catch(error => {
-          this.props.location.pathname !== '/login' ? loginError('unauthorized') : null;
+          if (this.props.location.pathname !== '/login') {
+            loginError('unauthorized');
+          }
           this.setState({
             loading: false,
           });
           console.log(error);
         });
+
   };
 
   handleLogout = () => {
@@ -66,50 +75,53 @@ class App extends Component {
   render() {
 
     const PrivateRoute = ({component: Component, ...rest}) => (
-        <Route {...rest} render={(props) => (
-            this.state.isAuth === true
-                ? <Component {...rest} {...props}/>
-                : <Redirect to={{
-                  pathname: '/login',
-                  state: {from: props.location}
-                }}/>
-        )}/>
+        <div className={'app-content'}>
+          <Route {...rest} render={(props) => (
+              this.state.isAuth === true
+                  ? <Component {...rest} {...props}/>
+                  : <Redirect to={{
+                    pathname: '/login',
+                    state: {from: props.location}
+                  }}/>
+          )}/>
+        </div>
     );
 
     const antIcon = <Icon type="loading-3-quarters" style={{fontSize: 30}} spin/>;
 
     if (this.state.loading) {
       return (
-          <div className="App">
-            <header className="App-header">
+          <div className="app-main">
+            <header>
               <Spin indicator={antIcon} style={{display: 'block', textAlign: 'center', marginTop: 30}}/>
             </header>
           </div>
       )
     } else {
       return (
-          <div className="App">
-            <AuthContext.Provider value={this.state.test}>
-              <Switch>
-                <Route exact path="/login"
-                       render={(props) => <LoginComponent
-                           {...props}
-                           checkAuth={this.checkAuth}
-                       />}/>
+          <div>
+            <Layout>
+              <AppHeader handleLogout={this.handleLogout} isAuth={this.state.isAuth}/>
+              <Content>
+                <Switch>
+                  <Route exact path="/login"
+                         render={(props) => <LoginComponent
+                             {...props}
+                             checkAuth={this.checkAuth}
+                         />}/>
 
-                <PrivateRoute path='/hello'
-                              component={HelloComponent}
-                              handleLogout={this.handleLogout}
-                              userName={this.state.currentUser}/>
+                  <PrivateRoute path='/hello'
+                                component={HelloComponent}
+                                userName={this.state.currentUser}/>
 
-                <PrivateRoute path='/test'
-                              component={Test}
-                              handleLogout={this.handleLogout}
-                              userName={this.state.currentUser}/>
+                  <PrivateRoute path='/form'
+                                component={FormComponent}
+                                userName={this.state.currentUser}/>
 
-                <Route path='*' render={(props) => <Redirect to={'/login'}/>}/>
-              </Switch>
-            </AuthContext.Provider>
+                  <Route path='*' render={(props) => <Redirect to={'/login'}/>}/>
+                </Switch>
+              </Content>
+            </Layout>
           </div>
       );
     }
