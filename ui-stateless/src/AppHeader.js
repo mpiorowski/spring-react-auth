@@ -6,7 +6,14 @@ const {Header} = Layout;
 
 class AppHeader extends Component {
 
+  constructor(props) {
+    super(props);
+  }
+
+
   render() {
+
+    console.log(this.props.active.substr(1));
 
     if (this.props.isAuth) {
       return (
@@ -15,11 +22,11 @@ class AppHeader extends Component {
               <Menu
                   theme="dark"
                   mode="horizontal"
-                  // defaultSelectedKeys={['hello']}
+                  selectedKeys={[this.props.active.substr(1)]}
                   style={{lineHeight: '5vh'}}
               >
                 <Menu.Item key="hello" className={'menu'}><Link to="/hello">hello</Link></Menu.Item>
-                <Menu.Item key="form" className={'menu'}><Link to="/form">form</Link></Menu.Item>
+                <Menu.Item key="users" className={'menu'}><Link to="/users">users</Link></Menu.Item>
                 <Menu.Item style={{float:'right'}} key="logout" onClick={this.props.handleLogout} className={'menu'}>LOGOUT</Menu.Item>
               </Menu>
             </Header>

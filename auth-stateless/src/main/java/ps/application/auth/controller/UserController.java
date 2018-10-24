@@ -1,15 +1,19 @@
 package ps.application.auth.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import ps.application.auth.dao.User;
 import ps.application.auth.mapper.UserMapper;
 
 import java.security.Principal;
+import java.util.List;
 
 @RestController
 public class UserController {
+
+  private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
   private final UserMapper userMapper;
 
@@ -18,8 +22,8 @@ public class UserController {
     this.userMapper = userMapper;
   }
 
-  @GetMapping("/alluser")
-  public User alluser() {
+  @GetMapping("/allusers")
+  public List<User> allusers() {
     return userMapper.findAll();
   }
 
@@ -28,14 +32,12 @@ public class UserController {
     return user;
   }
 
-  @GetMapping("/checkuser")
-  public String checkUser() {
-    User user = userMapper.findByUserUsername("ww");
-    if (user == null) {
-      return "EMPTY";
-    } else {
-      return user.getUsername();
-    }
+  @PostMapping("/addusers")
+  public String addusers(@RequestBody String users) {
+
+    logger.info(users);
+    return "ok";
 
   }
+
 }

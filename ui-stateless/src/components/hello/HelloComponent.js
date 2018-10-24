@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
 import {AuthContext} from "../../App";
+import {Col, Row} from "antd";
+import './HelloComponent.css';
 
 class HelloComponent extends Component {
 
@@ -10,10 +12,15 @@ class HelloComponent extends Component {
   render() {
     return (
         <div>
-          <h1>Hello {this.props.userName}</h1>
-          <AuthContext.Consumer>
-            {auth => <div>authContext : {auth}</div>}
-          </AuthContext.Consumer>
+          <Row type="flex" justify="center" align="top">
+            <Col span={24} style={{textAlign:'center'}}>
+              <h2>Hello {this.props.userName}</h2>
+              <AuthContext.Consumer>
+                {auth => <div>authContext : {auth}</div>}
+              </AuthContext.Consumer>
+            </Col>
+          </Row>
+
         </div>
     );
   }

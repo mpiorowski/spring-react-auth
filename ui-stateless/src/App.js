@@ -2,13 +2,14 @@ import React, {Component} from 'react';
 import './App.css';
 import LoginComponent from './components/login/LoginComponent';
 import {serviceGetUser} from "./service/AuthService";
-import {Redirect, Route, Switch, withRouter} from "react-router-dom";
+import {Switch, Redirect, Route, withRouter} from "react-router-dom";
 import HelloComponent from "./components/hello/HelloComponent";
 import {ACCESS_TOKEN} from "./config/config";
 import {Icon, Layout, Spin} from "antd";
 import {loginError} from "./error/LoginError";
 import AppHeader from "./AppHeader";
-import FormComponent from "./components/form/FormComponent";
+// import {UserFormWrapped} from "./components/form/UserComponent";
+import UserComponent from "./components/form/UserComponent";
 
 const {Content} = Layout;
 
@@ -31,6 +32,7 @@ class App extends Component {
 
   componentWillMount() {
     this.checkAuth();
+    // console.log(this.props);
   }
 
   checkAuth = () => {
@@ -101,7 +103,7 @@ class App extends Component {
       return (
           <div>
             <Layout>
-              <AppHeader handleLogout={this.handleLogout} isAuth={this.state.isAuth}/>
+              <AppHeader handleLogout={this.handleLogout} isAuth={this.state.isAuth} active={this.props.location.pathname}/>
               <Content>
                 <Switch>
                   <Route exact path="/login"
@@ -114,8 +116,8 @@ class App extends Component {
                                 component={HelloComponent}
                                 userName={this.state.currentUser}/>
 
-                  <PrivateRoute path='/form'
-                                component={FormComponent}
+                  <PrivateRoute path='/users'
+                                component={UserComponent}
                                 userName={this.state.currentUser}/>
 
                   <Route path='*' render={(props) => <Redirect to={'/login'}/>}/>

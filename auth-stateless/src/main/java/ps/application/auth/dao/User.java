@@ -7,6 +7,16 @@ public class User {
   private String password;
   private String role;
 
+  @Override
+  public String toString() {
+    return "User{" +
+        "id=" + id +
+        ", username='" + username + '\'' +
+        ", password='" + password + '\'' +
+        ", role='" + role + '\'' +
+        '}';
+  }
+
   public User(Integer id, String username, String password, String role) {
     this.id = id;
     this.username = username;
