@@ -3,14 +3,15 @@ import {request} from "./request";
 
 export function serviceGetUser() {
   return request({
-    url: API_BASE_URL + "/user/auth",
+    url: API_BASE_URL + "/auth/user",
     method: "GET"
   })
 }
 
 export function serviceLogIn(values) {
   return request({
-    url: API_BASE_URL + "/auth?username=" + values.userName + "&password=" + values.password,
-    method: "GET"
+    url: API_BASE_URL + "/auth/log",
+    method: "POST",
+    body: JSON.stringify(values)
   });
 }

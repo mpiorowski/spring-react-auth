@@ -85,7 +85,7 @@ class FormComponent extends Component {
 
     const {getFieldDecorator, getFieldError} = this.props.form;
 
-    const userNameError = this.state.firstSubmit && getFieldError('userName');
+    const userNameError = this.state.firstSubmit && getFieldError('username');
     const passwordError = this.state.firstSubmit && getFieldError('password');
 
     return (
@@ -96,7 +96,7 @@ class FormComponent extends Component {
                 help={userNameError || ''}
             >
               {getFieldDecorator(
-                  'userName', {
+                  'username', {
                     rules: [{required: true, message: 'Please input your username!'}],
                   }
               )(

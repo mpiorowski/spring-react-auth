@@ -1,19 +1,14 @@
 package ps.application.auth.controller;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import ps.application.auth.dao.User;
-import ps.application.auth.dao.UserList;
 import ps.application.auth.mapper.UserMapper;
+import ps.application.auth.traffic.UserRequest;
 
 import javax.validation.Valid;
-import java.security.Principal;
-import java.util.ArrayList;
-import java.util.List;
 
 @RestController
 @RequestMapping("/user")
@@ -26,11 +21,6 @@ public class UserController {
     this.userMapper = userMapper;
   }
 
-  @GetMapping("/auth")
-  public Principal auth(Principal user) {
-    return user;
-  }
-
   @GetMapping("/all")
   public ResponseEntity allUsers() {
     return ResponseEntity.ok(userMapper.findAll());
@@ -38,7 +28,7 @@ public class UserController {
 
   @PostMapping("/add")
   @Transactional
-  public ResponseEntity addUsers(@Valid @RequestBody UserList users) {
+  public ResponseEntity addUsers(@Valid @RequestBody UserRequest users) {
     try {
       userMapper.deleteAllUsers();
       for (User user : users.getUsers()) {

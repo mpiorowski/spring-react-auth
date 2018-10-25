@@ -1,4 +1,4 @@
-package ps.application.auth.payload;
+package ps.application.auth.traffic;
 
 public class JwtAuthenticationResponse {
 

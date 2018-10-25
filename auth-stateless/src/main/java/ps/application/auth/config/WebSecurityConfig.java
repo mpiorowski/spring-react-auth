@@ -70,7 +70,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         .authenticationEntryPoint(jwtAuthenticationException)
         .and()
         .authorizeRequests()
-        .antMatchers("/auth", "/checkuser", "/alluser")
+        .antMatchers("/auth/**")
         .permitAll()
         .anyRequest()
         .authenticated()
