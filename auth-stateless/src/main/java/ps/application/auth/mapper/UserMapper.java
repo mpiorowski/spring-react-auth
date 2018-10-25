@@ -11,10 +11,10 @@ import java.util.List;
 @Component
 public interface UserMapper {
 
-  @Insert({"INSERT into users(username,password,role) VALUES(#{username},#{password},#{role})"})
+  @Insert({"INSERT into users(user_name,user_password,user_role) VALUES(#{username},#{password},#{role})"})
   Integer insertUser(User user);
 
-  @Select("SELECT * FROM users where username = #{username}")
+  @Select("SELECT * FROM users where user_name = #{username}")
   User findByUserUsername(String username);
 
   @Select("SELECT * FROM users")
