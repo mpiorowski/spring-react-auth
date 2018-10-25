@@ -1,17 +1,16 @@
 import {API_BASE_URL} from "../config/config";
-import {request} from "./AuthService";
+import {request} from "./request";
 
 export const getAllUsers = () => {
   return request({
-    url: API_BASE_URL + "/allusers",
+    url: API_BASE_URL + "/user/all",
     method: "GET"
   })
 };
 
 export const addUsers = (users) => {
-  console.log(JSON.stringify(users));
   return request({
-    url: API_BASE_URL + "/addusers",
+    url: API_BASE_URL + "/user/add",
     method: "POST",
     body: JSON.stringify(users)
   })

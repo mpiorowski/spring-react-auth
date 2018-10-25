@@ -12,7 +12,7 @@ import java.util.List;
 public interface UserMapper {
 
   @Insert({"INSERT into users(user_name,user_password,user_role) VALUES(#{username},#{password},#{role})"})
-  Integer insertUser(User user);
+  void insertUser(User user);
 
   @Select("SELECT * FROM users where user_name = #{username}")
   User findByUserUsername(String username);

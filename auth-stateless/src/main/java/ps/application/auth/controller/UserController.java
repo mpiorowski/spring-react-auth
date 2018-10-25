@@ -16,9 +16,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
+@RequestMapping("/user")
 public class UserController {
-
-  private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
   private final UserMapper userMapper;
 
@@ -27,39 +26,27 @@ public class UserController {
     this.userMapper = userMapper;
   }
 
-  @GetMapping("/allusers")
-  public List<User> allusers() {
-    return userMapper.findAll();
-  }
-
-  @GetMapping("/user")
-  public Principal user(Principal user) {
+  @GetMapping("/auth")
+  public Principal auth(Principal user) {
     return user;
   }
 
-  @PostMapping("/addusers")
-  @Transactional
-  public ResponseEntity addusers(@Valid @RequestBody UserList users) {
-
-    List<Integer> ids = new ArrayList<>();
-    Integer id;
-
-    try{
-
-      userMapper.deleteAllUsers();
-
-      for (User user : users.getUsers()) {
-        id = userMapper.insertUser(user);
-        ids.add(id);
-        logger.info(ids.toString());
-        logger.info(String.valueOf(id));
-      }
-    } catch (NullPointerException e){
-      return ResponseEntity.ok(e.getMessage());
-    }
-
-    return ResponseEntity.ok(ids);
-
+  @GetMapping("/all")
+  public ResponseEntity allUsers() {
+    return ResponseEntity.ok(userMapper.findAll());
   }
 
+  @PostMapping("/add")
+  @Transactional
+  public ResponseEntity addUsers(@Valid @RequestBody UserList users) {
+    try {
+      userMapper.deleteAllUsers();
+      for (User user : users.getUsers()) {
+        userMapper.insertUser(user);
+      }
+    } catch (NullPointerException e) {
+      return ResponseEntity.ok(e.getMessage());
+    }
+    return ResponseEntity.ok("true");
+  }
 }
