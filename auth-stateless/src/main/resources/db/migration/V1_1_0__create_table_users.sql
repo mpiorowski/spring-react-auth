@@ -4,7 +4,7 @@ create table users
   id   serial not null
     constraint users_pk
     primary key,
-  name varchar(60),
+  username varchar(60) unique,
   password varchar(60),
   role varchar(60)
 );
