@@ -1,23 +1,37 @@
 package ps.application.auth.dao;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class User {
 
   private Integer id;
   private String username;
   private String password;
-  private String role;
+  private String role = "admin";
 
   public User(Integer id, String username, String password, String role) {
     this.id = id;
     this.username = username;
     this.password = password;
-    this.role = role;
+    this.role = role ;
   }
 
-  public User(String username, String password, String role) {
+  @JsonCreator
+  public User(@JsonProperty(value = "username", required = true) String username,
+              @JsonProperty(value = "password", required = true) String password) {
     this.username = username;
     this.password = password;
-    this.role = role;
+  }
+
+  @Override
+  public String toString() {
+    return "User{" +
+        "id=" + id +
+        ", username='" + username + '\'' +
+        ", password='" + password + '\'' +
+        ", role='" + role + '\'' +
+        '}';
   }
 
   public Integer getId() {

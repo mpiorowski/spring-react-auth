@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import {Button, Form, Icon, Input} from 'antd';
-import {serviceLogIn} from "../service/AuthService";
-import {ACCESS_TOKEN} from "../config/config";
-import {loginError} from "../error/LoginError";
+import {serviceLogIn} from "../../service/AuthService";
+import {ACCESS_TOKEN} from "../../config/config";
+import {loginError} from "../../error/LoginError";
 
 class LoginComponent extends Component {
 
@@ -31,7 +31,7 @@ class LoginComponent extends Component {
 
   render() {
     return (
-        <div>
+        <div className={'app-main'}>
           <WrappedFormComponent handleSubmit={this.handleSubmit}/>
         </div>
     );
@@ -89,7 +89,7 @@ class FormComponent extends Component {
     const passwordError = this.state.firstSubmit && getFieldError('password');
 
     return (
-        <header className="App-header">
+        <div>
           <Form layout={'inline'} onSubmit={this.validateAndSubmit}>
             <FormItem
                 validateStatus={userNameError ? 'error' : ''}
@@ -126,7 +126,7 @@ class FormComponent extends Component {
               </Button>
             </FormItem>
           </Form>
-        </header>
+        </div>
     );
   }
 

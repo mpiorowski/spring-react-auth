@@ -10,7 +10,7 @@ export function loginError(type) {
       notificationMsg = {title: 'Unauthorized', msg: 'Please try to log in again.'};
       break;
     default:
-      notificationMsg = {title: 'Application error', msg: 'The error accured during operations. Sorry!'};
+      notificationMsg = {title: 'Application error', msg: 'The error accrued during operations. Sorry!'};
       break;
   }
 
@@ -18,8 +18,9 @@ export function loginError(type) {
 }
 
 const openErrorNotification = (notificationMsg) => {
-  notification.open({
+  notification['error']({
     message: notificationMsg.title,
     description: notificationMsg.msg,
+    duration: 3,
   });
 };

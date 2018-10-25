@@ -1,24 +1,25 @@
 package ps.application.auth.mapper;
 
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.SelectKey;
+import org.apache.ibatis.annotations.*;
+import org.apache.ibatis.mapping.StatementType;
 import org.springframework.stereotype.Component;
 import ps.application.auth.dao.User;
+
+import java.util.List;
 
 @Mapper
 @Component
 public interface UserMapper {
 
-  @Insert("insert into users(name,password,role) values(#{name},#{password},#{role})")
-  @SelectKey(statement = "call identity()", keyProperty = "id",
-      before = false, resultType = Integer.class)
+  @Insert({"INSERT into users(user_name,user_password,user_role) VALUES(#{username},#{password},#{role})"})
   void insertUser(User user);
 
-  @Select("SELECT * FROM users where name = #{name}")
-  User findByUserUsername(String name);
+  @Select("SELECT * FROM users where user_name = #{username}")
+  User findByUserUsername(String username);
 
   @Select("SELECT * FROM users")
-  User findAll();
+  List<User> findAll();
+
+  @Delete("DELETE FROM users")
+  void deleteAllUsers();
 }

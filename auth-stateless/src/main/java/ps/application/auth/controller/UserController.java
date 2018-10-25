@@ -1,14 +1,22 @@
 package ps.application.auth.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.*;
 import ps.application.auth.dao.User;
+import ps.application.auth.dao.UserList;
 import ps.application.auth.mapper.UserMapper;
 
+import javax.validation.Valid;
 import java.security.Principal;
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
+@RequestMapping("/user")
 public class UserController {
 
   private final UserMapper userMapper;
@@ -18,24 +26,27 @@ public class UserController {
     this.userMapper = userMapper;
   }
 
-  @GetMapping("/alluser")
-  public User alluser() {
-    return userMapper.findAll();
-  }
-
-  @GetMapping("/user")
-  public Principal user(Principal user) {
+  @GetMapping("/auth")
+  public Principal auth(Principal user) {
     return user;
   }
 
-  @GetMapping("/checkuser")
-  public String checkUser() {
-    User user = userMapper.findByUserUsername("ww");
-    if (user == null) {
-      return "EMPTY";
-    } else {
-      return user.getUsername();
-    }
+  @GetMapping("/all")
+  public ResponseEntity allUsers() {
+    return ResponseEntity.ok(userMapper.findAll());
+  }
 
+  @PostMapping("/add")
+  @Transactional
+  public ResponseEntity addUsers(@Valid @RequestBody UserList users) {
+    try {
+      userMapper.deleteAllUsers();
+      for (User user : users.getUsers()) {
+        userMapper.insertUser(user);
+      }
+    } catch (NullPointerException e) {
+      return ResponseEntity.ok(e.getMessage());
+    }
+    return ResponseEntity.ok("true");
   }
 }
