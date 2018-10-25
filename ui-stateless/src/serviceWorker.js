@@ -7,7 +7,7 @@
 // existing tabs open on the page have been closed, since previously cached
 // resources are updated in the background.
 
-// To learn more about the benefits of this model and instructions on how to
+// To learn more about the benefits of this dao and instructions on how to
 // opt-in, read http://bit.ly/CRA-PWA.
 
 const isLocalhost = Boolean(

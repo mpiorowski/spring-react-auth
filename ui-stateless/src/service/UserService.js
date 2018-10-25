@@ -9,6 +9,7 @@ export const getAllUsers = () => {
 };
 
 export const addUsers = (users) => {
+  console.log(JSON.stringify(users));
   return request({
     url: API_BASE_URL + "/addusers",
     method: "POST",

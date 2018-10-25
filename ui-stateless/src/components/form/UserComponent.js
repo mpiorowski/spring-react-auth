@@ -7,10 +7,11 @@ import {addUsers, getAllUsers} from "../../service/UserService";
 class UserComponent extends Component {
 
   handleSubmit = (values) => {
-    const users = [];
-    values['user'].map((val) =>{
-      users.push({username: val[0], password: val[1]})
-    });
+    const users = {
+      users: values['user'].map((val) => {
+        return {username: val[0], password: val[1]}
+      })
+    };
     addUsers(users);
   };
 

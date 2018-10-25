@@ -5,8 +5,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import ps.application.auth.dao.User;
+import ps.application.auth.dao.UserList;
 import ps.application.auth.mapper.UserMapper;
 
+import javax.validation.Valid;
 import java.security.Principal;
 import java.util.List;
 
@@ -33,9 +35,13 @@ public class UserController {
   }
 
   @PostMapping("/addusers")
-  public String addusers(@RequestBody String users) {
+  public String addusers(@Valid @RequestBody UserList users) {
 
-    logger.info(users);
+    for (User user : users.getUsers()) {
+      logger.info(user.toString());
+//      userMapper.insertUser(user);
+    }
+
     return "ok";
 
   }
