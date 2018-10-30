@@ -8,8 +8,8 @@ import {ACCESS_TOKEN} from "./config/config";
 import {Icon, Layout, Spin} from "antd";
 import {authNotification} from "./notification/AuthNotification";
 import AppHeader from "./AppHeader";
-import UserComponent from "./components/users/UserComponent";
 import {WrappedProductComponent} from "./components/products/ProductComponent";
+import {WrappedUserComponent} from "./components/users/UserComponent";
 
 const {Content} = Layout;
 
@@ -61,12 +61,6 @@ class App extends Component {
           });
           console.log(error);
         });
-  };
-
-  setLoading = (loading = true) => {
-    this.setState({
-      loading: loading
-    })
   };
 
   handleLogout = () => {
@@ -127,7 +121,7 @@ class App extends Component {
                 />
 
                 <PrivateRoute path='/users'
-                              component={UserComponent}
+                              component={WrappedUserComponent}
                               user={this.state.currentUser}
                 />
 

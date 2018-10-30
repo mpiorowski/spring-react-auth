@@ -123,10 +123,11 @@ class ProductComponent extends Component {
                     rules: [{
                       required: true,
                       whitespace: true,
-                      message: "Please input product's name.",
+                      max: 200,
+                      message: "Please input product's name. Max 200 characters.",
                     }],
                   })(
-                      <Input placeholder="product name" style={{width: '90%', marginRight: 8}}/>
+                      <Input placeholder="product name (max: 200)" style={{width: '90%', marginRight: 8}}/>
                   )}
                 </FormItem>
               </Col>
@@ -141,8 +142,11 @@ class ProductComponent extends Component {
                     validateTrigger: ['onChange'],
                     rules: [{
                       required: true,
-                      message: "Please input product's price.",
-                    }]
+                      type: 'number',
+                      max: 999,
+                      message: "Input correct number, max 999.",
+                    }],
+
                   })(
                       <InputNumber
                           min={1}

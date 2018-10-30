@@ -4,7 +4,10 @@ import {Form, Input, Icon, Button, Col, Row} from 'antd';
 import './UserComponent.css';
 import {addUsers, getAllUsers} from "../../service/UserService";
 
-class UserComponent extends Component {
+const FormItem = Form.Item;
+let uuid = 0;
+
+class UserFormComponent extends Component {
 
   handleSubmit = (values) => {
     const users = {
@@ -14,22 +17,6 @@ class UserComponent extends Component {
     };
     addUsers(users);
   };
-
-  render() {
-    return (
-        <div>
-          <UserFormWrapped handleSubmit={this.handleSubmit}/>
-        </div>
-    );
-  }
-}
-
-export default UserComponent;
-
-const FormItem = Form.Item;
-let uuid = 0;
-
-class UserFormComponent extends Component {
 
   componentDidMount() {
     getAllUsers().then(response => {
@@ -193,4 +180,4 @@ UserFormComponent.propTypes = {
   nameT: PropTypes.string
 };
 
-const UserFormWrapped = Form.create()(UserFormComponent);
+export const WrappedUserComponent = Form.create()(UserFormComponent);
