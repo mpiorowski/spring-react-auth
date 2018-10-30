@@ -39,6 +39,11 @@ th {
     color: white !important;
 }
 
+.ant-table-placeholder {
+    background: #282c34;
+    color: white;
+}
+
 
 
 
