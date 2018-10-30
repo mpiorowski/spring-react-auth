@@ -6,14 +6,15 @@ import {Switch, Redirect, Route, withRouter} from "react-router-dom";
 import HelloComponent from "./components/hello/HelloComponent";
 import {ACCESS_TOKEN} from "./config/config";
 import {Icon, Layout, Spin} from "antd";
-import {loginError} from "./error/LoginError";
+import {authNotification} from "./notification/AuthNotification";
 import AppHeader from "./AppHeader";
-// import {UserFormWrapped} from "./components/form/UserComponent";
-import UserComponent from "./components/form/UserComponent";
+import UserComponent from "./components/users/UserComponent";
+import {WrappedProductComponent} from "./components/products/ProductComponent";
 
 const {Content} = Layout;
 
 export const AuthContext = React.createContext('tak');
+export const LoadingContext = React.createContext(true);
 
 class App extends Component {
 
@@ -32,7 +33,6 @@ class App extends Component {
 
   componentWillMount() {
     this.checkAuth();
-    // console.log(this.props);
   }
 
   checkAuth = () => {
@@ -44,8 +44,8 @@ class App extends Component {
           if (response.name) {
             this.setState({
               currentUser: response.name,
-              loading: false,
               isAuth: true,
+              loading: false
             });
             if (this.props.location.pathname === '/login') {
               this.props.history.push('/hello');
@@ -53,15 +53,20 @@ class App extends Component {
           }
         })
         .catch(error => {
-          if (this.props.location.pathname !== '/login') {
-            loginError('unauthorized');
+          if (this.props.location.pathname !== '/login' && this.props.location.pathname !== '/') {
+            authNotification('unauthorized');
           }
           this.setState({
             loading: false,
           });
           console.log(error);
         });
+  };
 
+  setLoading = (loading = true) => {
+    this.setState({
+      loading: loading
+    })
   };
 
   handleLogout = () => {
@@ -72,7 +77,6 @@ class App extends Component {
     localStorage.removeItem(ACCESS_TOKEN);
     this.props.history.push("/");
   };
-
 
   render() {
 
@@ -103,7 +107,8 @@ class App extends Component {
       return (
           <div>
             <Layout>
-              <AppHeader handleLogout={this.handleLogout} isAuth={this.state.isAuth} active={this.props.location.pathname}/>
+              <AppHeader handleLogout={this.handleLogout} isAuth={this.state.isAuth}
+                         active={this.props.location.pathname}/>
               <Content>
                 <Switch>
                   <Route exact path="/login"
@@ -114,11 +119,17 @@ class App extends Component {
 
                   <PrivateRoute path='/hello'
                                 component={HelloComponent}
-                                userName={this.state.currentUser}/>
+                                user={this.state.currentUser}/>
+
+                  <PrivateRoute path='/products'
+                                component={WrappedProductComponent}
+                                user={this.state.currentUser}
+                  />
 
                   <PrivateRoute path='/users'
                                 component={UserComponent}
-                                userName={this.state.currentUser}/>
+                                user={this.state.currentUser}
+                  />
 
                   <Route path='*' render={(props) => <Redirect to={'/login'}/>}/>
                 </Switch>

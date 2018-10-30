@@ -14,7 +14,7 @@ class HelloComponent extends Component {
         <div>
           <Row type="flex" justify="center" align="top">
             <Col span={24} style={{textAlign:'center'}}>
-              <h2>Hello {this.props.userName}</h2>
+              <h2>Hello {this.props.user}</h2>
               <AuthContext.Consumer>
                 {auth => <div>authContext : {auth}</div>}
               </AuthContext.Consumer>

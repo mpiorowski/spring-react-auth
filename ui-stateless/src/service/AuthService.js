@@ -8,10 +8,10 @@ export function serviceGetUser() {
   })
 }
 
-export function serviceLogIn(values) {
+export function serviceLogIn(credentials) {
   return request({
     url: API_BASE_URL + "/auth/log",
     method: "POST",
-    body: JSON.stringify(values)
+    body: JSON.stringify(credentials)
   });
 }
