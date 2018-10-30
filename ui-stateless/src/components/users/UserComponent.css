@@ -18,3 +18,28 @@ label {
     color:white !important;
 }
 
+td {
+    color: white !important;
+}
+
+tr:hover > td {
+    background: gray !important;
+}
+
+th {
+    background-color: #1DA57A !important;
+    color: white !important;
+}
+
+.ant-pagination-item {
+    background: #282c34;
+}
+
+.ant-pagination-item-link {
+    color: white !important;
+}
+
+
+
+
+
