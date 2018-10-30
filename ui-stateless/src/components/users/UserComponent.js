@@ -34,7 +34,7 @@ class UserFormComponent extends Component {
   componentDidMount() {
     getAllUsers().then(response => {
       if (response) {
-        response.map((val) => {
+        response.forEach(val => {
           this.add(val);
         });
       }

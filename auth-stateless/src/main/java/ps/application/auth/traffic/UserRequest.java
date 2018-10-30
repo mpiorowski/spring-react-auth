@@ -1,8 +1,10 @@
-package ps.application.auth.dao;
+package ps.application.auth.traffic;
+
+import ps.application.auth.dao.User;
 
 import java.util.List;
 
-public class UserList {
+public class UserRequest {
 
   private List<User> users;
 

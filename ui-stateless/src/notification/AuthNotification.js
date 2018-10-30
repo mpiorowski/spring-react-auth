@@ -1,6 +1,6 @@
 import {notification} from 'antd';
 
-export function loginError(type) {
+export function authNotification(type) {
   let notificationMsg;
   switch (type) {
     case 'credential':
@@ -14,13 +14,9 @@ export function loginError(type) {
       break;
   }
 
-  openErrorNotification(notificationMsg);
-}
-
-const openErrorNotification = (notificationMsg) => {
   notification['error']({
     message: notificationMsg.title,
     description: notificationMsg.msg,
     duration: 3,
   });
-};
+}

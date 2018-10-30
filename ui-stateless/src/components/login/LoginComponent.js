@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {Button, Form, Icon, Input} from 'antd';
 import {serviceLogIn} from "../../service/AuthService";
 import {ACCESS_TOKEN} from "../../config/config";
-import {loginError} from "../../error/LoginError";
+import {authNotification} from "../../notification/AuthNotification";
 
 class LoginComponent extends Component {
 
@@ -14,8 +14,8 @@ class LoginComponent extends Component {
     }
   }
 
-  handleSubmit = (values) => {
-    serviceLogIn(values)
+  handleSubmit = (credentials) => {
+    serviceLogIn(credentials)
         .then(response => {
           if (response.jwtToken) {
             localStorage.setItem(ACCESS_TOKEN, response.jwtToken);
@@ -24,7 +24,7 @@ class LoginComponent extends Component {
           }
         })
         .catch(error => {
-          loginError('credential');
+          authNotification('credential');
           console.log(error);
         });
   };
@@ -58,9 +58,9 @@ class FormComponent extends Component {
 
   validateAndSubmit = (e) => {
     e.preventDefault();
-    this.props.form.validateFields((err, values) => {
+    this.props.form.validateFields((err, credentials) => {
       if (!err) {
-        this.props.handleSubmit(values);
+        this.props.handleSubmit(credentials);
       } else {
         console.log(err);
         this.setState({
@@ -85,7 +85,7 @@ class FormComponent extends Component {
 
     const {getFieldDecorator, getFieldError} = this.props.form;
 
-    const userNameError = this.state.firstSubmit && getFieldError('userName');
+    const userNameError = this.state.firstSubmit && getFieldError('username');
     const passwordError = this.state.firstSubmit && getFieldError('password');
 
     return (
@@ -96,7 +96,7 @@ class FormComponent extends Component {
                 help={userNameError || ''}
             >
               {getFieldDecorator(
-                  'userName', {
+                  'username', {
                     rules: [{required: true, message: 'Please input your username!'}],
                   }
               )(
