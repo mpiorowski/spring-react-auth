@@ -6,16 +6,18 @@
     color: #999;
     transition: all .3s;
 }
+
 .dynamic-delete-button:hover {
     color: #777;
 }
+
 .dynamic-delete-button[disabled] {
     cursor: not-allowed;
     opacity: 0.5;
 }
 
 label {
-    color:white !important;
+    color: white !important;
 }
 
 td {
@@ -43,6 +45,18 @@ th {
     background: #282c34;
     color: white;
 }
+
+.ant-pagination-item:not(.ant-pagination-item-active) > a {
+    color: white !important;
+}
+
+.ant-pagination-item:hover > a, .ant-pagination-next:hover:not(.ant-pagination-disabled) > a, .ant-pagination-prev:hover:not(.ant-pagination-disabled) > a {
+    color: #1DA57A !important;
+}
+.ant-pagination-disabled > a{
+    color:gray !important;
+}
+
 
 
 

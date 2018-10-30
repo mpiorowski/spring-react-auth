@@ -5,6 +5,7 @@ import {getAllUsers} from "../../service/UserService";
 
 let uuid = 0;
 let keys = [];
+
 class UserComponent extends Component {
 
   constructor(props) {
@@ -61,7 +62,15 @@ class UserComponent extends Component {
     return (
         <Row type="flex" justify="center" align="top" style={{width: '100%'}}>
           <Col span={18}>
-            <Table columns={columns} dataSource={this.state.tableData} onChange={onChange} loading={this.state.tableLoading} className={"userTable"} size="middle"/>
+            <Table
+                columns={columns}
+                dataSource={this.state.tableData}
+                onChange={onChange}
+                loading={this.state.tableLoading}
+                className={"userTable"}
+                size="middle"
+                pagination={{ pageSize: 2 }}
+            />
           </Col>
         </Row>
     );
