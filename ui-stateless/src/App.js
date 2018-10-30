@@ -103,41 +103,40 @@ class App extends Component {
             </header>
           </div>
       )
-    } else {
-      return (
-          <div>
-            <Layout>
-              <AppHeader handleLogout={this.handleLogout} isAuth={this.state.isAuth}
-                         active={this.props.location.pathname}/>
-              <Content>
-                <Switch>
-                  <Route exact path="/login"
-                         render={(props) => <LoginComponent
-                             {...props}
-                             checkAuth={this.checkAuth}
-                         />}/>
-
-                  <PrivateRoute path='/hello'
-                                component={HelloComponent}
-                                user={this.state.currentUser}/>
-
-                  <PrivateRoute path='/products'
-                                component={WrappedProductComponent}
-                                user={this.state.currentUser}
-                  />
-
-                  <PrivateRoute path='/users'
-                                component={UserComponent}
-                                user={this.state.currentUser}
-                  />
-
-                  <Route path='*' render={(props) => <Redirect to={'/login'}/>}/>
-                </Switch>
-              </Content>
-            </Layout>
-          </div>
-      );
     }
+    return (
+        <div>
+          <Layout>
+            <AppHeader handleLogout={this.handleLogout} isAuth={this.state.isAuth}
+                       active={this.props.location.pathname}/>
+            <Content>
+              <Switch>
+                <Route exact path="/login"
+                       render={(props) => <LoginComponent
+                           {...props}
+                           checkAuth={this.checkAuth}
+                       />}/>
+
+                <PrivateRoute path='/hello'
+                              component={HelloComponent}
+                              user={this.state.currentUser}/>
+
+                <PrivateRoute path='/products'
+                              component={WrappedProductComponent}
+                              user={this.state.currentUser}
+                />
+
+                <PrivateRoute path='/users'
+                              component={UserComponent}
+                              user={this.state.currentUser}
+                />
+
+                <Route path='*' render={(props) => <Redirect to={'/login'}/>}/>
+              </Switch>
+            </Content>
+          </Layout>
+        </div>
+    );
   }
 }
 

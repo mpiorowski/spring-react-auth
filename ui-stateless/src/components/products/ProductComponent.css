@@ -24,3 +24,7 @@
     width: 60%;
     opacity: 0.9;
 }
+
+.loading {
+    padding-top: 32vh;
+}

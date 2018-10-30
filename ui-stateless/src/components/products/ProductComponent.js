@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Form, Input, Icon, Button, Row, Col, Switch, InputNumber} from 'antd';
+import {Form, Input, Icon, Button, Row, Col, Switch, InputNumber, Spin} from 'antd';
 import './ProductComponent.css';
 import {addProducts, getAllProducts} from "../../service/ProductService";
 import {productNotification} from "../../notification/ProductNotification";
@@ -9,11 +9,22 @@ let uuid = 0;
 
 class ProductComponent extends Component {
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      loading: true,
+    }
+  }
+
+
   componentDidMount() {
     getAllProducts().then(response => {
       if (response) {
         response.forEach(product => {
           this.add(product);
+        });
+        this.setState({
+          loading: false,
         })
       }
     })
@@ -169,6 +180,17 @@ class ProductComponent extends Component {
 
       );
     });
+
+    const antIcon = <Icon type="loading-3-quarters" style={{fontSize: 30}} spin/>;
+    if (this.state.loading) {
+      return (
+          <div className="loading">
+            <header>
+              <Spin indicator={antIcon} style={{display: 'block', textAlign: 'center', marginTop: 30}}/>
+            </header>
+          </div>
+      )
+    }
     return (
         <Form onSubmit={this.handleSubmit} layout={"vertical"}>
           {formItems}
