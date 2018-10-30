@@ -16,7 +16,6 @@ class ProductComponent extends Component {
     }
   }
 
-
   componentDidMount() {
     getAllProducts().then(response => {
       if (response) {

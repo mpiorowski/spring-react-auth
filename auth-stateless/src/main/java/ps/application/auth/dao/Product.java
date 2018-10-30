@@ -2,33 +2,28 @@ package ps.application.auth.dao;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.hibernate.validator.constraints.Range;
 
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 
 public class Product {
 
   private int id;
 
   @NotBlank
-  @Size(max = 160)
+  @Size(max = 200)
   private String productName;
 
-  @NotBlank
-  @Min(1)
-  @Max(999)
+  @Range(min = 1, max = 999)
   private double price;
 
-  @NotBlank private boolean available;
-
+  @NotNull private boolean available;
 
   public Product(
       int id,
-      @NotBlank @Size(max = 160) String productName,
-      @NotBlank @Min(1) @Max(999) double price,
-      @NotBlank boolean available) {
+      @NotBlank @Size(max = 200) String productName,
+      @NotBlank @Range(min = 1, max = 999) double price,
+      @NotNull boolean available) {
     this.id = id;
     this.productName = productName;
     this.price = price;
@@ -37,10 +32,11 @@ public class Product {
 
   @JsonCreator
   public Product(
-      @JsonProperty(value = "productName", required = true) @NotBlank @Size(max = 160)
+      @JsonProperty(value = "productName", required = true) @NotBlank @Size(max = 200)
           String productName,
-      @JsonProperty(value = "price", required = true) @NotBlank @Min(1) @Max(999) double price,
-      @JsonProperty(value = "available", required = true) @NotBlank boolean available) {
+      @JsonProperty(value = "price", required = true) @NotBlank @Range(min = 1, max = 999)
+          double price,
+      @JsonProperty(value = "available", required = true) @NotNull boolean available) {
     this.productName = productName;
     this.price = price;
     this.available = available;
@@ -48,12 +44,17 @@ public class Product {
 
   @Override
   public String toString() {
-    return "Product{" +
-        "id=" + id +
-        ", productName='" + productName + '\'' +
-        ", price=" + price +
-        ", available=" + available +
-        '}';
+    return "Product{"
+        + "id="
+        + id
+        + ", productName='"
+        + productName
+        + '\''
+        + ", price="
+        + price
+        + ", available="
+        + available
+        + '}';
   }
 
   public int getId() {
