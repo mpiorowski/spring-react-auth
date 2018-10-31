@@ -1,23 +1,15 @@
-.dynamic-delete-button {
-    cursor: pointer;
-    position: relative;
-    top: 4px;
-    font-size: 24px;
-    color: #999;
-    transition: all .3s;
+table {
+    border-collapse: separate !important;
+    border-spacing: 0px !important;
+    border-color: rgba(0,0,0,0.2) !important;
 }
 
-.dynamic-delete-button:hover {
-    color: #777;
+table > tbody, td, tr, th {
+    border-color: rgba(0,0,0,0.2) !important;
 }
 
-.dynamic-delete-button[disabled] {
-    cursor: not-allowed;
-    opacity: 0.5;
-}
-
-label {
-    color: white !important;
+table > th {
+    border-spacing: inherit !important;
 }
 
 td {

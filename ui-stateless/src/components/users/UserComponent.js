@@ -26,13 +26,17 @@ class UserComponent extends Component {
 
   add = (val) => {
     const tableData = val.map(val => {
-      return {username: val.username, password: val.password};
+      return {
+        username: val.username,
+        email: val.email ? val.email : 'brak',
+        password: val.password,
+        role: val.role
+      };
     });
     this.setState({
       tableData: tableData,
       tableLoading: false,
     })
-
   };
 
 
@@ -52,6 +56,12 @@ class UserComponent extends Component {
     }, {
       title: 'Password',
       dataIndex: 'password',
+    }, {
+      title: 'Email',
+      dataIndex: 'email',
+    }, {
+      title: 'Role',
+      dataIndex: 'role',
     }];
 
     function onChange() {
@@ -69,7 +79,8 @@ class UserComponent extends Component {
                 loading={this.state.tableLoading}
                 className={"userTable"}
                 size="middle"
-                pagination={{ pageSize: 2 }}
+                pagination={{pageSize: 2}}
+                bordered={true}
             />
           </Col>
         </Row>
