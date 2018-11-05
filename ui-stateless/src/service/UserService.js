@@ -8,10 +8,10 @@ export const getAllUsers = () => {
   })
 };
 
-export const addUsers = (users) => {
+export const addUser = (user) => {
   return request({
     url: API_BASE_URL + "/user/add",
     method: "POST",
-    body: JSON.stringify(users)
+    body: JSON.stringify(user)
   })
 };

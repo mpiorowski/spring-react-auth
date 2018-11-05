@@ -11,7 +11,7 @@ import java.util.List;
 @Component
 public interface UserMapper {
 
-  @Insert({"INSERT into users(user_name,user_password,user_mail,user_role) VALUES(#{username},#{mail},#{password},#{role})"})
+  @Insert({"INSERT into users(user_name,user_mail,user_password,user_role) VALUES(#{username},#{email},#{password},#{role})"})
   void insertUser(User user);
 
   @Select("SELECT * FROM users where user_name = #{username}")

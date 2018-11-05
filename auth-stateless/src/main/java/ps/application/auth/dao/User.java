@@ -13,38 +13,38 @@ public class User {
 
   @NotBlank
   @Size(min = 1, max = 60)
-  @JsonProperty(value = "username", required = true)
   private String username;
 
-  private String mail;
+  @NotBlank @Email private String email;
 
-  @NotBlank
-  @JsonProperty(value = "password", required = true)
-  private String password;
+  @NotBlank private String password;
 
-  @NotBlank private String role = "admin";
+  @NotBlank private String role;
 
   public User(
       Integer id,
       @NotBlank @Size(min = 1, max = 60) String username,
-      String mail,
+      String email,
       @NotBlank String password,
       @NotBlank String role) {
     this.id = id;
     this.username = username;
-    this.mail = mail;
+    this.email = email;
     this.password = password;
     this.role = role;
   }
 
   @JsonCreator
   public User(
-      @NotBlank @Size(min = 1, max = 60) String username,
-      String mail,
-      @NotBlank String password) {
+      @JsonProperty(value = "username", required = true) @NotBlank @Size(min = 1, max = 60)
+          String username,
+      @JsonProperty(value = "email", required = true) @NotBlank @Email String email,
+      @JsonProperty(value = "password", required = true) @NotBlank String password,
+      @JsonProperty(value = "role", required = true) @NotBlank String role) {
     this.username = username;
-    this.mail = mail;
+    this.email = email;
     this.password = password;
+    this.role = role;
   }
 
   public Integer getId() {
@@ -79,11 +79,11 @@ public class User {
     this.role = role;
   }
 
-  public String getMail() {
-    return mail;
+  public String getEmail() {
+    return email;
   }
 
-  public void setMail(String mail) {
-    this.mail = mail;
+  public void setEmail(String email) {
+    this.email = email;
   }
 }

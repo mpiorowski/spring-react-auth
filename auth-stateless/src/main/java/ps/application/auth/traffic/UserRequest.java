@@ -2,17 +2,19 @@ package ps.application.auth.traffic;
 
 import ps.application.auth.dao.User;
 
+import javax.validation.Valid;
 import java.util.List;
 
 public class UserRequest {
 
-  private List<User> users;
+  @Valid
+  private User user;
 
-  public void setUsers(List<User> users) {
-    this.users = users;
+  public User getUser() {
+    return user;
   }
 
-  public List<User> getUsers() {
-    return users;
+  public void setUser(User user) {
+    this.user = user;
   }
 }

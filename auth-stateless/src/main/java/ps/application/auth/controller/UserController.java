@@ -28,12 +28,9 @@ public class UserController {
 
   @PostMapping("/add")
   @Transactional
-  public ResponseEntity addUsers(@Valid @RequestBody UserRequest users) {
+  public ResponseEntity addUser(@Valid @RequestBody UserRequest user) {
     try {
-      userMapper.deleteAllUsers();
-      for (User user : users.getUsers()) {
-        userMapper.insertUser(user);
-      }
+      userMapper.insertUser(user.getUser());
     } catch (NullPointerException e) {
       return ResponseEntity.ok(e.getMessage());
     }

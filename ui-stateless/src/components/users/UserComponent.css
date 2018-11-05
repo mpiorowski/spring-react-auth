@@ -1,6 +1,6 @@
 table {
     border-collapse: separate !important;
-    border-spacing: 0px !important;
+    border-spacing: 0 !important;
     border-color: rgba(0,0,0,0.2) !important;
 }
 
@@ -45,9 +45,22 @@ th {
 .ant-pagination-item:hover > a, .ant-pagination-next:hover:not(.ant-pagination-disabled) > a, .ant-pagination-prev:hover:not(.ant-pagination-disabled) > a {
     color: #1DA57A !important;
 }
-.ant-pagination-disabled > a{
+.ant-pagination-disabled > a {
     color:gray !important;
 }
+
+.ant-modal-content, .ant-modal-header {
+    background: #282c34 !important;
+}
+
+.ant-modal-title, .ant-modal-close:not(:hover) {
+    color: white !important;
+}
+
+.ant-table-placeholder {
+    border-color: black !important;
+}
+
 
 
 
