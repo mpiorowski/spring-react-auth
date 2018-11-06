@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
-import ps.application.auth.dao.User;
 import ps.application.auth.mapper.UserMapper;
 import ps.application.auth.traffic.UserRequest;
 
@@ -31,6 +30,18 @@ public class UserController {
   public ResponseEntity addUser(@Valid @RequestBody UserRequest user) {
     try {
       userMapper.insertUser(user.getUser());
+    } catch (NullPointerException e) {
+      return ResponseEntity.ok(e.getMessage());
+    }
+    return ResponseEntity.ok("true");
+  }
+
+  @CrossOrigin
+  @DeleteMapping("/delete")
+  @Transactional
+  public ResponseEntity deleteUser(@RequestBody Integer userId) {
+    try {
+      userMapper.deleteUser(userId);
     } catch (NullPointerException e) {
       return ResponseEntity.ok(e.getMessage());
     }

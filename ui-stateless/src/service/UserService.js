@@ -15,3 +15,12 @@ export const addUser = (user) => {
     body: JSON.stringify(user)
   })
 };
+
+
+export const deleteUser = (userId) => {
+  return request({
+    url: API_BASE_URL + "/user/delete",
+    method: "DELETE",
+    body: JSON.stringify(userId)
+  })
+};

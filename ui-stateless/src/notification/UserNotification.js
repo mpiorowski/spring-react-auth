@@ -12,6 +12,9 @@ export function userNotification(type) {
     case 'wrong':
       notificationMsg = {title: 'Username already taken', msg: 'Please try another one.', type: 'error'};
       break;
+    case 'delete':
+      notificationMsg = {title: 'Username successfully deleted', msg: 'Username successfully deleted.', type: 'success'};
+      break;
     default:
       notificationMsg = {title: 'Application error', msg: 'An error accrued during operations. Sorry!', type: 'error'};
       break;

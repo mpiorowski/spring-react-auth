@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Button, Col, Popconfirm, Row, Table} from 'antd';
 import "./UserComponent.css";
-import {addUser, getAllUsers} from "../../service/UserService";
+import {addUser, deleteUser, getAllUsers} from "../../service/UserService";
 import {WrappedUserModalForm} from "./UserModalForm";
 import {userNotification} from "../../notification/UserNotification";
 
@@ -54,7 +54,6 @@ class UserComponent extends Component {
         const user = {
           "user": values
         };
-        // console.log(user);
         addUser(user).then(response => {
           if (response) {
             form.resetFields();
@@ -62,8 +61,8 @@ class UserComponent extends Component {
             userNotification('success');
             this.add(values);
           }
-        }).catch(error => {
-          console.log(error);
+        }).catch(err => {
+          console.log(err);
           userNotification('wrong');
         })
       } else {
@@ -75,8 +74,16 @@ class UserComponent extends Component {
   saveRefModal = (modalRef) => {
     this.modalRef = modalRef;
   };
-  handleDelete = () => {
-    console.log("tutaj");
+  handleDelete = (userId) => {
+    deleteUser(userId).then(response => {
+      if (response) {
+        userNotification("delete");
+        const tableData = [...this.state.tableData];
+        this.setState({
+          tableData: tableData.filter(item => item.key !== userId)
+        });
+      }
+    })
   };
 
   render() {

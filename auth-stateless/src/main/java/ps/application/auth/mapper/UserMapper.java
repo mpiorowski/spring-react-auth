@@ -20,6 +20,6 @@ public interface UserMapper {
   @Select("SELECT * FROM users")
   List<User> findAll();
 
-  @Delete("DELETE FROM users")
-  void deleteAllUsers();
+  @Delete("DELETE FROM users where user_id = #{userId}")
+  void deleteUser(Integer userId);
 }
