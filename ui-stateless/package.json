@@ -2,15 +2,18 @@
   "name": "ui-stateless",
   "version": "0.1.0",
   "private": true,
+  "homepage" : "http://myapp",
   "dependencies": {
-    "antd": "^3.10.2",
-    "babel-plugin-import": "^1.10.0",
+    "antd": "^3.10.4",
+    "babel-plugin-import": "^1.11.0",
     "prop-types": "^15.6.2",
-    "react": "^16.5.2",
+    "react": "^16.6.0",
     "react-app-rewire-less": "^2.1.3",
-    "react-dom": "^16.5.2",
+    "react-app-rewired": "^1.6.2",
+    "react-dom": "^16.6.0",
     "react-router-dom": "^4.3.1",
-    "react-router-transition": "^1.2.1"
+    "react-router-transition": "^1.2.1",
+    "react-scripts": "^2.1.1"
   },
   "scripts": {
     "start": "react-app-rewired start",
@@ -28,8 +31,6 @@
     "not op_mini all"
   ],
   "devDependencies": {
-    "ajv": "^6.5.4",
-    "react-scripts": "^1.1.5",
-    "react-app-rewired": "^1.6.2"
+    "ajv": "^6.5.5"
   }
 }
