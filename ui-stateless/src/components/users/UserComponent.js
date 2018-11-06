@@ -95,9 +95,6 @@ class UserComponent extends Component {
       title: 'Email',
       dataIndex: 'email',
     }, {
-      title: 'Password',
-      dataIndex: 'password',
-    }, {
       title: 'Role',
       dataIndex: 'role',
     }, {

@@ -1,9 +1,13 @@
 package ps.application.auth.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
+import ps.application.auth.dao.User;
 import ps.application.auth.mapper.UserMapper;
 import ps.application.auth.traffic.UserRequest;
 
@@ -20,6 +24,11 @@ public class UserController {
     this.userMapper = userMapper;
   }
 
+  @Bean
+  public PasswordEncoder passwordEncoder() {
+    return new BCryptPasswordEncoder();
+  }
+
   @GetMapping("/all")
   public ResponseEntity allUsers() {
     return ResponseEntity.ok(userMapper.findAll());
@@ -27,9 +36,11 @@ public class UserController {
 
   @PostMapping("/add")
   @Transactional
-  public ResponseEntity addUser(@Valid @RequestBody UserRequest user) {
+  public ResponseEntity addUser(@Valid @RequestBody UserRequest userRequest) {
     try {
-      userMapper.insertUser(user.getUser());
+      User user = userRequest.getUser();
+      user.setPassword(passwordEncoder().encode(user.getPassword()));
+      userMapper.insertUser(user);
     } catch (NullPointerException e) {
       return ResponseEntity.ok(e.getMessage());
     }

@@ -1,7 +1,5 @@
 package ps.application.auth.security;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -14,7 +12,6 @@ import ps.application.auth.dao.User;
 @Component
 public class CustomUserDetailsService implements UserDetailsService {
 
-  private static final Logger logger = LoggerFactory.getLogger(CustomUserDetailsService.class);
   private final UserMapper userMapper;
 
   @Autowired
@@ -30,7 +27,7 @@ public class CustomUserDetailsService implements UserDetailsService {
       if (user == null) {
         throw new UsernameNotFoundException("User not found with username");
       } else {
-        return new MyUserPrincipal(user);
+        return new CustomUserPrincipal(user);
       }
 
   }

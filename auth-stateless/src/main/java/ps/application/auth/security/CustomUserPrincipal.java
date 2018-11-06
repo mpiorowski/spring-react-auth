@@ -12,17 +12,12 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-public class MyUserPrincipal implements UserDetails {
+public class CustomUserPrincipal implements UserDetails {
 
   private transient User user;
 
-  MyUserPrincipal(User user) {
+  CustomUserPrincipal(User user) {
     this.user = user;
-  }
-
-  @Bean
-  public PasswordEncoder passwordEncoder() {
-    return new BCryptPasswordEncoder();
   }
 
   @Override
@@ -34,7 +29,7 @@ public class MyUserPrincipal implements UserDetails {
 
   @Override
   public String getPassword() {
-    return passwordEncoder().encode(user.getPassword());
+    return user.getPassword();
   }
 
   @Override

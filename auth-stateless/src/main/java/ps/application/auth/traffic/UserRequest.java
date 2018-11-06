@@ -1,9 +1,7 @@
 package ps.application.auth.traffic;
 
 import ps.application.auth.dao.User;
-
 import javax.validation.Valid;
-import java.util.List;
 
 public class UserRequest {
 
