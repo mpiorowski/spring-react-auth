@@ -108,7 +108,7 @@ class UserComponent extends Component {
           this.state.tableData.length >= 1
               ? (
                   <Popconfirm title="Sure to delete?" onConfirm={() => this.handleDelete(record.key)}>
-                    <a href="javascript:;">Delete</a>
+                    <a href="javascript:">Delete</a>
                   </Popconfirm>
               ) : null
       );
