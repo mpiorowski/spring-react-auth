@@ -3,35 +3,48 @@ package ps.application.auth.dao;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
+
 public class User {
 
   private Integer id;
-  private String username;
-  private String password;
-  private String role = "admin";
 
-  public User(Integer id, String username, String password, String role) {
+  @NotBlank
+  @Size(min = 1, max = 60)
+  private String username;
+
+  @NotBlank @Email private String email;
+
+  @NotBlank private String password;
+
+  @NotBlank private String role;
+
+  public User(
+      Integer id,
+      @NotBlank @Size(min = 1, max = 60) String username,
+      String email,
+      @NotBlank String password,
+      @NotBlank String role) {
     this.id = id;
     this.username = username;
+    this.email = email;
     this.password = password;
-    this.role = role ;
+    this.role = role;
   }
 
   @JsonCreator
-  public User(@JsonProperty(value = "username", required = true) String username,
-              @JsonProperty(value = "password", required = true) String password) {
+  public User(
+      @JsonProperty(value = "username", required = true) @NotBlank @Size(min = 1, max = 60)
+          String username,
+      @JsonProperty(value = "email", required = true) @NotBlank @Email String email,
+      @JsonProperty(value = "password", required = true) @NotBlank String password,
+      @JsonProperty(value = "role", required = true) @NotBlank String role) {
     this.username = username;
+    this.email = email;
     this.password = password;
-  }
-
-  @Override
-  public String toString() {
-    return "User{" +
-        "id=" + id +
-        ", username='" + username + '\'' +
-        ", password='" + password + '\'' +
-        ", role='" + role + '\'' +
-        '}';
+    this.role = role;
   }
 
   public Integer getId() {
@@ -64,5 +77,13 @@ public class User {
 
   public void setRole(String role) {
     this.role = role;
+  }
+
+  public String getEmail() {
+    return email;
+  }
+
+  public void setEmail(String email) {
+    this.email = email;
   }
 }

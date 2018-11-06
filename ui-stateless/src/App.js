@@ -9,7 +9,8 @@ import {Icon, Layout, Spin} from "antd";
 import {authNotification} from "./notification/AuthNotification";
 import AppHeader from "./AppHeader";
 import {WrappedProductComponent} from "./components/products/ProductComponent";
-import {WrappedUserComponent} from "./components/users/UserComponent";
+import {EditableRow, WrappedUserComponent} from "./components/users/UserComponent";
+import UserComponent from "./components/users/UserComponent";
 
 const {Content} = Layout;
 
@@ -121,7 +122,7 @@ class App extends Component {
                 />
 
                 <PrivateRoute path='/users'
-                              component={WrappedUserComponent}
+                              component={UserComponent}
                               user={this.state.currentUser}
                 />
 

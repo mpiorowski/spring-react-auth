@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
-import ps.application.auth.dao.User;
 import ps.application.auth.mapper.UserMapper;
 import ps.application.auth.traffic.UserRequest;
 
@@ -28,12 +27,21 @@ public class UserController {
 
   @PostMapping("/add")
   @Transactional
-  public ResponseEntity addUsers(@Valid @RequestBody UserRequest users) {
+  public ResponseEntity addUser(@Valid @RequestBody UserRequest user) {
     try {
-      userMapper.deleteAllUsers();
-      for (User user : users.getUsers()) {
-        userMapper.insertUser(user);
-      }
+      userMapper.insertUser(user.getUser());
+    } catch (NullPointerException e) {
+      return ResponseEntity.ok(e.getMessage());
+    }
+    return ResponseEntity.ok("true");
+  }
+
+  @CrossOrigin
+  @DeleteMapping("/delete")
+  @Transactional
+  public ResponseEntity deleteUser(@RequestBody Integer userId) {
+    try {
+      userMapper.deleteUser(userId);
     } catch (NullPointerException e) {
       return ResponseEntity.ok(e.getMessage());
     }

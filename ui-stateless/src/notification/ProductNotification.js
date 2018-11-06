@@ -14,8 +14,6 @@ export function productNotification(type) {
       break;
   }
 
-  console.log(type);
-
   let notType;
   type != null ? notType = type : notType = 'error';
 

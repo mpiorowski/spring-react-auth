@@ -39,6 +39,7 @@ class ProductComponent extends Component {
                 return {productName: val[0], price: val[1], available: val[2]};
               })
         };
+        console.log(products);
         addProducts(products).then(response => {
           if (response) {
             productNotification('success');

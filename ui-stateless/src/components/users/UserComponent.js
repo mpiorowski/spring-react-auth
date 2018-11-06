@@ -1,183 +1,154 @@
 import React, {Component} from 'react';
-import PropTypes from 'prop-types';
-import {Form, Input, Icon, Button, Col, Row} from 'antd';
-import './UserComponent.css';
-import {addUsers, getAllUsers} from "../../service/UserService";
+import {Button, Col, Popconfirm, Row, Table} from 'antd';
+import "./UserComponent.css";
+import {addUser, deleteUser, getAllUsers} from "../../service/UserService";
+import {WrappedUserModalForm} from "./UserModalForm";
+import {userNotification} from "../../notification/UserNotification";
 
-const FormItem = Form.Item;
 let uuid = 0;
+class UserComponent extends Component {
 
-class UserFormComponent extends Component {
-
-  handleSubmit = (values) => {
-    const users = {
-      users: values['user'].map((val) => {
-        return {username: val[0], password: val[1]}
-      })
-    };
-    addUsers(users);
+  state = {
+    tableLoading: true,
+    tableData: [],
+    modalVisibility: false,
   };
 
-  componentDidMount() {
+  componentWillMount() {
     getAllUsers().then(response => {
       if (response) {
-        response.forEach(val => {
-          this.add(val);
-        });
+        response.forEach(val => this.add(val));
       }
+      this.setState({
+        tableLoading: false,
+      })
     });
   }
 
-  validateAndSubmit = (e) => {
-    e.preventDefault();
-    this.props.form.validateFields((err, values) => {
+  add = (val) => {
+    const tableData = this.state.tableData;
+    tableData.push({
+      key: val.id,
+      username: val.username,
+      email: val.email,
+      password: val.password,
+      role: val.role ? val.role : 'admin',
+    });
+    this.setState({
+      tableData: tableData,
+    });
+    uuid++;
+  };
+
+
+  openModal = () => {
+    this.setState({modalVisibility: true});
+  };
+  closeModal = () => {
+    this.setState({modalVisibility: false});
+  };
+  submitModal = () => {
+    const form = this.modalRef.props.form;
+    form.validateFields((err, values) => {
       if (!err) {
-        this.props.handleSubmit(values);
+        const user = {
+          "user": values
+        };
+        addUser(user).then(response => {
+          if (response) {
+            form.resetFields();
+            this.setState({modalVisibility: false});
+            userNotification('success');
+            this.add(values);
+          }
+        }).catch(err => {
+          console.log(err);
+          userNotification('wrong');
+        })
       } else {
         console.log(err);
+        userNotification('form');
+      }
+    });
+  };
+  saveRefModal = (modalRef) => {
+    this.modalRef = modalRef;
+  };
+  handleDelete = (userId) => {
+    deleteUser(userId).then(response => {
+      if (response) {
+        userNotification("delete");
+        const tableData = [...this.state.tableData];
+        this.setState({
+          tableData: tableData.filter(item => item.key !== userId)
+        });
       }
     })
   };
 
-  remove = (k) => {
-    const {form} = this.props;
-    // can use data-binding to get
-    const keys = form.getFieldValue('keys');
-    // We need at least one passenger
-    if (keys.length === 1) {
-      return;
-    }
-
-    // can use data-binding to set
-    form.setFieldsValue({
-      keys: keys.filter(key => key !== k),
-    });
-  };
-
-  add = ( value = null ) => {
-    const {form} = this.props;
-    // can use data-binding to get
-    const keys = form.getFieldValue('keys');
-    const nextKeys = keys.concat(uuid);
-
-    // can use data-binding to set
-    // important! notify form to detect changes
-    form.setFieldsValue({
-      keys: nextKeys,
-    });
-    if (value !== null) {
-      form.setFieldsValue({
-        [`user[${uuid}][0]`]: value['username'],
-        [`user[${uuid}][1]`]: value['password'],
-      });
-    }
-    uuid++;
-  };
-
   render() {
 
-    const {getFieldDecorator, getFieldValue} = this.props.form;
-    const formItemLayout = {
-      labelCol: {
-        xs: {span: 24},
-        sm: {span: 4},
-      },
-      wrapperCol: {
-        xs: {span: 24},
-        sm: {span: 20},
-      }
-    };
-    const formItemLayoutWithOutLabel = {
-      wrapperCol: {
-        xs: {span: 24, offset: 0},
-        sm: {span: 20, offset: 4},
-      },
-    };
-    const formItemLayoutAdd = {
-      wrapperCol: {
-        xs: {span: 24, offset: 0},
-        sm: {span: 14, offset: 5},
-      },
-    };
-
-    getFieldDecorator('keys', {initialValue: []});
-    getFieldDecorator('values', {initialValue: []});
-    const keys = getFieldValue('keys');
-    const formItems = keys.map((k, index) => {
+    const columns = [{
+      title: 'Username',
+      dataIndex: 'username',
+    }, {
+      title: 'Email',
+      dataIndex: 'email',
+    }, {
+      title: 'Password',
+      dataIndex: 'password',
+    }, {
+      title: 'Role',
+      dataIndex: 'role',
+    }, {
+      title: 'Action',
+      dataIndex: 'action',
+      render: (text, record) => {
       return (
-          <Row type="flex" justify="center" align="top" key={k}>
-            <Col span={8}>
-              <FormItem
-                  {...(index === 0 ? formItemLayout : formItemLayoutWithOutLabel)}
-                  label={index === 0 ? 'Login' : ''}
-                  required={false}
-                  key={k}
-                  style={{color: "white"}}
-              >
-                {
-                  getFieldDecorator(`user[${k}][0]`, {
-                    validateTrigger: ['onChange', 'onBlur'],
-                    rules: [{
-                      required: true,
-                      whitespace: true,
-                      message: "Please input user login.",
-                    }]
-                  })(
-                      <Input placeholder="Login" style={{width: '80%', marginRight: 8}} />
-                  )
-                }
-              </FormItem>
-            </Col>
-            <Col span={8}>
-              <FormItem
-                  {...(index === 0 ? formItemLayout : formItemLayoutWithOutLabel)}
-                  label={index === 0 ? 'Password' : ''}
-                  required={false}
-                  key={k + 1}
-                  style={{color: "white"}}
-              >
-                {getFieldDecorator(`user[${k}][1]`, {
-                  validateTrigger: ['onChange', 'onBlur'],
-                  validateStatus: 'success',
-                  rules: [{
-                    required: true,
-                    whitespace: true,
-                    message: "Please input user password.",
-                  }]
-                })(
-                    <Input placeholder="Login" style={{width: '80%', marginRight: 8}}/>
-                )}
-                {keys.length > 1 ? (
-                    <Icon
-                        className="dynamic-delete-button"
-                        type="minus-circle-o"
-                        disabled={keys.length === 1}
-                        onClick={() => this.remove(k)}
-                    />
-                ) : null}
-              </FormItem>
+          this.state.tableData.length >= 1
+              ? (
+                  <Popconfirm title="Sure to delete?" onConfirm={() => this.handleDelete(record.key)}>
+                    <a href="javascript:">Delete</a>
+                  </Popconfirm>
+              ) : null
+      );
+    },
+  }];
+
+    function onChange() {
+      console.log('dziala');
+    }
+
+    return (
+        <div>
+          <Row type="flex" justify="center" align="top" style={{width: '100%'}}>
+            <Col span={18}>
+              <Table
+                  columns={columns}
+                  dataSource={this.state.tableData}
+                  onChange={onChange}
+                  loading={this.state.tableLoading}
+                  className={"userTable"}
+                  size="middle"
+                  // pagination={{pageSize: 2}}
+                  bordered={true}
+              />
             </Col>
           </Row>
-      );
-    });
-    return (
-        <Form onSubmit={this.validateAndSubmit}>
-          {formItems}
-          <FormItem {...formItemLayoutAdd} style={{}}>
-            <Button type="dashed" onClick={this.add} style={{width: '100%'}}>
-              <Icon type="plus"/> Add field
-            </Button>
-          </FormItem>
-          <FormItem {...formItemLayoutAdd}>
-            <Button type="primary" htmlType="submit" >Submit</Button>
-          </FormItem>
-        </Form>
+          <Row type="flex" justify="center" align="top" style={{width: '100%'}}>
+            <Col span={18}>
+              <Button type={"primary"} onClick={this.openModal}>Add user</Button>
+              <WrappedUserModalForm
+                  wrappedComponentRef={this.saveRefModal}
+                  visible={this.state.modalVisibility}
+                  onCancel={this.closeModal}
+                  onCreate={this.submitModal}
+              />
+            </Col>
+          </Row>
+        </div>
     );
   }
 }
 
-UserFormComponent.propTypes = {
-  nameT: PropTypes.string
-};
-
-export const WrappedUserComponent = Form.create()(UserFormComponent);
+export default UserComponent;

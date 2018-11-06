@@ -11,7 +11,7 @@ import java.util.List;
 @Component
 public interface UserMapper {
 
-  @Insert({"INSERT into users(user_name,user_password,user_role) VALUES(#{username},#{password},#{role})"})
+  @Insert({"INSERT into users(user_name,user_mail,user_password,user_role) VALUES(#{username},#{email},#{password},#{role})"})
   void insertUser(User user);
 
   @Select("SELECT * FROM users where user_name = #{username}")
@@ -20,6 +20,6 @@ public interface UserMapper {
   @Select("SELECT * FROM users")
   List<User> findAll();
 
-  @Delete("DELETE FROM users")
-  void deleteAllUsers();
+  @Delete("DELETE FROM users where user_id = #{userId}")
+  void deleteUser(Integer userId);
 }
