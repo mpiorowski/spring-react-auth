@@ -17,7 +17,7 @@ public interface UserMapper {
   @Select("SELECT * FROM users where user_name = #{username}")
   User findByUserUsername(String username);
 
-  @Select("SELECT user_name, user_mail, user_role FROM users")
+  @Select("SELECT user_id, user_name, user_mail, user_role FROM users")
   List<User> findAll();
 
   @Delete("DELETE FROM users where user_id = #{userId}")

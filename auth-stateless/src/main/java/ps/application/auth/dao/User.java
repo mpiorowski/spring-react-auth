@@ -24,13 +24,24 @@ public class User {
   public User(
       Integer id,
       @NotBlank @Size(min = 1, max = 60) String username,
-      String email,
+      @NotBlank @Email String email,
       @NotBlank String password,
       @NotBlank String role) {
     this.id = id;
     this.username = username;
     this.email = email;
     this.password = password;
+    this.role = role;
+  }
+
+  public User(
+      Integer id,
+      @NotBlank @Size(min = 1, max = 60) String username,
+      @NotBlank @Email String email,
+      @NotBlank String role) {
+    this.id = id;
+    this.username = username;
+    this.email = email;
     this.role = role;
   }
 

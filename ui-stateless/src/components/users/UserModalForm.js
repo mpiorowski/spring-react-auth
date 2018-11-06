@@ -1,9 +1,8 @@
 import React, {Component} from 'react';
-import {Button, Modal, Form, Input, Radio} from 'antd';
+import {Modal, Form, Input, Radio} from 'antd';
 import "./UserComponent.css";
 
 const FormItem = Form.Item;
-const RadioButton = Radio.Button;
 const RadioGroup = Radio.Group;
 
 class UserModalForm extends Component {

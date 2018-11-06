@@ -9,7 +9,6 @@ import {Icon, Layout, Spin} from "antd";
 import {authNotification} from "./notification/AuthNotification";
 import AppHeader from "./AppHeader";
 import {WrappedProductComponent} from "./components/products/ProductComponent";
-import {EditableRow, WrappedUserComponent} from "./components/users/UserComponent";
 import UserComponent from "./components/users/UserComponent";
 
 const {Content} = Layout;

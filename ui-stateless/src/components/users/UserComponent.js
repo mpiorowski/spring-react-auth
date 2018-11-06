@@ -5,7 +5,6 @@ import {addUser, deleteUser, getAllUsers} from "../../service/UserService";
 import {WrappedUserModalForm} from "./UserModalForm";
 import {userNotification} from "../../notification/UserNotification";
 
-let uuid = 0;
 class UserComponent extends Component {
 
   state = {
@@ -31,13 +30,11 @@ class UserComponent extends Component {
       key: val.id,
       username: val.username,
       email: val.email,
-      password: val.password,
       role: val.role ? val.role : 'admin',
     });
     this.setState({
       tableData: tableData,
     });
-    uuid++;
   };
 
 
@@ -105,7 +102,7 @@ class UserComponent extends Component {
           this.state.tableData.length >= 1
               ? (
                   <Popconfirm title="Sure to delete?" onConfirm={() => this.handleDelete(record.key)}>
-                    <a href="javascript:">Delete</a>
+                    <a href="">Delete</a>
                   </Popconfirm>
               ) : null
       );
