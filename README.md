@@ -7,6 +7,9 @@ Backend   -> spring boot + flyway + mybatis + postgresql
 
 ## Instalation
 
+### Prerequisite
+maven, npm, postgresql
+
 ### Database
 Postgresql (configuration in application.yml):  
 port:   5436  
@@ -31,12 +34,13 @@ mvn clean install && java -jar target/auth-0.0.1-SNAPSHOT.jar
 ### Frontend
 ```
 cd ui-stateless/ 
+npm install
 ```
 dev (port 3000)
 ```
 npm start
 ```
-prod
+prod (port 5000)
 ```
 npm install -g serve
 npm run build
