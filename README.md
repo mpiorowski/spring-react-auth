@@ -8,7 +8,7 @@ Backend   -> spring boot + flyway + mybatis + postgresql
 # Instalation
 
 ## Prerequisite
-maven, npm, postgresql
+maven, npm, postgresql, docker (optional)
 
 ## Database
 ### via Docker
