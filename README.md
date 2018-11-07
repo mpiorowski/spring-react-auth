@@ -18,7 +18,6 @@ user:   admin
 pass:   admin  
 
 ### Backend
-port 9000
 ```
 cd auth-stateless/ 
 ```
@@ -36,11 +35,11 @@ mvn clean install && java -jar target/auth-0.0.1-SNAPSHOT.jar
 cd ui-stateless/ 
 npm install
 ```
-dev (port 3000)
+dev
 ```
 npm start
 ```
-prod (port 5000)
+prod
 ```
 npm install -g serve
 npm run build
@@ -48,8 +47,7 @@ serve -s build
 ```
 
 ### Access
-via http://localhost:3000 or http://localhost:5000
-username: mat
-password: pass
-
-
+via http://localhost:3000 (dev) or  
+http://localhost:5000 (prod)  
+username: mat  
+password: pass  
