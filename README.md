@@ -47,7 +47,6 @@ serve -s build
 ```
 
 ### Access
-via http://localhost:3000 (dev) or  
-http://localhost:5000 (prod)  
+via http://localhost:3000 (dev) or http://localhost:5000 (prod)  
 username: mat  
 password: pass  
