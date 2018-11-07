@@ -15,10 +15,10 @@ user:   admin
 pass:   admin  
 
 ### Backend
+port 9000
 ```
 cd auth-stateless/ 
 ```
-port 9000  
 dev
 ```
 mvn spring-boot:run
@@ -28,7 +28,7 @@ prod
 mvn clean install && java -jar target/auth-0.0.1-SNAPSHOT.jar
 ```
 
-## Frontend
+### Frontend
 ```
 cd ui-stateless/ 
 ```
