@@ -95,6 +95,12 @@
             <artifactId>mybatis-spring-boot-starter-test</artifactId>
             <version>1.3.2</version>
         </dependency>
+        <dependency>
+            <groupId>io.zonky.test</groupId>
+            <artifactId>embedded-database-spring-test</artifactId>
+            <version>1.3.3</version>
+            <scope>test</scope>
+        </dependency>
 
     </dependencies>
 
@@ -123,7 +129,7 @@
                 <configuration>
                     <user>admin</user>
                     <password>admin</password>
-                    <url>jdbc:postgresql://localhost:5436/auth</url>
+                    <url>jdbc:postgresql://localhost:5432/auth</url>
                 </configuration>
             </plugin>
         </plugins>

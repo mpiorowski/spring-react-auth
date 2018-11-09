@@ -1,16 +1,19 @@
 package ps.application.auth;
 
+import io.zonky.test.db.AutoConfigureEmbeddedDatabase;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mybatis.spring.boot.test.autoconfigure.MybatisTest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.junit4.SpringRunner;
 import ps.application.auth.dao.User;
 import ps.application.auth.mapper.UserMapper;
+
+import javax.sql.DataSource;
 
 import static org.assertj.core.api.Java6Assertions.assertThat;
 
@@ -18,6 +21,7 @@ import static org.assertj.core.api.Java6Assertions.assertThat;
 @SpringBootTest
 @MybatisTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+@AutoConfigureEmbeddedDatabase
 public class StatelessAuthApplicationTests {
 
   @Autowired
