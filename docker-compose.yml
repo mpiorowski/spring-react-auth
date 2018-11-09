@@ -1,0 +1,30 @@
+version: '3.1'
+
+services:
+
+  postgres:
+    container_name: auth-postgres
+    image: postgres
+    environment:
+      POSTGRES_PASSWORD: admin
+      POSTGRES_USER: admin
+      POSTGRES_DB: auth
+    volumes:
+      - ./database/_postgres:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  backend:
+    container_name: auth-backend
+    build: ./auth-stateless/
+    ports:
+      - "9000:9000"
+#
+#  frontend:
+#    container_name: auth-frontend
+#    build: ./ui-stateless/
+#    volumes:
+#      - './ui-stateless:/usr/src/app'
+#      - '/usr/src/app/node_modules'
+#    ports:
+#      - "3000:3000"

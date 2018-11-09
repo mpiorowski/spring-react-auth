@@ -123,13 +123,21 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.22.1</version>
+                <configuration>
+                    <forkCount>0</forkCount>
+                </configuration>
+            </plugin>
+            <plugin>
                 <groupId>org.flywaydb</groupId>
                 <artifactId>flyway-maven-plugin</artifactId>
                 <version>5.1.4</version>
                 <configuration>
                     <user>admin</user>
                     <password>admin</password>
-                    <url>jdbc:postgresql://localhost:5432/auth</url>
+                    <url>jdbc:postgresql://postgresql:5432/auth</url>
                 </configuration>
             </plugin>
         </plugins>
