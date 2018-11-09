@@ -1,0 +1,43 @@
+label {
+    color:white !important;
+}
+
+.dynamic-delete-button:hover {
+    color: #777;
+}
+
+.dynamic-delete-button[disabled] {
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+
+.dynamic-delete-button {
+    cursor: pointer;
+    position: relative;
+    top: 4px;
+    font-size: 24px;
+    color: #999;
+    transition: all .3s;
+}
+
+.switch-btn {
+    position: relative;
+    top: 3px;
+}
+
+.deleteDiv {
+    display: inline-flex;
+    height: 32px;
+    position: absolute;
+}
+
+.add-btn {
+    background: #282c34 !important;
+    color: white;
+    width: 60%;
+    opacity: 0.9;
+}
+
+.loading {
+    padding-top: 32vh;
+}

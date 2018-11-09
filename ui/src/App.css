@@ -1,0 +1,39 @@
+.app-main {
+    background-color: #282c34;
+    min-height: 100vh;
+    max-height: 100vh;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 40vh;
+    /*justify-content: center;*/
+    font-size: calc(10px + 2vmin);
+    color: white;
+}
+
+.app-content {
+    padding-top: 20px;
+    background-color: #282c34;
+    min-height: 95vh;
+    font-size: calc(10px + 2vmin);
+    color: white !important;
+    height: 100%;
+}
+
+.menu:hover:not(.ant-menu-item-selected) {
+    background-color: #282c34 !important;
+}
+
+.switch-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.switch-wrapper > div {
+    position: absolute;
+    width: 100%;
+}
+
+
+
