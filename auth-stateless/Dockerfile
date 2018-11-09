@@ -1,4 +1,4 @@
-# Create a builder container
+# Stage 1 - Create a builder container
 FROM maven:3.6-jdk-10-slim as builder
 RUN java -version
 
@@ -6,8 +6,8 @@ COPY src /usr/src/app/src
 COPY pom.xml /usr/src/app
 RUN mvn -f /usr/src/app/pom.xml clean package -DskipTests
 
-# Create a downsized container
-FROM openjdk:8-jre-alpine3.7
+# Stage 2 - Create a downsized production container
+FROM openjdk:10-jre-slim
 WORKDIR /usr/src/app/
 COPY --from=builder /usr/src/app/target/auth-0.0.1-SNAPSHOT.jar /usr/src/app
 

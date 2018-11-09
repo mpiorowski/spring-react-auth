@@ -19,12 +19,18 @@ services:
     build: ./auth-stateless/
     ports:
       - "9000:9000"
-#
+
 #  frontend:
 #    container_name: auth-frontend
 #    build: ./ui-stateless/
 #    volumes:
-#      - './ui-stateless:/usr/src/app'
-#      - '/usr/src/app/node_modules'
+#    - './ui-stateless:/usr/src/app'
+#    - '/usr/src/app/node_modules'
 #    ports:
-#      - "3000:3000"
+#    - "8080:80"
+
+  frontend:
+    container_name: auth-frontend
+    build: ./ui-stateless/
+    ports:
+      - "80:80"
