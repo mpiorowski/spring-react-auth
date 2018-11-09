@@ -1,4 +1,4 @@
-# Created by .ignore support plugin (hsz.mobi)
+docker/database/_postgres
 
 # IntelliJ project files
 .idea
@@ -15,5 +15,3 @@ dependency-reduced-pom.xml
 buildNumber.properties
 .mvn/timing.properties
 .mvn/wrapper/maven-wrapper.jar
-
-database/_postgres

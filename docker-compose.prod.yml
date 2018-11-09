@@ -1,0 +1,31 @@
+version: '3.1'
+
+services:
+
+  postgres:
+    container_name: auth-postgres
+    image: postgres
+    environment:
+      POSTGRES_PASSWORD: admin
+      POSTGRES_USER: admin
+      POSTGRES_DB: auth
+    volumes:
+      - ./docker/database/_postgres:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  backend:
+    container_name: auth-api
+    build:
+      context: ./api
+      dockerfile: ../docker/api/Dockerfile
+    ports:
+      - "9000:9000"
+
+  frontend:
+    container_name: auth-ui
+    build:
+      context: ./ui
+      dockerfile: ../docker/ui/Dockerfile
+    ports:
+      - "80:80"
