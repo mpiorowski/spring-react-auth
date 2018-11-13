@@ -2,7 +2,7 @@
   "name": "ui-stateless",
   "version": "0.1.0",
   "private": true,
-  "homepage" : "http://myapp",
+  "homepage": "http://myapp",
   "dependencies": {
     "antd": "^3.10.4",
     "babel-plugin-import": "^1.11.0",
