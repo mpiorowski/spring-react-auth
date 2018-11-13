@@ -7,19 +7,19 @@ Backend   -> spring boot + flyway + mybatis + postgresql
 
 # Instalation
 
-## Docker
+## using Docker
 
+### prod
 Prerequisite:
-maven, npm, docker
+docker
 
-## prod
 Create downsized production ready containers.  
-Access via http://localhost
 ```
 docker-compose -f docker-compose.prod.yml up -d --build
 ```
+Access via http://localhost
 
-## dev
+### dev
 Install required dependencies.
 ```
 mvn -f ./api clean compile
@@ -29,19 +29,25 @@ Create docker containers.
 ```
 docker-compose -f docker-compose.dev.yml up -d --build
 ```
+Access via http://localhost:3000
 
-## Database
-### via Docker
-```
-cd docker/
-docker-compose up --build -d
-```
-### manual
+## Manually
+
+Prerequisite:
+java8, maven, npm, postgres, docker (optional)
+
+### database config
 Postgresql (configuration in application.yml):  
 port:   5436  
 scheme: auth  
 user:   admin  
 pass:   admin  
+```
+cd docker/
+docker-compose up --build -d
+```
+### manual
+
 
 ## Backend
 ```
