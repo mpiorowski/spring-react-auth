@@ -1,4 +1,4 @@
-# ps-stateless-auth
+# stateless-auth with react and spring-boot
 
 Simple application with seperate frontend and backend. Authorization via jwt tokens. Allows managment of users and simple products.
 
@@ -7,8 +7,28 @@ Backend   -> spring boot + flyway + mybatis + postgresql
 
 # Instalation
 
-## Prerequisite
-maven, npm, postgresql, docker (optional)
+## Docker
+
+Prerequisite:
+maven, npm, docker
+
+## prod
+Create downsized production ready containers.  
+Access via http://localhost
+```
+docker-compose -f docker-compose.prod.yml up -d --build
+```
+
+## dev
+Install required dependencies.
+```
+mvn -f ./api clean compile
+npm --prefix ./ui install ./ui
+```
+Create docker containers.
+```
+docker-compose -f docker-compose.dev.yml up -d --build
+```
 
 ## Database
 ### via Docker
