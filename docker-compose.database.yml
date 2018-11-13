@@ -2,14 +2,14 @@ version: '3.1'
 
 services:
 
-  postgres-local:
-    container_name: auth-postgres-local
+  postgres:
+    container_name: auth-postgres
     image: postgres
     environment:
       POSTGRES_PASSWORD: admin
       POSTGRES_USER: admin
       POSTGRES_DB: auth
+    volumes:
+      - ./database/_postgres:/var/lib/postgresql/data
     ports:
       - "5432:5432"
-    volumes:
-    - ./_postgres:/var/lib/postgresql/data
