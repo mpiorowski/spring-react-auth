@@ -13,26 +13,25 @@ services:
       - ./docker/database/_postgres:/var/lib/postgresql/data
     ports:
       - "5432:5432"
-    restart: always
 
   backend:
     container_name: auth-api
-    build:
-      context: ./api
-      dockerfile: ../docker/api/Dockerfile
-      target: prod
+    image: maven:3.6-jdk-10-slim
+    volumes:
+      - ./api/:/usr/src/app
+    working_dir: /usr/src/app
+    command: mvn spring-boot:run
     ports:
       - "9000:9000"
     environment:
-      - "SPRING_PROFILES_ACTIVE=prod"
-    restart: always
+      - "SPRING_PROFILES_ACTIVE=dev"
 
   frontend:
     container_name: auth-ui
-    build:
-      context: ./ui
-      dockerfile: ../docker/ui/Dockerfile
-      target: prod
+    image: node:10.11.0
+    volumes:
+      - ./ui/:/usr/src/app
+    working_dir: /usr/src/app
+    command: npm start
     ports:
-      - "80:80"
-    restart: always
+      - "3000:3000"
