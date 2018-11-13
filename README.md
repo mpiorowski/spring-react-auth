@@ -1,6 +1,6 @@
 # stateless-auth with react and spring-boot
 
-Simple application with seperate frontend and backend. Authorization via jwt tokens. Allows managment of users and simple products.
+Simple application with seperate frontend and backend. Authorization via jwt tokens. It allows simple user managment, with the option to add or delete users. It also have a simple products data managment.
 
 Frontend  -> react + antd + babel  
 Backend   -> spring boot + flyway + mybatis + postgresql
@@ -22,19 +22,14 @@ npm --prefix ./ui install ./ui
 ## using Docker
 
 ### prod
-Create downsized production ready containers.  
+This one line creates a production ready downsized containers. Aftert the automatic startup, the application is ready.
 ```
 docker-compose -f docker-compose.prod.yml up -d --build
 ```
 Access via http://localhost
 
 ### dev
-Install required dependencies.
-```
-mvn -f ./api clean compile
-npm --prefix ./ui install ./ui
-```
-Create docker containers.
+Create a more "fat" containers, which are ready for develompment (live code reloading).
 ```
 docker-compose -f docker-compose.dev.yml up -d --build
 ```
@@ -55,6 +50,7 @@ docker-compose -f docker-compose.database.yml up -d --build
 ```
 
 ### prod
+Run two seperate shell windows for frontend and backend.
 ```
 mvn -f ./api clean install && java -jar target/auth-0.0.1-SNAPSHOT.jar
 ```
@@ -65,6 +61,7 @@ serve -s ./ui/build
 ```
 Access via http://localhost:5000
 ### dev
+Run two seperate shell windows for frontend and backend.
 ```
 npm --prefix ./ui start
 ```
