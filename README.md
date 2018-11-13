@@ -1,58 +1,71 @@
-# ps-stateless-auth
+# stateless-auth with react and spring-boot
 
-Simple application with seperate frontend and backend. Authorization via jwt tokens. Allows managment of users and simple products.
+Simple application with seperate frontend and backend. Authorization via jwt tokens. It allows simple user managment, with the option to add or delete users. It also have a simple products data managment.
 
 Frontend  -> react + antd + babel  
 Backend   -> spring boot + flyway + mybatis + postgresql
 
+## Basic access
+via http://localhost:3000 (dev) or http://localhost:5000 (prod)  
+username: mat  
+password: pass  
+
 # Instalation
 
-## Prerequisite
-maven, npm, postgresql, docker (optional)
+## Dependencies
+Install required dependencies (not needed for production instalation via docker)
+```
+mvn -f ./api clean compile
+npm --prefix ./ui install ./ui
+```
 
-## Database
-### via Docker
+## using Docker
+
+### prod
+This one line creates a production ready downsized containers. Aftert the automatic startup, the application is ready.
 ```
-cd docker/
-docker-compose up --build -d
+docker-compose -f docker-compose.prod.yml up -d --build
 ```
-### manual
+Access via http://localhost
+
+### dev
+Create a more "fat" containers, which are ready for develompment (live code reloading).
+```
+docker-compose -f docker-compose.dev.yml up -d --build
+```
+Access via http://localhost:3000
+
+## Manually
+
+### database config
 Postgresql (configuration in application.yml):  
 port:   5436  
 scheme: auth  
 user:   admin  
 pass:   admin  
 
-## Backend
+or You can use docker-compose to setup simple database container
 ```
-cd auth-stateless/ 
-```
-### dev
-```
-mvn spring-boot:run
-```
-### prod
-```
-mvn clean install && java -jar target/auth-0.0.1-SNAPSHOT.jar
+docker-compose -f docker-compose.database.yml up -d --build
 ```
 
-## Frontend
-```
-cd ui-stateless/ 
-npm install
-```
-### dev
-```
-npm start
-```
 ### prod
+Run two seperate shell windows for frontend and backend.
 ```
+mvn -f ./api clean install && java -jar target/auth-0.0.1-SNAPSHOT.jar
+```
+```
+npm --prefix ./ui run build
 npm install -g serve
-npm run build
-serve -s build
+serve -s ./ui/build
 ```
-
-## Access
-via http://localhost:3000 (dev) or http://localhost:5000 (prod)  
-username: mat  
-password: pass  
+Access via http://localhost:5000
+### dev
+Run two seperate shell windows for frontend and backend.
+```
+npm --prefix ./ui start
+```
+```
+mvn -f ./api spring-boot:run
+```
+Access via http://localhost:3000
