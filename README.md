@@ -52,7 +52,7 @@ docker-compose -f docker-compose.database.yml up -d --build
 ### prod
 Run two seperate shell windows for frontend and backend.
 ```
-mvn -f ./api clean install && java -jar target/auth-0.0.1-SNAPSHOT.jar
+mvn -f ./api clean install && java -jar ./api/target/api-0.0.1-SNAPSHOT.jar
 ```
 ```
 npm --prefix ./ui run build
