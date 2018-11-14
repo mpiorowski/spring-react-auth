@@ -63,9 +63,9 @@ Access via http://localhost:5000
 ### dev
 Run two seperate shell windows for frontend and backend.
 ```
-npm --prefix ./ui start
-```
-```
 mvn -f ./api spring-boot:run
+```
+```
+npm --prefix ./ui start
 ```
 Access via http://localhost:3000
