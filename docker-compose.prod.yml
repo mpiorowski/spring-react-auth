@@ -34,5 +34,5 @@ services:
       dockerfile: ../docker/ui/Dockerfile
       target: prod
     ports:
-      - "80:80"
+      - "5000:80"
     restart: always
