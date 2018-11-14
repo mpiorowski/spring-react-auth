@@ -26,7 +26,7 @@ This one line creates a production ready downsized containers. After the automat
 ```
 docker-compose -f docker-compose.prod.yml up -d --build
 ```
-Access via http://localhost
+Access via http://localhost:5000
 
 ### dev
 Creates a more "fat" containers, which are ready for develompment (live code reloading).
