@@ -1,8 +1,8 @@
-# stateless-auth with react and spring-boot
+# Simple jwt authorization app with spring-boot, react and postgresql
 
-Simple application with seperate frontend and backend. Authorization via jwt tokens. It allows simple user managment, with the option to add or delete users. It also have a simple products data managment.
+Simple application with seperate frontend and backend, connected to postgresql database. Authorization via jwt tokens. Offers a simple ui to manage users and simple products data.
 
-Frontend  -> react + antd + babel  
+Frontend  -> react + antd + babel
 Backend   -> spring boot + flyway + mybatis + postgresql
 
 ## Basic access
@@ -19,17 +19,17 @@ mvn -f ./api clean compile
 npm --prefix ./ui install ./ui
 ```
 
-## using Docker
+## via Docker
 
 ### prod
-This one line creates a production ready downsized containers. Aftert the automatic startup, the application is ready.
+This one line creates a production ready downsized containers. After the automatic startup, which may take a while, the application is ready to work.
 ```
 docker-compose -f docker-compose.prod.yml up -d --build
 ```
 Access via http://localhost
 
 ### dev
-Create a more "fat" containers, which are ready for develompment (live code reloading).
+Creates a more "fat" containers, which are ready for develompment (live code reloading).
 ```
 docker-compose -f docker-compose.dev.yml up -d --build
 ```
@@ -37,9 +37,9 @@ Access via http://localhost:3000
 
 ## Manually
 
-### database config
+### database
 Postgresql (configuration in application.yml):  
-port:   5436  
+port:   5432  
 scheme: auth  
 user:   admin  
 pass:   admin  
