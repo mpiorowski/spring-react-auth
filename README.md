@@ -15,7 +15,7 @@ password: pass
 ## Dependencies
 Install required dependencies (not needed for production instalation via docker)
 ```
-mvn -f ./api clean compile
+mvn -f ./api clean dependency:resolve
 npm --prefix ./ui install ./ui
 ```
 
