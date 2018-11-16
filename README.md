@@ -12,7 +12,9 @@ password: pass
 
 # Instalation
 
-## Dependencies
+## Prerequisites and Dependencies
+Prerequisites: node, npm, java, maven, docker
+
 Install required dependencies (not needed for production instalation via docker)
 ```
 mvn -f ./api clean dependency:resolve
@@ -24,21 +26,21 @@ npm --prefix ./ui install ./ui
 ### prod
 This one line creates a production ready downsized containers. After the automatic startup, which may take a while, the application is ready to work.
 ```
-docker-compose -f docker-compose.prod.yml up -d --build
+docker-compose -f ./docker/docker-compose.prod.yml up -d --build
 ```
 Access via http://localhost:5000
 
 ### dev
 Creates a more "fat" containers, which are ready for develompment (live code reloading).
 ```
-docker-compose -f docker-compose.dev.yml up -d --build
+docker-compose -f ./docker/docker-compose.dev.yml up -d --build
 ```
 Access via http://localhost:3000
 
 ## Manually
 
 ### database
-Postgresql (configuration in application.yml):  
+PostgreSQL (configuration in application.yml):  
 port:   5432  
 scheme: auth  
 user:   admin  
@@ -46,13 +48,13 @@ pass:   admin
 
 or You can use docker-compose to setup simple database container
 ```
-docker-compose -f docker-compose.database.yml up -d --build
+docker-compose -f ./docker/docker-compose.database.yml up -d --build
 ```
 
 ### prod
-Run two seperate shell windows for frontend and backend.
+Run two separate shell windows for frontend and backend.
 ```
-mvn -f ./api clean install && java -jar ./api/target/api-0.0.1-SNAPSHOT.jar
+mvn -f ./api clean package && java -jar ./api/target/api-0.0.1-SNAPSHOT.jar
 ```
 ```
 npm --prefix ./ui run build
@@ -61,7 +63,7 @@ serve -s ./ui/build
 ```
 Access via http://localhost:5000
 ### dev
-Run two seperate shell windows for frontend and backend.
+Run two separate shell windows for frontend and backend.
 ```
 mvn -f ./api spring-boot:run
 ```
