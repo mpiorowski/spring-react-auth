@@ -1,27 +1,29 @@
-# Stage 1 - Create a dev container
-#FROM maven:3.6-jdk-10-slim as dev
-#RUN mkdir /usr/src/app
-#WORKDIR /usr/src/app
-#COPY pom.xml /usr/src/app
-#RUN mvn dependency:go-offline
-
-# Stage 2 - Create a builder container
+# Stage 1 - Create a builder container
 FROM maven:3.6-jdk-10-slim as builder
 
-RUN mkdir /usr/src/app
-WORKDIR /usr/src/app
+RUN groupadd --system --gid 1000 test
+RUN useradd --system --gid test --uid 1000 --shell /bin/bash --create-home test
 
-COPY src /usr/src/app/src
-COPY pom.xml /usr/src/app
+USER test
+WORKDIR /home/test
+RUN mkdir /home/test/app
+COPY src /home/test/app/src
+COPY pom.xml /home/test/app
 
-RUN mvn clean install -DskipTests
+RUN mvn -f /home/test/app clean package
 
 # Stage 2 - Create a downsized production container
 FROM openjdk:10-jre-slim as prod
-WORKDIR /usr/src/app
-COPY --from=builder /usr/src/app/target/api-*.jar /usr/src/app/api.jar
 
-ENTRYPOINT ["java", "-Djava.security.egd=file:/dev/./urandom","-jar", "./api.jar"]
+RUN groupadd --system --gid 1000 prod
+RUN useradd --system --gid prod --uid 1000 --shell /bin/bash --create-home prod
+
+USER prod
+WORKDIR /home/prod
+
+COPY --from=builder /home/test/app/target/api-*.jar /home/prod/app/api.jar
+
+ENTRYPOINT ["java", "-Djava.security.egd=file:/dev/./urandom","-jar", "/home/prod/app/api.jar"]
 
 #Example code for building a container with pre-build fat jar
 #FROM openjdk:8-jre-alpine3.7
