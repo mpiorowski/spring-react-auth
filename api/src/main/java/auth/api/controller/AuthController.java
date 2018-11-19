@@ -32,11 +32,6 @@ public class AuthController {
     this.authenticationManager = authenticationManager;
   }
 
-  @Bean
-  public PasswordEncoder passwordEncoder() {
-    return new BCryptPasswordEncoder();
-  }
-
   @PostMapping("/login")
   public ResponseEntity auth(@Valid @RequestBody LoginRequest loginRequest) {
 

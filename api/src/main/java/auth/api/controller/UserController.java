@@ -1,5 +1,8 @@
 package auth.api.controller;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +18,7 @@ import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/user")
+@Api(value = "/user", description = "Users operations", produces = "application/json")
 public class UserController {
 
   private final UserMapper userMapper;
@@ -24,12 +28,13 @@ public class UserController {
     this.userMapper = userMapper;
   }
 
-  @Bean
-  public PasswordEncoder passwordEncoder() {
+  @Autowired PasswordEncoder passwordEncoder() {
     return new BCryptPasswordEncoder();
   }
 
   @GetMapping("/all")
+  @ApiOperation(value = "return all users")
+  @ApiResponse(code = 200, message = "All users returned")
   public ResponseEntity allUsers() {
     return ResponseEntity.ok(userMapper.findAll());
   }
