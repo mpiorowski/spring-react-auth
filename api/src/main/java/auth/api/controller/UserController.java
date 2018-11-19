@@ -3,6 +3,7 @@ package auth.api.controller;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.ResponseEntity;
@@ -34,7 +35,11 @@ public class UserController {
 
   @GetMapping("/all")
   @ApiOperation(value = "return all users")
-  @ApiResponse(code = 200, message = "All users returned")
+  @ApiResponses(value ={
+    @ApiResponse(code=200, message = "All users returned"),
+    @ApiResponse(code=500, message="Internal Server Error"),
+    @ApiResponse(code=404, message="User not found")
+  })
   public ResponseEntity allUsers() {
     return ResponseEntity.ok(userMapper.findAll());
   }
