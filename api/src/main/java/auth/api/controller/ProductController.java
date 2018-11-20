@@ -1,7 +1,6 @@
 package auth.api.controller;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,6 +13,7 @@ import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/product")
+@Api(value = "/product", description = "Products operations", produces = "application/json")
 public class ProductController {
 
   private final ProductMapper productMapper;
