@@ -6,6 +6,7 @@ import {productNotification} from "../../notification/ProductNotification";
 
 const FormItem = Form.Item;
 let uuid = 0;
+let productId;
 
 class ProductComponent extends Component {
 
@@ -13,6 +14,8 @@ class ProductComponent extends Component {
     super(props);
     this.state = {
       loading: true,
+      oldArray: [],
+      newArray: [],
     }
   }
 
@@ -21,6 +24,8 @@ class ProductComponent extends Component {
       if (response) {
         response.forEach(product => {
           this.add(product);
+          this.state.oldArray.push(product);
+          console.log(this.state.oldArray);
         });
         this.setState({
           loading: false,
@@ -29,25 +34,41 @@ class ProductComponent extends Component {
     })
   }
 
+  getChanges = (oldArray, newArray) => {
+    let changes, i, item, j, len;
+    if (JSON.stringify(oldArray) === JSON.stringify(newArray)) {
+      return false;
+    }
+    changes = [];
+    for (i = j = 0, len = newArray.length; j < len; i = ++j) {
+      item = newArray[i];
+      if (JSON.stringify(item) !== JSON.stringify(oldArray[i])) {
+        changes.push(item);
+      }
+    }
+    return changes;
+  };
+
   handleSubmit = (e) => {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        const products = {
-          products: values['product'].filter((val) => val != null)
-              .map((val) => {
-                return {productName: val[0], price: val[1], available: val[2]};
-              })
-        };
-        console.log(products);
-        addProducts(products).then(response => {
-          if (response) {
-            productNotification('success');
-          }
-        }).catch(err => {
-          console.log(err);
-          productNotification();
-        });
+        console.log(values);
+        // const products = {
+        //   products: values['product'].filter((val) => val != null)
+        //       .map((val) => {
+        //         return {productName: val[0], price: val[1], available: val[2]};
+        //       })
+        // };
+        // console.log(products);
+        // addProducts(products).then(response => {
+        //   if (response) {
+        //     productNotification('success');
+        //   }
+        // }).catch(err => {
+        //   console.log(err);
+        //   productNotification();
+        // });
       } else {
         console.log(err);
         productNotification('error');
@@ -70,13 +91,15 @@ class ProductComponent extends Component {
     });
   };
 
-  add = (product = null) => {
+  add = (product) => {
+
     const {form} = this.props;
-    // can use data-binding to get
     const keys = form.getFieldValue('keys');
-    const nextKeys = keys.concat(uuid);
-    // can use data-binding to set
-    // important! notify form to detect changes
+
+    product !== null ? productId = product['id'] : productId++;
+
+    const nextKeys = keys.concat(productId);
+
     form.setFieldsValue({
       keys: nextKeys,
     });
@@ -84,7 +107,7 @@ class ProductComponent extends Component {
       form.setFieldsValue({
         [`product[${uuid}][0]`]: product['productName'],
         [`product[${uuid}][1]`]: product['price'],
-        [`product[${uuid}][2]`]: product['available'],
+        [`product[${uuid}][2]`]: product['available']
       });
     }
     uuid++;
@@ -119,7 +142,7 @@ class ProductComponent extends Component {
                     required={false}
                     key={k}
                 >
-                  {getFieldDecorator(`product[${k}][0]`, {
+                  {getFieldDecorator(`product[${index}][0]`, {
                     validateTrigger: ['onChange', 'onBlur'],
                     rules: [{
                       required: true,
@@ -139,7 +162,7 @@ class ProductComponent extends Component {
                     required={false}
                     key={k}
                 >
-                  {getFieldDecorator(`product[${k}][1]`, {
+                  {getFieldDecorator(`product[${index}][1]`, {
                     validateTrigger: ['onChange'],
                     rules: [{
                       required: true,
@@ -164,7 +187,7 @@ class ProductComponent extends Component {
                     label={index === 0 ? 'Available' : ''}
                 >
                   <div className={"deleteDiv"}>
-                    {getFieldDecorator(`product[${k}][2]`, {valuePropName: 'checked', initialValue: true})(
+                    {getFieldDecorator(`product[${index}][2]`, {valuePropName: 'checked', initialValue: true})(
                         <Switch className={"switch-btn"}/>
                     )}
                     {keys.length > 1 ? (
@@ -201,7 +224,7 @@ class ProductComponent extends Component {
           <Row type="flex" align="top" key={-1}>
             <Col span={8} offset={4}>
               <FormItem {...formItemLayoutWithOutLabel}>
-                <Button type="dashed" onClick={this.add} className={"add-btn"}>
+                <Button type="dashed" onClick={() => this.add(null)} className={"add-btn"}>
                   <Icon type="plus"/> Add new product
                 </Button>
               </FormItem>
