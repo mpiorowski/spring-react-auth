@@ -70,7 +70,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         .authenticationEntryPoint(jwtAuthenticationException)
         .and()
         .authorizeRequests()
-        .antMatchers("/auth/**")
+        .antMatchers("/auth/**", "/swagger-ui.html", "/v2/api-docs", "/webjars/**", "/swagger-resources/**")
         .permitAll()
         .anyRequest()
         .authenticated()
