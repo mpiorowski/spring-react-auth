@@ -1,9 +1,6 @@
 package auth.api.mapper;
 
-import org.apache.ibatis.annotations.Delete;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Component;
 import auth.api.dao.Product;
 
@@ -13,11 +10,21 @@ import java.util.List;
 @Component
 public interface ProductMapper {
 
-  @Insert({"INSERT into products(product_name,product_price,product_availability) VALUES(#{productName},#{price},#{available})"})
+  @Insert({"INSERT into products(productName,productPrice,productAvailable) VALUES(#{productName},#{productPrice},#{productAvailability})"})
   void insertProduct(Product product);
 
-  @Select("SELECT * FROM products")
+  @Update({
+      "INSERT INTO products (productId, productName,productPrice,productAvailable) VALUES(#{productId}, #{productName},#{productPrice},#{productAvailable})" +
+          " ON CONFLICT (productId) DO " +
+          "UPDATE set productName = #{productName}, productPrice = #{productPrice}, productAvailable = #{productAvailable}"
+  })
+  void insertOrUpdateProduct(Product product);
+
+  @Select("SELECT * FROM products order by productId")
   List<Product> findAllProducts();
+
+  @Delete("DELETE FROM products where productId = #{productId}")
+  void deleteProduct(Integer productId);
 
   @Delete("DELETE FROM products")
   void deleteAllProducts();

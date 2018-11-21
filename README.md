@@ -2,7 +2,7 @@
 
 Simple application with seperate frontend and backend, connected to postgresql database. Authorization via jwt tokens. Offers a simple ui to manage users and simple products data.
 
-Frontend  -> react + antd + babel
+Frontend  -> react + antd + babel  
 Backend   -> spring boot + flyway + mybatis + postgresql
 
 ## Basic access
