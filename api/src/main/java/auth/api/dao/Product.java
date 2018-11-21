@@ -8,61 +8,64 @@ import javax.validation.constraints.*;
 
 public class Product {
 
-  private int id;
+  private int productId;
 
   @NotBlank
   @Size(max = 200)
   private String productName;
 
   @Range(min = 1, max = 999)
-  private double price;
+  private double productPrice;
 
-  @NotNull private boolean available;
+  @NotNull private boolean productAvailable;
 
-  public Product(
-      int id,
-      @NotBlank @Size(max = 200) String productName,
-      @NotBlank @Range(min = 1, max = 999) double price,
-      @NotNull boolean available) {
-    this.id = id;
-    this.productName = productName;
-    this.price = price;
-    this.available = available;
-  }
+//  public Product(
+//      int productId,
+//      @NotBlank @Size(max = 200) String productName,
+//      @NotBlank @Range(min = 1, max = 999) double productPrice,
+//      @NotNull boolean productAvailable) {
+//    this.productId = productId;
+//    this.productName = productName;
+//    this.productPrice = productPrice;
+//    this.productAvailable = productAvailable;
+//  }
 
   @JsonCreator
   public Product(
+      @JsonProperty(value = "productId")
+          int productId,
       @JsonProperty(value = "productName", required = true) @NotBlank @Size(max = 200)
           String productName,
-      @JsonProperty(value = "price", required = true) @NotBlank @Range(min = 1, max = 999)
-          double price,
-      @JsonProperty(value = "available", required = true) @NotNull boolean available) {
+      @JsonProperty(value = "productPrice", required = true) @NotBlank @Range(min = 1, max = 999)
+          double productPrice,
+      @JsonProperty(value = "productAvailable", required = true) @NotNull boolean productAvailable) {
+    this.productId = productId;
     this.productName = productName;
-    this.price = price;
-    this.available = available;
+    this.productPrice = productPrice;
+    this.productAvailable = productAvailable;
   }
 
   @Override
   public String toString() {
     return "Product{"
-        + "id="
-        + id
+        + "productId="
+        + productId
         + ", productName='"
         + productName
         + '\''
-        + ", price="
-        + price
-        + ", available="
-        + available
+        + ", productPrice="
+        + productPrice
+        + ", productAvailable="
+        + productAvailable
         + '}';
   }
 
-  public int getId() {
-    return id;
+  public int getProductId() {
+    return productId;
   }
 
-  public void setId(int id) {
-    this.id = id;
+  public void setProductId(int productId) {
+    this.productId = productId;
   }
 
   public String getProductName() {
@@ -73,19 +76,19 @@ public class Product {
     this.productName = productName;
   }
 
-  public double getPrice() {
-    return price;
+  public double getProductPrice() {
+    return productPrice;
   }
 
-  public void setPrice(float price) {
-    this.price = price;
+  public void setProductPrice(float productPrice) {
+    this.productPrice = productPrice;
   }
 
-  public boolean isAvailable() {
-    return available;
+  public boolean isProductAvailable() {
+    return productAvailable;
   }
 
-  public void setAvailable(boolean available) {
-    this.available = available;
+  public void setProductAvailable(boolean productAvailable) {
+    this.productAvailable = productAvailable;
   }
 }

@@ -16,3 +16,13 @@ export const addProducts = (products) => {
     body: JSON.stringify(products)
   })
 };
+
+
+export const deleteProducts = (products) => {
+  console.log(JSON.stringify(products));
+  return request({
+    url: API_BASE_URL + "/product/delete",
+    method: "DELETE",
+    body: JSON.stringify(products)
+  })
+};

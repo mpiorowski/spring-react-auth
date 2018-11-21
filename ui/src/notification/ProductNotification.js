@@ -3,21 +3,27 @@ import {notification} from 'antd';
 export function productNotification(type) {
   let notificationMsg;
   switch (type) {
+    case 'updated':
+      notificationMsg = {title: 'Products updated', msg: 'Products updated to the database.', type: 'success'};
+      break;
+    case 'deleted':
+      notificationMsg = {title: 'Products deleted', msg: 'Products deleted from the database.', type: 'success'};
+      break;
     case 'success':
-      notificationMsg = {title: 'Products updated', msg: 'Products added to the database.'};
+      notificationMsg = {title: 'Products updated', msg: 'Products added to the database.', type: 'success'};
+      break;
+    case 'warning':
+      notificationMsg = {title: 'Wrong form', msg: 'Please check your form again.', type: 'warning'};
       break;
     case 'error':
-      notificationMsg = {title: 'Wrong form', msg: 'Please check your form again.'};
+      notificationMsg = {title: 'Application error', msg: 'An error accrued during operations. Sorry!', type: 'error'};
       break;
-    default:
-      notificationMsg = {title: 'Application error', msg: 'An error accrued during operations. Sorry!'};
+    case 'noChanges':
+      notificationMsg = {title: 'No changes', msg: 'There is nothing to commit. Please check the form again.', type: 'warning'};
       break;
   }
 
-  let notType;
-  type != null ? notType = type : notType = 'error';
-
-  notification[notType]({
+  notification[notificationMsg.type]({
     message: notificationMsg.title,
     description: notificationMsg.msg,
     duration: 3,

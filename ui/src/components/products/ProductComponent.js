@@ -1,12 +1,14 @@
 import React, {Component} from 'react';
 import {Form, Input, Icon, Button, Row, Col, Switch, InputNumber, Spin} from 'antd';
 import './ProductComponent.css';
-import {addProducts, getAllProducts} from "../../service/ProductService";
+import {addProducts, deleteProducts, getAllProducts} from "../../service/ProductService";
 import {productNotification} from "../../notification/ProductNotification";
 
 const FormItem = Form.Item;
 let uuid = 0;
 let productId;
+let oldProducts = [];
+let deletedProducts = [];
 
 class ProductComponent extends Component {
 
@@ -14,8 +16,6 @@ class ProductComponent extends Component {
     super(props);
     this.state = {
       loading: true,
-      oldArray: [],
-      newArray: [],
     }
   }
 
@@ -24,8 +24,8 @@ class ProductComponent extends Component {
       if (response) {
         response.forEach(product => {
           this.add(product);
-          this.state.oldArray.push(product);
-          console.log(this.state.oldArray);
+          oldProducts.push(product);
+          console.log(product);
         });
         this.setState({
           loading: false,
@@ -53,25 +53,55 @@ class ProductComponent extends Component {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        console.log(values);
+
         // const products = {
-        //   products: values['product'].filter((val) => val != null)
-        //       .map((val) => {
-        //         return {productName: val[0], price: val[1], available: val[2]};
+        //   products: values['product']
+        //       .filter((val) => val != null)
+        //       .map((val, index) => {
+        //         let product =  {productId: values['keys'][index] ,productName: val[0], productPrice: val[1], productAvailable: val[2]};
+        //         newArray.push(product);
+        //         return product;
         //       })
         // };
-        // console.log(products);
-        // addProducts(products).then(response => {
-        //   if (response) {
-        //     productNotification('success');
-        //   }
-        // }).catch(err => {
-        //   console.log(err);
-        //   productNotification();
-        // });
+
+        console.log(values);
+
+        const newProducts = values['product']
+              .filter((val) => val != null)
+              .map((val, index) => {
+                return {productId: values['keys'][index] ,productName: val[0], productPrice: val[1], productAvailable: val[2]};
+              });
+
+        let changes = this.getChanges(oldProducts, newProducts);
+        console.log(changes);
+
+        if (changes !== undefined && changes.length > 0 ) {
+          const products = {products: changes};
+          console.log(products);
+          addProducts(products).then(response => {
+            if (response) {
+              productNotification('updated');
+            }
+          }).catch(err => {
+            console.log(err);
+            productNotification('error');
+          });
+        }
+
+        if (deletedProducts.length > 0 && deletedProducts !== undefined) {
+          deleteProducts(deletedProducts).then(response => {
+            if (response) {
+              productNotification('deleted');
+            }
+          }).catch(err => {
+            console.log(err);
+            productNotification('error');
+          });
+        }
+
       } else {
         console.log(err);
-        productNotification('error');
+        productNotification('warning');
       }
     });
   };
@@ -84,6 +114,7 @@ class ProductComponent extends Component {
     if (keys.length === 1) {
       return;
     }
+    deletedProducts.push(k);
 
     // can use data-binding to set
     form.setFieldsValue({
@@ -96,7 +127,7 @@ class ProductComponent extends Component {
     const {form} = this.props;
     const keys = form.getFieldValue('keys');
 
-    product !== null ? productId = product['id'] : productId++;
+    product !== null ? productId = product['productId'] : productId++;
 
     const nextKeys = keys.concat(productId);
 
@@ -106,8 +137,8 @@ class ProductComponent extends Component {
     if (product !== null) {
       form.setFieldsValue({
         [`product[${uuid}][0]`]: product['productName'],
-        [`product[${uuid}][1]`]: product['price'],
-        [`product[${uuid}][2]`]: product['available']
+        [`product[${uuid}][1]`]: product['productPrice'],
+        [`product[${uuid}][2]`]: product['productAvailable']
       });
     }
     uuid++;
@@ -175,6 +206,7 @@ class ProductComponent extends Component {
                       <InputNumber
                           min={1}
                           max={999}
+                          precision={2}
                           placeholder="price (max: 999)"
                           style={{width: '80%', marginRight: 8}}
                       />

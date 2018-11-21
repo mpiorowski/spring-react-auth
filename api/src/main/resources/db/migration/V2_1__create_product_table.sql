@@ -1,7 +1,7 @@
 CREATE TABLE products
 (
-    product_id serial PRIMARY KEY,
-    product_name varchar(200) NOT NULL,
-    product_price float,
-    product_availability boolean DEFAULT true NOT NULL
+    productId serial PRIMARY KEY,
+    productName varchar(200) NOT NULL,
+    productPrice float,
+    productAvailable boolean DEFAULT true NOT NULL
 );
