@@ -16,6 +16,7 @@ class ProductComponent extends Component {
     super(props);
     this.state = {
       loading: true,
+      updated: false,
     }
   }
 
@@ -25,7 +26,6 @@ class ProductComponent extends Component {
         response.forEach(product => {
           this.add(product);
           oldProducts.push(product);
-          console.log(product);
         });
         this.setState({
           loading: false,
@@ -64,8 +64,6 @@ class ProductComponent extends Component {
         //       })
         // };
 
-        console.log(values);
-
         const newProducts = values['product']
             .filter((val) => val != null)
             .map((val, index) => {
@@ -78,14 +76,15 @@ class ProductComponent extends Component {
             });
 
         let changes = this.getChanges(oldProducts, newProducts);
-        console.log(changes);
+        let noChanges = true;
 
         if (changes !== undefined && changes.length > 0) {
+          noChanges = false;
           const products = {products: changes};
           console.log(products);
           addProducts(products).then(response => {
             if (response) {
-              productNotification('updated');
+              productNotification("updated");
             }
           }).catch(err => {
             console.log(err);
@@ -94,14 +93,19 @@ class ProductComponent extends Component {
         }
 
         if (deletedProducts.length > 0 && deletedProducts !== undefined) {
+          noChanges = false;
           deleteProducts(deletedProducts).then(response => {
             if (response) {
-              productNotification('deleted');
+              productNotification("deleted");
             }
           }).catch(err => {
             console.log(err);
             productNotification('error');
           });
+        }
+
+        if (noChanges) {
+          productNotification("noChanges")
         }
 
       } else {
@@ -121,10 +125,9 @@ class ProductComponent extends Component {
     }
     deletedProducts.push(k);
 
-    console.log(keys);
-    console.log(k);
+    let test = keys.filter(key => key !== k);
+    console.log(test);
 
-    // can use data-binding to set
     form.setFieldsValue({
       keys: keys.filter(key => key !== k),
     });
@@ -144,9 +147,9 @@ class ProductComponent extends Component {
     });
     if (product !== null) {
       form.setFieldsValue({
-        [`product[${uuid}][0]`]: product['productName'],
-        [`product[${uuid}][1]`]: product['productPrice'],
-        [`product[${uuid}][2]`]: product['productAvailable']
+        [`product[${productId}][0]`]: product['productName'],
+        [`product[${productId}][1]`]: product['productPrice'],
+        [`product[${productId}][2]`]: product['productAvailable']
       });
     }
     uuid++;

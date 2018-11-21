@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Button, Col, Form, Icon, Input, InputNumber, Row, Spin, Switch} from "antd";
+import {Button, Col, Form, Icon, Input, InputNumber, Popconfirm, Row, Spin, Switch} from "antd";
 
 const FormItem = Form.Item;
 class ProductForm extends Component {
@@ -47,7 +47,7 @@ class ProductForm extends Component {
                     required={false}
                     key={k}
                 >
-                  {getFieldDecorator(`product[${index}][0]`, {
+                  {getFieldDecorator(`product[${k}][0]`, {
                     validateTrigger: ['onChange', 'onBlur'],
                     rules: [{
                       required: true,
@@ -67,7 +67,7 @@ class ProductForm extends Component {
                     required={false}
                     key={k}
                 >
-                  {getFieldDecorator(`product[${index}][1]`, {
+                  {getFieldDecorator(`product[${k}][1]`, {
                     validateTrigger: ['onChange'],
                     rules: [{
                       required: true,
@@ -93,17 +93,19 @@ class ProductForm extends Component {
                     label={index === 0 ? 'Available' : ''}
                 >
                   <div className={"deleteDiv"}>
-                    {getFieldDecorator(`product[${index}][2]`, {valuePropName: 'checked', initialValue: true})(
+                    {getFieldDecorator(`product[${k}][2]`, {valuePropName: 'checked', initialValue: true})(
                         <Switch className={"switch-btn"}/>
                     )}
                     {keys.length > 1 ? (
-                        <Icon
-                            className="dynamic-delete-button"
-                            type="minus-circle-o"
-                            disabled={keys.length === 1}
-                            onClick={() => this.props.remove(k)}
-                            style={{marginLeft: '40px'}}
-                        />
+                        <Popconfirm title="Sure to delete?" onConfirm={() => this.props.remove(k)}>
+                          <Icon
+                              className="dynamic-delete-button"
+                              type="minus-circle-o"
+                              disabled={keys.length === 1}
+                              // onClick={() => this.props.remove(k)}
+                              style={{marginLeft: '40px'}}
+                          />
+                        </Popconfirm>
                     ) : null}
                   </div>
                 </FormItem>
