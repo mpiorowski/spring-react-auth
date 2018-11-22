@@ -10,23 +10,16 @@ import java.util.List;
 @Component
 public interface ProductMapper {
 
-  @Insert({"INSERT into products(productName,productPrice,productAvailable) VALUES(#{productName},#{productPrice},#{productAvailability})"})
-  void insertProduct(Product product);
-
   @Update({
-      "INSERT INTO products (productId, productName,productPrice,productAvailable) VALUES(#{productId}, #{productName},#{productPrice},#{productAvailable})" +
-          " ON CONFLICT (productId) DO " +
-          "UPDATE set productName = #{productName}, productPrice = #{productPrice}, productAvailable = #{productAvailable}"
+    "INSERT INTO products (product_id, product_name, product_price, product_available) VALUES(#{productId}, #{productName},#{productPrice},#{productAvailable})"
+        + " ON CONFLICT (product_id) DO "
+        + "UPDATE set product_name = #{productName}, product_price = #{productPrice}, product_available = #{productAvailable}"
   })
   void insertOrUpdateProduct(Product product);
 
-  @Select("SELECT * FROM products order by productId")
+  @Select("SELECT * FROM products order by product_id")
   List<Product> findAllProducts();
 
-  @Delete("DELETE FROM products where productId = #{productId}")
+  @Delete("DELETE FROM products where product_id = #{productId}")
   void deleteProduct(Integer productId);
-
-  @Delete("DELETE FROM products")
-  void deleteAllProducts();
-
 }

@@ -1,14 +1,15 @@
 import React, {Component} from 'react';
-import {Form, Input, Icon, Button, Row, Col, Switch, InputNumber, Spin} from 'antd';
+import {Form} from 'antd';
 import './ProductComponent.css';
 import {addProducts, deleteProducts, getAllProducts} from "../../service/ProductService";
 import {productNotification} from "../../notification/ProductNotification";
+import ProductForm from "./ProductForm";
 
-const FormItem = Form.Item;
 let uuid = 0;
 let productId;
 let oldProducts = [];
 let deletedProducts = [];
+let success1, success2 = false;
 
 class ProductComponent extends Component {
 
@@ -25,7 +26,6 @@ class ProductComponent extends Component {
         response.forEach(product => {
           this.add(product);
           oldProducts.push(product);
-          console.log(product);
         });
         this.setState({
           loading: false,
@@ -54,49 +54,53 @@ class ProductComponent extends Component {
     this.props.form.validateFields((err, values) => {
       if (!err) {
 
-        // const products = {
-        //   products: values['product']
-        //       .filter((val) => val != null)
-        //       .map((val, index) => {
-        //         let product =  {productId: values['keys'][index] ,productName: val[0], productPrice: val[1], productAvailable: val[2]};
-        //         newArray.push(product);
-        //         return product;
-        //       })
-        // };
-
-        console.log(values);
-
         const newProducts = values['product']
-              .filter((val) => val != null)
-              .map((val, index) => {
-                return {productId: values['keys'][index] ,productName: val[0], productPrice: val[1], productAvailable: val[2]};
-              });
+            .filter((val) => val != null)
+            .map((val, index) => {
+              return {
+                productId: values['keys'][index],
+                productName: val[0],
+                productPrice: val[1],
+                productAvailable: val[2]
+              };
+            });
 
         let changes = this.getChanges(oldProducts, newProducts);
-        console.log(changes);
+        let noChanges = true;
 
-        if (changes !== undefined && changes.length > 0 ) {
+        if (changes !== undefined && changes.length > 0) {
+          noChanges = false;
           const products = {products: changes};
-          console.log(products);
           addProducts(products).then(response => {
             if (response) {
-              productNotification('updated');
+              success1 = true;
+              this.checkSuccess();
             }
           }).catch(err => {
             console.log(err);
             productNotification('error');
           });
+        } else {
+          success1 = true;
         }
 
         if (deletedProducts.length > 0 && deletedProducts !== undefined) {
+          noChanges = false;
           deleteProducts(deletedProducts).then(response => {
             if (response) {
-              productNotification('deleted');
+              success2 = true;
+              this.checkSuccess();
             }
           }).catch(err => {
             console.log(err);
             productNotification('error');
           });
+        } else {
+          success2 = true;
+        }
+
+        if (noChanges) {
+          productNotification("noChanges")
         }
 
       } else {
@@ -104,6 +108,13 @@ class ProductComponent extends Component {
         productNotification('warning');
       }
     });
+  };
+
+  checkSuccess = () => {
+    if (success1 === true && success2 === true) {
+      productNotification("updated");
+      success1 = success2 = false;
+    }
   };
 
   remove = (k) => {
@@ -114,9 +125,9 @@ class ProductComponent extends Component {
     if (keys.length === 1) {
       return;
     }
+
     deletedProducts.push(k);
 
-    // can use data-binding to set
     form.setFieldsValue({
       keys: keys.filter(key => key !== k),
     });
@@ -136,137 +147,27 @@ class ProductComponent extends Component {
     });
     if (product !== null) {
       form.setFieldsValue({
-        [`product[${uuid}][0]`]: product['productName'],
-        [`product[${uuid}][1]`]: product['productPrice'],
-        [`product[${uuid}][2]`]: product['productAvailable']
+        [`product[${productId}][0]`]: product['productName'],
+        [`product[${productId}][1]`]: product['productPrice'],
+        [`product[${productId}][2]`]: product['productAvailable']
       });
     }
     uuid++;
   };
 
   render() {
-    const {getFieldDecorator, getFieldValue} = this.props.form;
-    const formItemLayout = {
-      labelCol: {
-        xs: {span: 24},
-      },
-      wrapperCol: {
-        xs: {span: 24},
-      },
-    };
-    const formItemLayoutWithOutLabel = {
-      wrapperCol: {
-        xs: {span: 24},
-      },
-    };
-    getFieldDecorator('keys', {initialValue: []});
-    const keys = getFieldValue('keys');
-    const formItems = keys.map((k, index) => {
-      return (
-          <div key={k}>
-            {index === 0 ? '' : <hr style={{marginBottom: '30px'}}/>}
-            <Row type="flex" align="top" key={k}>
-              <Col span={10} offset={4}>
-                <FormItem
-                    {...(index === 0 ? formItemLayout : formItemLayoutWithOutLabel)}
-                    label={index === 0 ? 'Product name' : ''}
-                    required={false}
-                    key={k}
-                >
-                  {getFieldDecorator(`product[${index}][0]`, {
-                    validateTrigger: ['onChange', 'onBlur'],
-                    rules: [{
-                      required: true,
-                      whitespace: true,
-                      max: 200,
-                      message: "Please input product's name. Max 200 characters.",
-                    }],
-                  })(
-                      <Input placeholder="product name (max: 200)" style={{width: '90%', marginRight: 8}}/>
-                  )}
-                </FormItem>
-              </Col>
-              <Col span={4}>
-                <FormItem
-                    {...(index === 0 ? formItemLayout : formItemLayoutWithOutLabel)}
-                    label={index === 0 ? 'Product price' : ''}
-                    required={false}
-                    key={k}
-                >
-                  {getFieldDecorator(`product[${index}][1]`, {
-                    validateTrigger: ['onChange'],
-                    rules: [{
-                      required: true,
-                      type: 'number',
-                      max: 999,
-                      message: "Input correct number, max 999.",
-                    }],
-
-                  })(
-                      <InputNumber
-                          min={1}
-                          max={999}
-                          precision={2}
-                          placeholder="price (max: 999)"
-                          style={{width: '80%', marginRight: 8}}
-                      />
-                  )}
-                </FormItem>
-              </Col>
-              <Col span={3}>
-                <FormItem
-                    {...formItemLayout}
-                    label={index === 0 ? 'Available' : ''}
-                >
-                  <div className={"deleteDiv"}>
-                    {getFieldDecorator(`product[${index}][2]`, {valuePropName: 'checked', initialValue: true})(
-                        <Switch className={"switch-btn"}/>
-                    )}
-                    {keys.length > 1 ? (
-                        <Icon
-                            className="dynamic-delete-button"
-                            type="minus-circle-o"
-                            disabled={keys.length === 1}
-                            onClick={() => this.remove(k)}
-                            style={{marginLeft: '40px'}}
-                        />
-                    ) : null}
-                  </div>
-                </FormItem>
-              </Col>
-            </Row>
-          </div>
-
-      );
-    });
-
-    const antIcon = <Icon type="loading-3-quarters" style={{fontSize: 30}} spin/>;
-    if (this.state.loading) {
-      return (
-          <div className="loading">
-            <header>
-              <Spin indicator={antIcon} style={{display: 'block', textAlign: 'center', marginTop: 30}}/>
-            </header>
-          </div>
-      )
-    }
     return (
-        <Form onSubmit={this.handleSubmit} layout={"vertical"}>
-          {formItems}
-          <Row type="flex" align="top" key={-1}>
-            <Col span={8} offset={4}>
-              <FormItem {...formItemLayoutWithOutLabel}>
-                <Button type="dashed" onClick={() => this.add(null)} className={"add-btn"}>
-                  <Icon type="plus"/> Add new product
-                </Button>
-              </FormItem>
-              <FormItem {...formItemLayoutWithOutLabel}>
-                <Button type="primary" htmlType="submit">Submit</Button>
-              </FormItem>
-            </Col>
-          </Row>
-        </Form>
-    );
+        <div>
+          <ProductForm
+              {...this.props}
+              loading={this.state.loading}
+              form={this.props.form}
+              add={this.add}
+              remove={this.remove}
+              handleSubmit={this.handleSubmit}
+          />
+        </div>
+    )
   }
 }
 

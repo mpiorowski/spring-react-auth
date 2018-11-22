@@ -21,6 +21,9 @@ export function productNotification(type) {
     case 'noChanges':
       notificationMsg = {title: 'No changes', msg: 'There is nothing to commit. Please check the form again.', type: 'warning'};
       break;
+    default:
+      notificationMsg = {title: 'Application error', msg: 'An error accrued during operations. Sorry!', type: 'error'};
+      break;
   }
 
   notification[notificationMsg.type]({
