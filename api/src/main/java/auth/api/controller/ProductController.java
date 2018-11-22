@@ -20,8 +20,6 @@ import java.util.List;
 @Api(value = "/product", description = "Products operations", produces = "application/json")
 public class ProductController {
 
-  private static final Logger logger = LoggerFactory.getLogger(ProductController.class);
-
   private final ProductMapper productMapper;
 
   @Autowired

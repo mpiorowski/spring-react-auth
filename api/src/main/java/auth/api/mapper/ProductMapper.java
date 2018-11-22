@@ -10,11 +10,6 @@ import java.util.List;
 @Component
 public interface ProductMapper {
 
-  @Insert({
-    "INSERT into products(product_name,product_price,product_available) VALUES(#{productName},#{productPrice},#{productAvailability})"
-  })
-  void insertProduct(Product product);
-
   @Update({
     "INSERT INTO products (product_id, product_name, product_price, product_available) VALUES(#{productId}, #{productName},#{productPrice},#{productAvailable})"
         + " ON CONFLICT (product_id) DO "
