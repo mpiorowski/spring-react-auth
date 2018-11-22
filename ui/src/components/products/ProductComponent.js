@@ -9,6 +9,7 @@ let uuid = 0;
 let productId;
 let oldProducts = [];
 let deletedProducts = [];
+let success1, success2 = false;
 
 class ProductComponent extends Component {
 
@@ -54,16 +55,6 @@ class ProductComponent extends Component {
     this.props.form.validateFields((err, values) => {
       if (!err) {
 
-        // const products = {
-        //   products: values['product']
-        //       .filter((val) => val != null)
-        //       .map((val, index) => {
-        //         let product =  {productId: values['keys'][index] ,productName: val[0], productPrice: val[1], productAvailable: val[2]};
-        //         newArray.push(product);
-        //         return product;
-        //       })
-        // };
-
         const newProducts = values['product']
             .filter((val) => val != null)
             .map((val, index) => {
@@ -81,27 +72,32 @@ class ProductComponent extends Component {
         if (changes !== undefined && changes.length > 0) {
           noChanges = false;
           const products = {products: changes};
-          console.log(products);
           addProducts(products).then(response => {
             if (response) {
-              productNotification("updated");
+              success1 = true;
+              this.checkSuccess();
             }
           }).catch(err => {
             console.log(err);
             productNotification('error');
           });
+        } else {
+          success1 = true;
         }
 
         if (deletedProducts.length > 0 && deletedProducts !== undefined) {
           noChanges = false;
           deleteProducts(deletedProducts).then(response => {
             if (response) {
-              productNotification("deleted");
+              success2 = true;
+              this.checkSuccess();
             }
           }).catch(err => {
             console.log(err);
             productNotification('error');
           });
+        } else {
+          success2 = true;
         }
 
         if (noChanges) {
@@ -115,6 +111,13 @@ class ProductComponent extends Component {
     });
   };
 
+  checkSuccess = () => {
+    if (success1 === true && success2 === true) {
+      productNotification("updated");
+      success1 = success2 = false;
+    }
+  };
+
   remove = (k) => {
     const {form} = this.props;
     // can use data-binding to get
@@ -123,10 +126,8 @@ class ProductComponent extends Component {
     if (keys.length === 1) {
       return;
     }
-    deletedProducts.push(k);
 
-    let test = keys.filter(key => key !== k);
-    console.log(test);
+    deletedProducts.push(k);
 
     form.setFieldsValue({
       keys: keys.filter(key => key !== k),

@@ -97,15 +97,13 @@ class ProductForm extends Component {
                         <Switch className={"switch-btn"}/>
                     )}
                     {keys.length > 1 ? (
-                        <Popconfirm title="Sure to delete?" onConfirm={() => this.props.remove(k)}>
                           <Icon
                               className="dynamic-delete-button"
                               type="minus-circle-o"
                               disabled={keys.length === 1}
-                              // onClick={() => this.props.remove(k)}
+                              onClick={() => this.props.remove(k)}
                               style={{marginLeft: '40px'}}
                           />
-                        </Popconfirm>
                     ) : null}
                   </div>
                 </FormItem>
