@@ -4,7 +4,9 @@ import "./UserComponent.css";
 import {addUser, deleteUser, getAllUsers} from "../../service/UserService";
 import {WrappedUserModalForm} from "./UserModalForm";
 import {userNotification} from "../../notification/UserNotification";
-import {EditableContext} from "./UserEditableCell";
+import {EditableContext, EditableFormRow} from "./UserEditableCell";
+import UserEditableCell from "./UserEditableCell";
+import UserTable from "./UserTable";
 
 class UserComponent extends Component {
 
@@ -12,7 +14,6 @@ class UserComponent extends Component {
     tableLoading: true,
     tableData: [],
     modalVisibility: false,
-    editingKey: null,
   };
 
   componentWillMount() {
@@ -89,95 +90,17 @@ class UserComponent extends Component {
     })
   };
 
-  edit = (key) => {
-    this.setState({
-      editingKey: key,
-    })
-  };
-
-  cancel = (key) => {
-    this.setState({
-      editingKey: null,
-    })
-  };
-
   render() {
 
-    const columns = [{
-      title: 'Username',
-      dataIndex: 'username',
-      editable: true,
-      width: '20%',
-    }, {
-      title: 'Email',
-      dataIndex: 'email',
-      editable: true,
-      width: '20%',
-    }, {
-      title: 'Role',
-      dataIndex: 'role',
-      editable: true,
-      width: '20%',
-    }, {
-      title: 'Action',
-      dataIndex: 'action',
-      width: '20%',
-      render: (text, record) => {
-        return (
-            <div>
-              {
-                this.state.tableData.length >= 1 ? (
-                    <div> {
-                      record.key === this.state.editingKey ? (
-                          <span>
-                        <EditableContext.Consumer>
-                          {form => (
-                              <a href={"javascript:;"}
-                                 style={{marginRight: 8}}>
-                                Save
-                              </a>
-                          )}
-                        </EditableContext.Consumer>
-                        <Popconfirm
-                            title="Sure to cancel?"
-                            onConfirm={() => this.cancel(record.key)}
-                        >
-                        <a>Cancel</a>
-                        </Popconfirm>
-                      </span>
-                      ) : (
-                          <span>
-                        <a onClick={() => this.edit(record.key)}>Edit</a>
-                      </span>
-                      )}
-                      <span style={{marginLeft:8, marginRight:8}}>|</span>
-                      <Popconfirm title="Sure to delete?" onConfirm={() => this.handleDelete(record.key)}>
-                        <button className={"link"}>Delete</button>
-                      </Popconfirm>
-                    </div>
-                ) : null}
-            </div>
-        );
-      },
-    }];
 
-    function onChange() {
-      console.log('dziala');
-    }
 
     return (
         <div>
           <Row type="flex" justify="center" align="top" style={{width: '100%'}}>
             <Col span={18}>
-              <Table
-                  columns={columns}
-                  dataSource={this.state.tableData}
-                  onChange={onChange}
-                  loading={this.state.tableLoading}
-                  className={"userTable"}
-                  size="middle"
-                  // pagination={{pageSize: 2}}
-                  bordered={true}
+              <UserTable
+                tableData={this.state.tableData}
+                tableLoading={this.state.tableLoading}
               />
             </Col>
           </Row>

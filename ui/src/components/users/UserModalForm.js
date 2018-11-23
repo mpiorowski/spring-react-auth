@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {Modal, Form, Input, Radio} from 'antd';
 import "./UserComponent.css";
+import "./UserModalForm.css";
 
 const FormItem = Form.Item;
 const RadioGroup = Radio.Group;

@@ -10,7 +10,7 @@ const EditableRow = ({form, index, ...props}) => (
     </EditableContext.Provider>
 );
 
-const EditableFormRow = Form.create()(EditableRow);
+export const EditableFormRow = Form.create()(EditableRow);
 
 class UserEditableCell extends Component {
 
@@ -35,28 +35,27 @@ class UserEditableCell extends Component {
     } = this.props;
 
     return (
-        <div>
-          <EditableContext.Consumer>
-            {(form) => {
-              const {getFieldDecorator} = form;
-              return (
-                  <td {...restProps}>
-                    {editing ? (
-                        <FormItem style={{margin: 0}}>
-                          {getFieldDecorator(dataIndex, {
-                            rules: [{
-                              required: true,
-                              message: `Please Input ${title} !`,
-                            }],
-                            initialValue: record[dataIndex],
-                          })(this.getInput())}
-                        </FormItem>
-                    ) : restProps.children}
-                  </td>
-              );
-            }}
-          </EditableContext.Consumer>
-        </div>);
+        <EditableContext.Consumer>
+          {(form) => {
+            const { getFieldDecorator } = form;
+            return (
+                <td {...restProps}>
+                  {editing ? (
+                      <FormItem style={{ margin: 0 }}>
+                        {getFieldDecorator(dataIndex, {
+                          rules: [{
+                            required: true,
+                            message: `Please Input ${title}!`,
+                          }],
+                          initialValue: record[dataIndex],
+                        })(this.getInput())}
+                      </FormItem>
+                  ) : restProps.children}
+                </td>
+            );
+          }}
+        </EditableContext.Consumer>
+    );
   }
 }
 
