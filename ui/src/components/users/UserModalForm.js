@@ -10,7 +10,7 @@ class UserModalForm extends Component {
 
   render() {
 
-    const {visible, onCancel, onCreate, form} = this.props;
+    const {visible, form, submitModal, closeModal} = this.props;
     const {getFieldDecorator} = form;
 
     return (
@@ -19,8 +19,8 @@ class UserModalForm extends Component {
               visible={visible}
               title={"Add new user"}
               okText={"Add"}
-              onCancel={onCancel}
-              onOk={onCreate}
+              onCancel={closeModal}
+              onOk={submitModal}
               className={"addModal"}
           >
             <Form layout="vertical">

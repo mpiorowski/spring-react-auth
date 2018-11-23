@@ -1,9 +1,18 @@
 import React, {Component} from 'react';
-import {EditableContext, EditableFormRow} from "./UserEditableCell";
-import {Popconfirm, Table} from "antd";
+import {Form, Popconfirm, Table} from "antd";
 import UserEditableCell from "./UserEditableCell";
 import "./UserComponent.css";
 import "./UserTable.css";
+
+export const EditableContext = React.createContext();
+
+const EditableRow = ({form, index, ...props}) => (
+    <EditableContext.Provider value={form}>
+      <tr {...props} />
+    </EditableContext.Provider>
+);
+
+const EditableFormRow = Form.create()(EditableRow);
 
 class UserTable extends Component {
 

@@ -1,11 +1,9 @@
 import React, {Component} from 'react';
-import {Button, Col, Popconfirm, Row, Table} from 'antd';
+import {Button, Col, Row} from 'antd';
 import "./UserComponent.css";
 import {addUser, deleteUser, getAllUsers} from "../../service/UserService";
 import {WrappedUserModalForm} from "./UserModalForm";
 import {userNotification} from "../../notification/UserNotification";
-import {EditableContext, EditableFormRow} from "./UserEditableCell";
-import UserEditableCell from "./UserEditableCell";
 import UserTable from "./UserTable";
 
 class UserComponent extends Component {
@@ -40,15 +38,6 @@ class UserComponent extends Component {
     });
   };
 
-
-  openModal = () => {
-    this.setState({modalVisibility: true});
-  };
-
-  closeModal = () => {
-    this.setState({modalVisibility: false});
-  };
-
   submitModal = () => {
     const form = this.modalRef.props.form;
     form.validateFields((err, values) => {
@@ -74,10 +63,6 @@ class UserComponent extends Component {
     });
   };
 
-  saveRefModal = (modalRef) => {
-    this.modalRef = modalRef;
-  };
-
   handleDelete = (userId) => {
     deleteUser(userId).then(response => {
       if (response) {
@@ -90,9 +75,19 @@ class UserComponent extends Component {
     })
   };
 
+  saveRefModal = (modalRef) => {
+    this.modalRef = modalRef;
+  };
+
+  openModal = () => {
+    this.setState({modalVisibility: true});
+  };
+
+  closeModal = () => {
+    this.setState({modalVisibility: false});
+  };
+
   render() {
-
-
 
     return (
         <div>
@@ -110,8 +105,8 @@ class UserComponent extends Component {
               <WrappedUserModalForm
                   wrappedComponentRef={this.saveRefModal}
                   visible={this.state.modalVisibility}
-                  onCancel={this.closeModal}
-                  onCreate={this.submitModal}
+                  submitModal={this.submitModal}
+                  closeModal={this.closeModal}
               />
             </Col>
           </Row>

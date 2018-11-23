@@ -1,16 +1,8 @@
 import React, {Component} from 'react';
 import {Form, Input, InputNumber} from 'antd';
+import {EditableContext} from "./UserTable";
 
 const FormItem = Form.Item;
-export const EditableContext = React.createContext();
-
-const EditableRow = ({form, index, ...props}) => (
-    <EditableContext.Provider value={form}>
-      <tr {...props} />
-    </EditableContext.Provider>
-);
-
-export const EditableFormRow = Form.create()(EditableRow);
 
 class UserEditableCell extends Component {
 
@@ -28,9 +20,7 @@ class UserEditableCell extends Component {
       editing,
       dataIndex,
       title,
-      inputType,
       record,
-      index,
       ...restProps
     } = this.props;
 
