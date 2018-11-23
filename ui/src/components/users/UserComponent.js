@@ -4,6 +4,7 @@ import "./UserComponent.css";
 import {addUser, deleteUser, getAllUsers} from "../../service/UserService";
 import {WrappedUserModalForm} from "./UserModalForm";
 import {userNotification} from "../../notification/UserNotification";
+import {EditableContext} from "./UserEditableCell";
 
 class UserComponent extends Component {
 
@@ -11,6 +12,7 @@ class UserComponent extends Component {
     tableLoading: true,
     tableData: [],
     modalVisibility: false,
+    editingKey: null,
   };
 
   componentWillMount() {
@@ -41,9 +43,11 @@ class UserComponent extends Component {
   openModal = () => {
     this.setState({modalVisibility: true});
   };
+
   closeModal = () => {
     this.setState({modalVisibility: false});
   };
+
   submitModal = () => {
     const form = this.modalRef.props.form;
     form.validateFields((err, values) => {
@@ -68,9 +72,11 @@ class UserComponent extends Component {
       }
     });
   };
+
   saveRefModal = (modalRef) => {
     this.modalRef = modalRef;
   };
+
   handleDelete = (userId) => {
     deleteUser(userId).then(response => {
       if (response) {
@@ -83,31 +89,66 @@ class UserComponent extends Component {
     })
   };
 
+
+  edit = (key) => {
+    this.setState({
+      editingKey: key,
+    })
+  };
+
   render() {
 
     const columns = [{
       title: 'Username',
       dataIndex: 'username',
+      editable: true,
+      width: '20%',
     }, {
       title: 'Email',
       dataIndex: 'email',
+      editable: true,
+      width: '20%',
     }, {
       title: 'Role',
       dataIndex: 'role',
+      editable: true,
+      width: '20%',
     }, {
       title: 'Action',
       dataIndex: 'action',
+      width: '20%',
       render: (text, record) => {
-      return (
-          this.state.tableData.length >= 1
-              ? (
-                  <Popconfirm title="Sure to delete?" onConfirm={() => this.handleDelete(record.key)}>
-                    <button className={"link"}>Delete</button>
+        return (
+            <div>
+              {record.key === this.state.editingKey ? (
+                  <span>
+                    <EditableContext.Consumer>
+                      {form => (
+                          <a href={"javascript:;"}
+                             style={{marginRight: 8}}>
+                            Save
+                          </a>
+                      )}
+                    </EditableContext.Consumer>
+                    <Popconfirm
+                        title="Sure to cancel?"
+                    >
+                    <a style={{marginRight: 8}}>Cancel</a>
                   </Popconfirm>
-              ) : null
-      );
-    },
-  }];
+                  </span>
+              ) : (
+                  <a onClick={() => this.edit(record.key)} style={{marginRight: 10}}>Edit</a>
+              )}{this.state.tableData.length >= 1
+                ? (
+                      <Popconfirm title="Sure to delete?" onConfirm={() => this.handleDelete(record.key)}>
+                        <button className={"link"}>Delete</button>
+                      </Popconfirm>
+                ) : null
+            }
+            </div>
+        );
+      },
+    }];
 
     function onChange() {
       console.log('dziala');
