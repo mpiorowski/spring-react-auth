@@ -17,7 +17,7 @@ td {
 }
 
 tr:hover > td {
-    background: gray !important;
+    background: darkslategrey !important;
 }
 
 th {
@@ -45,6 +45,7 @@ th {
 .ant-pagination-item:hover > a, .ant-pagination-next:hover:not(.ant-pagination-disabled) > a, .ant-pagination-prev:hover:not(.ant-pagination-disabled) > a {
     color: #1DA57A !important;
 }
+
 .ant-pagination-disabled > a {
     color:gray !important;
 }

@@ -1,13 +1,14 @@
 import React, {Component} from 'react';
-import {Form, Input, InputNumber} from 'antd';
+import {Form, Input, InputNumber, Radio} from 'antd';
 import {EditableContext} from "./UserTable";
 
 const FormItem = Form.Item;
+const RadioGroup = Radio.Group;
 
 class UserEditableCell extends Component {
 
   getInput = () => {
-    if (this.props.inputType === 'number') {
+    if (this.props.inputtype === 'number') {
       return <InputNumber/>;
     }
     return <Input/>;
@@ -27,18 +28,34 @@ class UserEditableCell extends Component {
     return (
         <EditableContext.Consumer>
           {(form) => {
-            const { getFieldDecorator } = form;
+            const {getFieldDecorator} = form;
             return (
                 <td {...restProps}>
                   {editing ? (
-                      <FormItem style={{ margin: 0 }}>
-                        {getFieldDecorator(dataIndex, {
-                          rules: [{
-                            required: true,
-                            message: `Please Input ${title}!`,
-                          }],
-                          initialValue: record[dataIndex],
-                        })(this.getInput())}
+                      <FormItem style={{margin: 0}}>
+                        {dataIndex === 'role' ? (
+                            getFieldDecorator(dataIndex, {
+                              rules: [{
+                                required: true,
+                                message: `Please Input ${title}!`,
+                              }],
+                              initialValue: record[dataIndex],
+                            })(
+                                <RadioGroup>
+                                  <Radio value="admin">Admin</Radio>
+                                  <Radio value="user">User</Radio>
+                                </RadioGroup>
+                            )
+                        ) : (
+                            getFieldDecorator(dataIndex, {
+                              rules: [{
+                                required: true,
+                                message: `Please Input ${title}!`,
+                              }],
+                              initialValue: record[dataIndex],
+                            })(this.getInput())
+                        )}
+
                       </FormItem>
                   ) : restProps.children}
                 </td>

@@ -55,22 +55,19 @@ class UserTable extends Component {
                           <span>
                             <EditableContext.Consumer>
                               {form => (
-                                  <a href={"javascript:;"}
-                                     style={{marginRight: 8}}>
-                                    Save
-                                  </a>
+                                  <button className={"link"} style={{marginRight: 8}}>Save</button>
                               )}
                             </EditableContext.Consumer>
                             <Popconfirm
                                 title="Sure to cancel?"
                                 onConfirm={() => this.cancel()}
                             >
-                            <a>Cancel</a>
+                            <button className={"link"}>Cancel</button>
                             </Popconfirm>
                           </span>
                       ) : (
                           <span>
-                            <a onClick={() => this.edit(record.key)}>Edit</a>
+                            <button className={"link"} onClick={() => this.edit(record.key)}>Edit</button>
                           </span>
                       )}
                       <span style={{marginLeft: 8, marginRight: 8}}>|</span>
@@ -119,7 +116,7 @@ class UserTable extends Component {
         ...col,
         onCell: record => ({
           record,
-          inputType: 'text',
+          inputtype: 'text',
           dataIndex: col.dataIndex,
           title: col.title,
           editing: record.key === this.state.editingKey,

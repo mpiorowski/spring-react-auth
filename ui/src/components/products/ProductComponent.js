@@ -5,7 +5,6 @@ import {addProducts, deleteProducts, getAllProducts} from "../../service/Product
 import {productNotification} from "../../notification/ProductNotification";
 import ProductForm from "./ProductForm";
 
-let uuid = 0;
 let productId;
 let oldProducts = [];
 let deletedProducts = [];
@@ -152,7 +151,6 @@ class ProductComponent extends Component {
         [`product[${productId}][2]`]: product['productAvailable']
       });
     }
-    uuid++;
   };
 
   render() {
