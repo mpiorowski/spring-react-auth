@@ -89,10 +89,15 @@ class UserComponent extends Component {
     })
   };
 
-
   edit = (key) => {
     this.setState({
       editingKey: key,
+    })
+  };
+
+  cancel = (key) => {
+    this.setState({
+      editingKey: null,
     })
   };
 
@@ -120,31 +125,37 @@ class UserComponent extends Component {
       render: (text, record) => {
         return (
             <div>
-              {record.key === this.state.editingKey ? (
-                  <span>
-                    <EditableContext.Consumer>
-                      {form => (
-                          <a href={"javascript:;"}
-                             style={{marginRight: 8}}>
-                            Save
-                          </a>
+              {
+                this.state.tableData.length >= 1 ? (
+                    <div> {
+                      record.key === this.state.editingKey ? (
+                          <span>
+                        <EditableContext.Consumer>
+                          {form => (
+                              <a href={"javascript:;"}
+                                 style={{marginRight: 8}}>
+                                Save
+                              </a>
+                          )}
+                        </EditableContext.Consumer>
+                        <Popconfirm
+                            title="Sure to cancel?"
+                            onConfirm={() => this.cancel(record.key)}
+                        >
+                        <a>Cancel</a>
+                        </Popconfirm>
+                      </span>
+                      ) : (
+                          <span>
+                        <a onClick={() => this.edit(record.key)}>Edit</a>
+                      </span>
                       )}
-                    </EditableContext.Consumer>
-                    <Popconfirm
-                        title="Sure to cancel?"
-                    >
-                    <a style={{marginRight: 8}}>Cancel</a>
-                  </Popconfirm>
-                  </span>
-              ) : (
-                  <a onClick={() => this.edit(record.key)} style={{marginRight: 10}}>Edit</a>
-              )}{this.state.tableData.length >= 1
-                ? (
+                      <span style={{marginLeft:8, marginRight:8}}>|</span>
                       <Popconfirm title="Sure to delete?" onConfirm={() => this.handleDelete(record.key)}>
                         <button className={"link"}>Delete</button>
                       </Popconfirm>
-                ) : null
-            }
+                    </div>
+                ) : null}
             </div>
         );
       },
