@@ -5,9 +5,9 @@ Simple application with separate frontend and backend, connected to postgresql d
 Frontend  -> react + antd + babel  
 Backend   -> spring boot + flyway + mybatis + postgresql
 
-## Basic access
-via http://localhost:3000 (dev) or http://localhost:5000 (prod)  
-username: mat  
+## Initial credentials
+http://localhost:3000 (dev) or http://localhost:5000 (prod)  
+username: user  
 password: pass  
 
 # Installation
@@ -15,29 +15,32 @@ password: pass
 ## Prerequisites and Dependencies
 Prerequisites: node, npm, java, maven, docker
 
-Install required dependencies (not needed for production instalation using docker)
+Dependencies (not needed for production installation using docker):
 ```
 mvn -f ./api clean dependency:resolve; \
 npm --prefix ./ui install ./ui
 ```
 
-## Docker instalation
-
-### prod
-This one line creates a production ready downsized containers. After the automatic startup, which may take a while, the application is ready to work.
-```
-docker-compose -f ./docker/docker-compose.prod.yml up -d --build
-```
-Access via http://localhost:5000
+## Docker installation
 
 ### dev
-Creates a more "fat" containers, which are ready for develompment (live code reloading).
+Creates a "fat" containers, which are ready for development.  
+Frontend live-reloading available.
 ```
 docker-compose -f ./docker/docker-compose.dev.yml up -d --build
 ```
 Access via http://localhost:3000
 
-## Manual instalation
+### prod
+This one line creates a production ready downsized containers.  
+Only docker is needed as prerequisites, no need to download any dependencies.  
+After the automatic startup, which may take a while, the application is ready to work.  
+```
+docker-compose -f ./docker/docker-compose.prod.yml up -d --build
+```
+Access via http://localhost:5000
+
+## Manual installation
 
 ### database
 PostgreSQL (configuration in application.yml):  
