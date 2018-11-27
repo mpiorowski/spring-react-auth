@@ -1,5 +1,7 @@
 package auth.api.controller;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -29,43 +31,60 @@ public class UserController {
     this.userMapper = userMapper;
   }
 
-  @Autowired PasswordEncoder passwordEncoder() {
+  PasswordEncoder passwordEncoder() {
     return new BCryptPasswordEncoder();
   }
 
   @GetMapping("/all")
   @ApiOperation(value = "return all users")
-  @ApiResponses(value ={
-    @ApiResponse(code=200, message = "All users returned"),
-    @ApiResponse(code=500, message="Internal Server Error"),
-    @ApiResponse(code=404, message="User not found")
-  })
+  @ApiResponses(
+      value = {
+        @ApiResponse(code = 200, message = "All users returned"),
+        @ApiResponse(code = 500, message = "Internal Server Error"),
+        @ApiResponse(code = 404, message = "User not found")
+      })
   public ResponseEntity allUsers() {
     return ResponseEntity.ok(userMapper.findAll());
   }
 
   @PostMapping("/add")
   @Transactional
-  public ResponseEntity addUser(@Valid @RequestBody UserRequest userRequest) {
+  public ResponseEntity addUser(@Valid @RequestBody User user) {
+
     try {
-      User user = userRequest.getUser();
-      user.setPassword(passwordEncoder().encode(user.getPassword()));
+
+      user.setUserPassword(passwordEncoder().encode(user.getUserPassword()));
       userMapper.insertUser(user);
+      Integer userId = userMapper.findByUserName(user.getUserName()).getUserId();
+      return ResponseEntity.ok(userId);
+
+    } catch (NullPointerException e) {
+      return ResponseEntity.ok(e);
+    }
+
+  }
+
+  @CrossOrigin
+  @PutMapping("/update")
+  @Transactional
+  public ResponseEntity updateUser(@Valid @RequestBody User user) {
+    try {
+      userMapper.updateUser(user);
+      return ResponseEntity.ok("true");
     } catch (NullPointerException e) {
       return ResponseEntity.ok(e.getMessage());
     }
-    return ResponseEntity.ok("true");
   }
 
   @CrossOrigin
   @DeleteMapping("/delete")
   @Transactional
-  public ResponseEntity deleteUser(@RequestBody Integer userId) {
+  public ResponseEntity deleteUser(@Valid @RequestBody Integer userId) {
     try {
       userMapper.deleteUser(userId);
+      return ResponseEntity.ok("true");
     } catch (NullPointerException e) {
       return ResponseEntity.ok(e.getMessage());
     }
-    return ResponseEntity.ok("true");
   }
 }

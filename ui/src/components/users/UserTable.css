@@ -1,0 +1,61 @@
+table {
+    border-collapse: separate !important;
+    border-spacing: 0 !important;
+    border-color: rgba(0,0,0,0.2) !important;
+}
+
+table > tbody, td, tr, th {
+    border-color: rgba(0,0,0,0.2) !important;
+}
+
+table > th {
+    border-spacing: inherit !important;
+}
+
+td {
+    color: white !important;
+}
+
+tr:hover > td {
+    background: darkslategrey !important;
+}
+
+th {
+    background-color: #1DA57A !important;
+    color: white !important;
+}
+
+.ant-pagination-item {
+    background: #282c34;
+}
+
+.ant-pagination-item-link {
+    color: white !important;
+}
+
+.ant-table-placeholder {
+    background: #282c34;
+    color: white;
+}
+
+.ant-pagination-item:not(.ant-pagination-item-active) > a {
+    color: white !important;
+}
+
+.ant-pagination-item:hover > a, .ant-pagination-next:hover:not(.ant-pagination-disabled) > a, .ant-pagination-prev:hover:not(.ant-pagination-disabled) > a {
+    color: #1DA57A !important;
+}
+
+.ant-pagination-disabled > a {
+    color:gray !important;
+}
+
+.editable-row .ant-form-explain {
+    position: absolute;
+    font-size: 12px;
+    margin-top: -4px;
+}
+
+.ant-table-placeholder {
+    border-color: black !important;
+}

@@ -11,13 +11,27 @@ import java.util.List;
 @Component
 public interface UserMapper {
 
-  @Insert({"INSERT into users(user_name,user_mail,user_password,user_role) VALUES(#{username},#{email},#{password},#{role})"})
+  @Insert({"INSERT into users(user_name,user_email,user_password,user_role) VALUES(#{userName},#{userEmail},#{userPassword},#{userRole})"})
   void insertUser(User user);
 
-  @Select("SELECT * FROM users where user_name = #{username}")
-  User findByUserUsername(String username);
+  @Update({"UPDATE users set user_name = #{userName}, user_email = #{userEmail}, user_role = #{userRole} where user_id = #{userId}"})
+  void updateUser(User user);
 
-  @Select("SELECT user_id, user_name, user_mail, user_role FROM users")
+  @Select("SELECT " +
+      "user_id as userId, " +
+      "user_name as userName, " +
+      "user_email as userEmail, " +
+      "user_password as userPassword, " +
+      "user_role as userRole " +
+      "FROM users where user_name = #{userName}")
+  User findByUserName(String userName);
+
+  @Select("SELECT " +
+      "user_id as userId, " +
+      "user_name as userName, " +
+      "user_email as userEmail, " +
+      "user_role as userRole " +
+      " FROM users order by user_id")
   List<User> findAll();
 
   @Delete("DELETE FROM users where user_id = #{userId}")

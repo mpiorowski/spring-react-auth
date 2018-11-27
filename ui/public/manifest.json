@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Stateless Auth App",
+  "name": "Sample auth app with react and spring",
   "icons": [
     {
       "src": "favicon.ico",

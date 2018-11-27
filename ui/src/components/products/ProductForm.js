@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Button, Col, Form, Icon, Input, InputNumber, Popconfirm, Row, Spin, Switch} from "antd";
+import {Button, Col, Form, Icon, Input, InputNumber, Row, Spin, Switch} from "antd";
 
 const FormItem = Form.Item;
 class ProductForm extends Component {

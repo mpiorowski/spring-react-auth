@@ -1,0 +1,8 @@
+
+.ant-modal-content, .ant-modal-header {
+    background: #282c34 !important;
+}
+
+.ant-modal-title, .ant-modal-close:not(:hover) {
+    color: white !important;
+}

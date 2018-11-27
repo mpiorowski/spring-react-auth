@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {Modal, Form, Input, Radio} from 'antd';
 import "./UserComponent.css";
+import "./UserModalForm.css";
 
 const FormItem = Form.Item;
 const RadioGroup = Radio.Group;
@@ -9,7 +10,7 @@ class UserModalForm extends Component {
 
   render() {
 
-    const {visible, onCancel, onCreate, form} = this.props;
+    const {visible, form, submitModal, closeModal} = this.props;
     const {getFieldDecorator} = form;
 
     return (
@@ -18,13 +19,13 @@ class UserModalForm extends Component {
               visible={visible}
               title={"Add new user"}
               okText={"Add"}
-              onCancel={onCancel}
-              onOk={onCreate}
+              onCancel={closeModal}
+              onOk={submitModal}
               className={"addModal"}
           >
             <Form layout="vertical">
               <FormItem label="Username" required={false}>
-                {getFieldDecorator('username', {
+                {getFieldDecorator('userName', {
                   validateTrigger: ['onChange', 'onBlur'],
                   rules: [{
                     required: true,
@@ -38,7 +39,7 @@ class UserModalForm extends Component {
                 )}
               </FormItem>
               <FormItem label="Email" required={false}>
-                {getFieldDecorator('email', {
+                {getFieldDecorator('userEmail', {
                   validateTrigger: ['onBlur'],
                   rules: [{
                     required: true,
@@ -52,7 +53,7 @@ class UserModalForm extends Component {
                 )}
               </FormItem>
               <FormItem label="Password" required={false}>
-                {getFieldDecorator('password', {
+                {getFieldDecorator('userPassword', {
                   validateTrigger: ['onChange', 'onBlur'],
                   rules: [{
                     required: true,
@@ -66,7 +67,7 @@ class UserModalForm extends Component {
                 )}
               </FormItem>
               <FormItem label="Role" required={false}>
-                {getFieldDecorator('role', {
+                {getFieldDecorator('userRole', {
                   initialValue: "admin"
                 })(
                     <RadioGroup>
