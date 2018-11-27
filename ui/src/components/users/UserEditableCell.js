@@ -7,13 +7,6 @@ const RadioGroup = Radio.Group;
 
 class UserEditableCell extends Component {
 
-  getInput = () => {
-    if (this.props.type === 'number') {
-      return <InputNumber/>;
-    }
-    return <Input/>;
-  };
-
   getFormItem = (dataIndex, form, record) => {
     const {getFieldDecorator} = form;
     switch (dataIndex) {
@@ -96,32 +89,6 @@ class UserEditableCell extends Component {
     );
   }
 }
-//
-// <FormItem style={{margin: 0}}>
-//   {dataIndex === 'userRole' ? (
-//       getFieldDecorator(dataIndex, {
-//         rules: [{
-//           required: true,
-//           message: `Please Input ${title}!`,
-//         }],
-//         initialValue: record[dataIndex],
-//       })(
-//           <RadioGroup>
-//             <Radio value="admin">Admin</Radio>
-//             <Radio value="user">User</Radio>
-//           </RadioGroup>
-//       )
-//   ) : (
-//       getFieldDecorator(dataIndex, {
-//         rules: [{
-//           required: true,
-//           message: `Please Input ${title}!`,
-//         }],
-//         initialValue: record[dataIndex],
-//       })(this.getInput())
-//   )}
-//
-// </FormItem>
 
 export default UserEditableCell;
 
