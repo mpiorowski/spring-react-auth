@@ -1,6 +1,6 @@
 # Simple jwt authorization app with spring-boot, react and postgresql
 
-Simple application with separate frontend and backend, connected to postgresql database. Authorization via jwt tokens. Offers a simple ui to manage users and simple products data.
+Simple application with separate frontend and backend, connected to postgresql database. Authorization via jwt tokens. Offers a basic ui to manage users and products data.
 
 Frontend  -> react + antd + babel  
 Backend   -> spring boot + flyway + mybatis + postgresql
@@ -15,13 +15,13 @@ password: pass
 ## Prerequisites and Dependencies
 Prerequisites: node, npm, java, maven, docker
 
-Install required dependencies (not needed for production instalation via docker)
+Install required dependencies (not needed for production instalation using docker)
 ```
-mvn -f ./api clean dependency:resolve
+mvn -f ./api clean dependency:resolve; \
 npm --prefix ./ui install ./ui
 ```
 
-## via Docker
+## Docker instalation
 
 ### prod
 This one line creates a production ready downsized containers. After the automatic startup, which may take a while, the application is ready to work.
@@ -37,7 +37,7 @@ docker-compose -f ./docker/docker-compose.dev.yml up -d --build
 ```
 Access via http://localhost:3000
 
-## Manually
+## Manual instalation
 
 ### database
 PostgreSQL (configuration in application.yml):  
@@ -65,11 +65,12 @@ Access via http://localhost:3000
 ### prod
 Run two separate shell windows for frontend and backend.
 ```
-mvn -f ./api clean package && java -jar ./api/target/api-0.0.1-SNAPSHOT.jar
+mvn -f ./api clean package; \ 
+java -jar ./api/target/api-0.0.1-SNAPSHOT.jar
 ```
 ```
-npm --prefix ./ui run build
-npm install -g serve
+npm --prefix ./ui run build; \
+npm install -g serve; \
 serve -s ./ui/build
 ```
 Access via http://localhost:5000
