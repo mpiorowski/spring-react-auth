@@ -1,6 +1,6 @@
 # Simple jwt authorization app with spring-boot, react and postgresql
 
-Simple application with seperate frontend and backend, connected to postgresql database. Authorization via jwt tokens. Offers a simple ui to manage users and simple products data.
+Simple application with separate frontend and backend, connected to postgresql database. Authorization via jwt tokens. Offers a simple ui to manage users and simple products data.
 
 Frontend  -> react + antd + babel  
 Backend   -> spring boot + flyway + mybatis + postgresql
@@ -10,7 +10,7 @@ via http://localhost:3000 (dev) or http://localhost:5000 (prod)
 username: mat  
 password: pass  
 
-# Instalation
+# Installation
 
 ## Prerequisites and Dependencies
 Prerequisites: node, npm, java, maven, docker
@@ -51,6 +51,17 @@ or You can use docker-compose to setup simple database container
 docker-compose -f ./docker/docker-compose.database.yml up -d --build
 ```
 
+### dev
+Run two separate shell windows for frontend and backend.
+(Or just use your favorite IDE :) )
+```
+mvn -f ./api spring-boot:run
+```
+```
+npm --prefix ./ui start
+```
+Access via http://localhost:3000
+
 ### prod
 Run two separate shell windows for frontend and backend.
 ```
@@ -62,12 +73,3 @@ npm install -g serve
 serve -s ./ui/build
 ```
 Access via http://localhost:5000
-### dev
-Run two separate shell windows for frontend and backend.
-```
-mvn -f ./api spring-boot:run
-```
-```
-npm --prefix ./ui start
-```
-Access via http://localhost:3000

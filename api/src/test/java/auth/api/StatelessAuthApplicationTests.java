@@ -30,14 +30,14 @@ public class StatelessAuthApplicationTests {
   @Test
   public void contextLoads() {
 
-    User user = userMapper.findByUserUsername("mat");
-    assertThat(user.getUsername()).isEqualTo("mat");
-    assertThat(user.getRole()).isEqualTo("admin");
-    assertThat(user.getEmail()).isEqualTo("mat@gmail.com");
+    User user = userMapper.findByUserName("mat");
+    assertThat(user.getUserName()).isEqualTo("mat");
+    assertThat(user.getUserRole()).isEqualTo("admin");
+    assertThat(user.getUserEmail()).isEqualTo("mat@gmail.com");
 
     BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-    assertThat(user.getPassword().equals("pass")).isFalse();
-    assertThat(encoder.matches("pass", user.getPassword())).isTrue();
+    assertThat(user.getUserPassword().equals("pass")).isFalse();
+    assertThat(encoder.matches("pass", user.getUserPassword())).isTrue();
 
   }
 }

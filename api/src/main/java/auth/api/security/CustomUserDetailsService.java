@@ -23,7 +23,7 @@ public class CustomUserDetailsService implements UserDetailsService {
   @Transactional
   public UserDetails loadUserByUsername(String username) {
 
-      User user = userMapper.findByUserUsername(username);
+      User user = userMapper.findByUserName(username);
       if (user == null) {
         throw new UsernameNotFoundException("User not found with username");
       } else {

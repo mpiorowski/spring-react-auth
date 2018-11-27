@@ -25,7 +25,7 @@ class UserModalForm extends Component {
           >
             <Form layout="vertical">
               <FormItem label="Username" required={false}>
-                {getFieldDecorator('username', {
+                {getFieldDecorator('userName', {
                   validateTrigger: ['onChange', 'onBlur'],
                   rules: [{
                     required: true,
@@ -39,7 +39,7 @@ class UserModalForm extends Component {
                 )}
               </FormItem>
               <FormItem label="Email" required={false}>
-                {getFieldDecorator('email', {
+                {getFieldDecorator('userEmail', {
                   validateTrigger: ['onBlur'],
                   rules: [{
                     required: true,
@@ -53,7 +53,7 @@ class UserModalForm extends Component {
                 )}
               </FormItem>
               <FormItem label="Password" required={false}>
-                {getFieldDecorator('password', {
+                {getFieldDecorator('userPassword', {
                   validateTrigger: ['onChange', 'onBlur'],
                   rules: [{
                     required: true,
@@ -67,7 +67,7 @@ class UserModalForm extends Component {
                 )}
               </FormItem>
               <FormItem label="Role" required={false}>
-                {getFieldDecorator('role', {
+                {getFieldDecorator('userRole', {
                   initialValue: "admin"
                 })(
                     <RadioGroup>

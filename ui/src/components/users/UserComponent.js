@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Button, Col, Row} from 'antd';
 import "./UserComponent.css";
-import {addUser, deleteUser, getAllUsers} from "../../service/UserService";
+import {addUser, deleteUser, getAllUsers, updateUser} from "../../service/UserService";
 import {WrappedUserModalForm} from "./UserModalForm";
 import {userNotification} from "../../notification/UserNotification";
 import UserTable from "./UserTable";
@@ -25,13 +25,13 @@ class UserComponent extends Component {
     });
   }
 
-  add = (val) => {
+  add = (val, key = null) => {
     const tableData = this.state.tableData;
     tableData.push({
-      key: val.id,
-      username: val.username,
-      email: val.email,
-      role: val.role ? val.role : 'admin',
+      key: key === null ? val.userId : key,
+      userName: val.userName,
+      userEmail: val.userEmail,
+      userRole: val.userRole ? val.userRole : 'admin',
     });
     this.setState({
       tableData: tableData,
@@ -42,15 +42,12 @@ class UserComponent extends Component {
     const form = this.modalRef.props.form;
     form.validateFields((err, values) => {
       if (!err) {
-        const user = {
-          "user": values
-        };
-        addUser(user).then(response => {
+        addUser(values).then(response => {
           if (response) {
             form.resetFields();
             this.setState({modalVisibility: false});
             userNotification('success');
-            this.add(values);
+            this.add(values, response);
           }
         }).catch(err => {
           console.log(err);
@@ -60,6 +57,53 @@ class UserComponent extends Component {
         console.log(err);
         userNotification('form');
       }
+    });
+  };
+
+  saveRefModal = (modalRef) => {
+    this.modalRef = modalRef;
+  };
+
+  openModal = () => {
+    this.setState({modalVisibility: true});
+  };
+
+  closeModal = () => {
+    this.setState({modalVisibility: false});
+  };
+
+
+  submitRow = (form, key) => {
+    form.validateFields((error, row) => {
+      if (error) {
+        userNotification("error");
+        return;
+      }
+      const newData = [...this.state.tableData];
+      const index = newData.findIndex(item => key === item.key);
+      if (index > -1) {
+        const item = newData[index];
+        newData.splice(index, 1, {
+          ...item,
+          ...row,
+        });
+        this.setState({tableData: newData});
+      } else {
+        newData.push(row);
+        this.setState({tableData: newData});
+      }
+
+      const user = {userId: key, ...row};
+
+      updateUser(user).then(response => {
+        if (response) {
+          userNotification("updated");
+        }
+      }).catch(err => {
+        console.log(err);
+        userNotification("error");
+      });
+
     });
   };
 
@@ -75,18 +119,6 @@ class UserComponent extends Component {
     })
   };
 
-  saveRefModal = (modalRef) => {
-    this.modalRef = modalRef;
-  };
-
-  openModal = () => {
-    this.setState({modalVisibility: true});
-  };
-
-  closeModal = () => {
-    this.setState({modalVisibility: false});
-  };
-
   render() {
 
     return (
@@ -94,8 +126,10 @@ class UserComponent extends Component {
           <Row type="flex" justify="center" align="top" style={{width: '100%'}}>
             <Col span={18}>
               <UserTable
-                tableData={this.state.tableData}
-                tableLoading={this.state.tableLoading}
+                  tableData={this.state.tableData}
+                  tableLoading={this.state.tableLoading}
+                  submitRow={this.submitRow}
+                  handleDelete={this.handleDelete}
               />
             </Col>
           </Row>

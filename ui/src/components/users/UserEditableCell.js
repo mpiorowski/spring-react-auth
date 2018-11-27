@@ -8,7 +8,7 @@ const RadioGroup = Radio.Group;
 class UserEditableCell extends Component {
 
   getInput = () => {
-    if (this.props.inputtype === 'number') {
+    if (this.props.type === 'number') {
       return <InputNumber/>;
     }
     return <Input/>;
@@ -33,7 +33,7 @@ class UserEditableCell extends Component {
                 <td {...restProps}>
                   {editing ? (
                       <FormItem style={{margin: 0}}>
-                        {dataIndex === 'role' ? (
+                        {dataIndex === 'userRole' ? (
                             getFieldDecorator(dataIndex, {
                               rules: [{
                                 required: true,

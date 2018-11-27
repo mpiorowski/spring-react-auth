@@ -23,18 +23,18 @@ public class CustomUserPrincipal implements UserDetails {
   @Override
   public Collection<? extends GrantedAuthority> getAuthorities() {
     final List<GrantedAuthority> authorities = new ArrayList<>();
-    authorities.add(new SimpleGrantedAuthority(user.getRole()));
+    authorities.add(new SimpleGrantedAuthority(user.getUserRole()));
     return authorities;
   }
 
   @Override
   public String getPassword() {
-    return user.getPassword();
+    return user.getUserPassword();
   }
 
   @Override
   public String getUsername() {
-    return user.getUsername();
+    return user.getUserName();
   }
 
   @Override

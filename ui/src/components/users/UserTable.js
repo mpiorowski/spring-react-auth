@@ -27,17 +27,17 @@ class UserTable extends Component {
   setColumns = () => {
     return [{
       title: 'Username',
-      dataIndex: 'username',
+      dataIndex: 'userName',
       editable: true,
       width: '20%',
     }, {
       title: 'Email',
-      dataIndex: 'email',
+      dataIndex: 'userEmail',
       editable: true,
       width: '20%',
     }, {
       title: 'Role',
-      dataIndex: 'role',
+      dataIndex: 'userRole',
       editable: true,
       width: '20%',
     }, {
@@ -55,7 +55,7 @@ class UserTable extends Component {
                           <span>
                             <EditableContext.Consumer>
                               {form => (
-                                  <button className={"link"} style={{marginRight: 8}}>Save</button>
+                                  <button className={"link"} style={{marginRight: 8}} onClick={() => this.submitRow(form, record.key)} >Save</button>
                               )}
                             </EditableContext.Consumer>
                             <Popconfirm
@@ -71,7 +71,7 @@ class UserTable extends Component {
                           </span>
                       )}
                       <span style={{marginLeft: 8, marginRight: 8}}>|</span>
-                      <Popconfirm title="Sure to delete?" onConfirm={() => this.handleDelete(record.key)}>
+                      <Popconfirm title="Sure to delete?" onConfirm={() => this.props.handleDelete(record.key)}>
                         <button className={"link"}>Delete</button>
                       </Popconfirm>
                     </div>
@@ -80,6 +80,11 @@ class UserTable extends Component {
         );
       },
     }];
+  };
+
+  submitRow = (form, key) => {
+    this.cancel();
+    this.props.submitRow(form, key);
   };
 
 
@@ -116,7 +121,7 @@ class UserTable extends Component {
         ...col,
         onCell: record => ({
           record,
-          inputtype: 'text',
+          type: 'text',
           dataIndex: col.dataIndex,
           title: col.title,
           editing: record.key === this.state.editingKey,
