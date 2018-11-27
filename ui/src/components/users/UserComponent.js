@@ -12,6 +12,7 @@ class UserComponent extends Component {
     tableLoading: true,
     tableData: [],
     modalVisibility: false,
+    editingKey: null,
   };
 
   componentWillMount() {
@@ -73,7 +74,7 @@ class UserComponent extends Component {
   };
 
 
-  submitRow = (form, key) => {
+  submitEdit = (form, key) => {
     form.validateFields((error, row) => {
       if (error) {
         userNotification("error");
@@ -98,6 +99,7 @@ class UserComponent extends Component {
       updateUser(user).then(response => {
         if (response) {
           userNotification("updated");
+          this.cancelEdit();
         }
       }).catch(err => {
         console.log(err);
@@ -105,6 +107,18 @@ class UserComponent extends Component {
       });
 
     });
+  };
+
+  cancelEdit = () => {
+    this.setState({
+      editingKey: null,
+    })
+  };
+
+  edit = (key) => {
+    this.setState({
+      editingKey: key,
+    })
   };
 
   handleDelete = (userId) => {
@@ -128,7 +142,10 @@ class UserComponent extends Component {
               <UserTable
                   tableData={this.state.tableData}
                   tableLoading={this.state.tableLoading}
-                  submitRow={this.submitRow}
+                  editingKey={this.state.editingKey}
+                  submitEdit={this.submitEdit}
+                  cancelEdit={this.cancelEdit}
+                  edit={this.edit}
                   handleDelete={this.handleDelete}
               />
             </Col>

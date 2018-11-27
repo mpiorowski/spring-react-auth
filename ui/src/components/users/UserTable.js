@@ -19,9 +19,6 @@ class UserTable extends Component {
   constructor(props) {
     super(props);
     this.columns = this.setColumns();
-    this.state = {
-      editingKey: null
-    }
   }
 
   setColumns = () => {
@@ -51,23 +48,23 @@ class UserTable extends Component {
               {
                 this.props.tableData.length >= 1 ? (
                     <div> {
-                      record.key === this.state.editingKey ? (
+                      record.key === this.props.editingKey ? (
                           <span>
                             <EditableContext.Consumer>
                               {form => (
-                                  <button className={"link"} style={{marginRight: 8}} onClick={() => this.submitRow(form, record.key)} >Save</button>
+                                  <button className={"link"} style={{marginRight: 8}} onClick={() => this.props.submitEdit(form, record.key)} >Save</button>
                               )}
                             </EditableContext.Consumer>
                             <Popconfirm
                                 title="Sure to cancel?"
-                                onConfirm={() => this.cancel()}
+                                onConfirm={() => this.props.cancelEdit()}
                             >
                             <button className={"link"}>Cancel</button>
                             </Popconfirm>
                           </span>
                       ) : (
                           <span>
-                            <button className={"link"} onClick={() => this.edit(record.key)}>Edit</button>
+                            <button className={"link"} onClick={() => this.props.edit(record.key)}>Edit</button>
                           </span>
                       )}
                       <span style={{marginLeft: 8, marginRight: 8}}>|</span>
@@ -82,26 +79,8 @@ class UserTable extends Component {
     }];
   };
 
-  submitRow = (form, key) => {
-    this.cancel();
-    this.props.submitRow(form, key);
-  };
-
-
-  edit = (key) => {
-    this.setState({
-      editingKey: key,
-    })
-  };
-
-  cancel = () => {
-    this.setState({
-      editingKey: null,
-    })
-  };
-
   onChange = () => {
-    console.log('dziala');
+    console.log('change');
   };
 
   render() {
@@ -124,7 +103,7 @@ class UserTable extends Component {
           type: 'text',
           dataIndex: col.dataIndex,
           title: col.title,
-          editing: record.key === this.state.editingKey,
+          editing: record.key === this.props.editingKey,
         }),
       };
     });
