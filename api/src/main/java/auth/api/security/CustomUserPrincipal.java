@@ -1,12 +1,9 @@
 package auth.api.security;
 
-import org.springframework.context.annotation.Bean;
+import auth.api.dao.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import auth.api.dao.User;
 
 import java.util.ArrayList;
 import java.util.Collection;

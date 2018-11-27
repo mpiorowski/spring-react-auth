@@ -1,27 +1,23 @@
 package auth.api.controller;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import auth.api.dao.User;
+import auth.api.mapper.UserMapper;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
-import auth.api.dao.User;
-import auth.api.mapper.UserMapper;
-import auth.api.traffic.UserRequest;
 
 import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/user")
-@Api(value = "/user", description = "Users operations", produces = "application/json")
+@Api(value = "/user", produces = "application/json")
 public class UserController {
 
   private final UserMapper userMapper;

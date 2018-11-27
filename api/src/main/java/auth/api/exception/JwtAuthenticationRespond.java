@@ -6,15 +6,14 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.stereotype.Component;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @Component
-public class JwtAuthenticationException implements AuthenticationEntryPoint {
+public class JwtAuthenticationRespond implements AuthenticationEntryPoint {
 
-  private static final Logger LOGGER = LoggerFactory.getLogger(JwtAuthenticationException.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger(JwtAuthenticationRespond.class);
 
   @Override
   public void commence(

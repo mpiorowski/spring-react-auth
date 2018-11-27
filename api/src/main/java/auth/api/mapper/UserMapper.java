@@ -1,9 +1,8 @@
 package auth.api.mapper;
 
-import org.apache.ibatis.annotations.*;
-import org.apache.ibatis.mapping.StatementType;
-import org.springframework.stereotype.Component;
 import auth.api.dao.User;
+import org.apache.ibatis.annotations.*;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 

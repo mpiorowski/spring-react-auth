@@ -1,5 +1,8 @@
 package auth.api.config;
 
+import auth.api.exception.JwtAuthenticationRespond;
+import auth.api.security.CustomUserDetailsService;
+import auth.api.security.JwtAuthenticationFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,20 +16,17 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import auth.api.security.CustomUserDetailsService;
-import auth.api.exception.JwtAuthenticationException;
-import auth.api.security.JwtAuthenticationFilter;
 
 @Configuration
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
   private final CustomUserDetailsService customUserDetailsService;
-  private final JwtAuthenticationException jwtAuthenticationException;
+  private final JwtAuthenticationRespond jwtAuthenticationRespond;
 
   @Autowired
-  public WebSecurityConfig(CustomUserDetailsService customUserDetailsService, JwtAuthenticationException jwtAuthenticationException) {
+  public WebSecurityConfig(CustomUserDetailsService customUserDetailsService, JwtAuthenticationRespond jwtAuthenticationRespond) {
     this.customUserDetailsService = customUserDetailsService;
-    this.jwtAuthenticationException = jwtAuthenticationException;
+    this.jwtAuthenticationRespond = jwtAuthenticationRespond;
   }
 
   @Bean
@@ -67,7 +67,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         .csrf()
         .disable()
         .exceptionHandling()
-        .authenticationEntryPoint(jwtAuthenticationException)
+        .authenticationEntryPoint(jwtAuthenticationRespond)
         .and()
         .authorizeRequests()
         .antMatchers("/auth/**", "/swagger-ui.html", "/v2/api-docs", "/webjars/**", "/swagger-resources/**")

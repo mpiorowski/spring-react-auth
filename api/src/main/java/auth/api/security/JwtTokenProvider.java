@@ -19,10 +19,6 @@ public class JwtTokenProvider {
 
   private Key key = Keys.secretKeyFor(SignatureAlgorithm.HS512);
 
-//  not used
-//  @Value("${app.jwtSecret}")
-//  private Key jwtSecret;
-
   @Value("${app.jwtExpirationInMs}")
   private int jwtExpirationInMs;
 

@@ -19,17 +19,6 @@ public class Product {
 
   @NotNull private boolean productAvailable;
 
-//  public Product(
-//      int productId,
-//      @NotBlank @Size(max = 200) String productName,
-//      @NotBlank @Range(min = 1, max = 999) double productPrice,
-//      @NotNull boolean productAvailable) {
-//    this.productId = productId;
-//    this.productName = productName;
-//    this.productPrice = productPrice;
-//    this.productAvailable = productAvailable;
-//  }
-
   @JsonCreator
   public Product(
       @JsonProperty(value = "productId")

@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Form, Input, InputNumber, Radio} from 'antd';
+import {Form, Input, Radio} from 'antd';
 import {EditableContext} from "./UserTable";
 
 const FormItem = Form.Item;
