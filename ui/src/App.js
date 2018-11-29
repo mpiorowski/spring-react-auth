@@ -10,7 +10,6 @@ import {authNotification} from "./notification/AuthNotification";
 import AppHeader from "./AppHeader";
 import {WrappedProductComponent} from "./components/products/ProductComponent";
 import UserComponent from "./components/users/UserComponent";
-import SwaggerComponent from "./components/swagger/SwaggerComponent";
 
 const {Content} = Layout;
 
@@ -122,11 +121,6 @@ class App extends Component {
 
                 <PrivateRoute path='/users'
                               component={UserComponent}
-                              user={this.state.currentUser}
-                />
-
-                <PrivateRoute path='/swagger'
-                              component={SwaggerComponent}
                               user={this.state.currentUser}
                 />
 
