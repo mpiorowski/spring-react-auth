@@ -59,6 +59,12 @@ class UserEditableCell extends Component {
               )}
             </FormItem>
         );
+      default:
+        return (
+            <FormItem style={{margin: 0}} required={false}>
+              ERROR
+            </FormItem>
+        );
     }
   };
 
