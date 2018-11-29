@@ -10,7 +10,7 @@ services:
       POSTGRES_USER: admin
       POSTGRES_DB: auth
     volumes:
-      - ./database/_postgres:/var/lib/postgresql/data
+      - ./database/_postgres_dev:/var/lib/postgresql/data
     ports:
       - "5432:5432"
 

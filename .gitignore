@@ -1,4 +1,6 @@
 docker/database/_postgres
+docker/database/_postgres_dev
+docker/database/_postgres_prod
 
 # IntelliJ project files
 .idea
