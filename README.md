@@ -77,3 +77,7 @@ npm install -g serve; \
 serve -s ./ui/build
 ```
 Access via http://localhost:5000
+
+# Swagger
+For the development build there is an active swagger component for api documentation.  
+Access via ui link or by entering http://localhost:9000/swagger-ui.html.
