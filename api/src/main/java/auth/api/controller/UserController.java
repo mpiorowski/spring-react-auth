@@ -57,7 +57,6 @@ public class UserController {
     } catch (NullPointerException e) {
       return ResponseEntity.ok(e);
     }
-
   }
 
   @CrossOrigin
