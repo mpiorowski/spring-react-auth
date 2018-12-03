@@ -19,6 +19,8 @@ public class User {
   @Size(min = 1, max = 60)
   private String userEmail;
 
+  @Size(min = 1, max = 5)
+  @NotBlank
   private String userPassword;
 
   @NotBlank private String userRole;
@@ -69,12 +71,21 @@ public class User {
 
   @Override
   public String toString() {
-    return "User{" +
-        "userId=" + userId +
-        ", userName='" + userName + '\'' +
-        ", userEmail='" + userEmail + '\'' +
-        ", userPassword='" + userPassword + '\'' +
-        ", userRole='" + userRole + '\'' +
-        '}';
+    return "User{"
+        + "userId="
+        + userId
+        + ", userName='"
+        + userName
+        + '\''
+        + ", userEmail='"
+        + userEmail
+        + '\''
+        + ", userPassword='"
+        + userPassword
+        + '\''
+        + ", userRole='"
+        + userRole
+        + '\''
+        + '}';
   }
 }
