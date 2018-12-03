@@ -42,11 +42,12 @@ class UserComponent extends Component {
   submitModal = () => {
     const form = this.modalRef.props.form;
     form.validateFields((error, values) => {
-      if (!error) {
+      // if (!error) {
+      if (true) {
         addUser(values).then(response => {
           if (response) {
             form.resetFields();
-            this.setState({modalVisibility: false});
+            // this.setState({modalVisibility: false});
             userNotification('success');
             this.add(values, response);
           }

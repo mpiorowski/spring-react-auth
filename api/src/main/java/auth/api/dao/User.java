@@ -19,6 +19,8 @@ public class User {
   @Size(min = 1, max = 60)
   private String userEmail;
 
+  @Size(min = 1, max = 5)
+  @NotBlank
   private String userPassword;
 
   @NotBlank private String userRole;

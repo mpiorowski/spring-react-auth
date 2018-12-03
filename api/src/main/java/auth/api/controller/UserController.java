@@ -3,6 +3,7 @@ package auth.api.controller;
 import auth.api.dao.User;
 import auth.api.exception.AppException;
 import auth.api.mapper.UserMapper;
+import auth.api.traffic.UserUpdate;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -51,9 +52,7 @@ public class UserController {
   @PostMapping("/add")
   @Transactional
   public ResponseEntity addUser(@Valid @RequestBody User user) {
-
     try {
-
       user.setUserPassword(passwordEncoder().encode(user.getUserPassword()));
       userMapper.insertUser(user);
       Integer userId = userMapper.findByUserName(user.getUserName()).getUserId();
@@ -67,9 +66,9 @@ public class UserController {
   @CrossOrigin
   @PutMapping("/update")
   @Transactional
-  public ResponseEntity updateUser(@Valid @RequestBody User user) {
+  public ResponseEntity updateUser(@Valid @RequestBody UserUpdate userUpdate) {
     try {
-      userMapper.updateUser(user);
+      userMapper.updateUser(userUpdate);
       return ResponseEntity.ok("true");
     } catch (NullPointerException e) {
       return ResponseEntity.ok(e.getMessage());

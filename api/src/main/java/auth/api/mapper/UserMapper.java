@@ -1,6 +1,7 @@
 package auth.api.mapper;
 
 import auth.api.dao.User;
+import auth.api.traffic.UserUpdate;
 import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Component;
 
@@ -14,7 +15,7 @@ public interface UserMapper {
   void insertUser(User user);
 
   @Update({"UPDATE users set user_name = #{userName}, user_email = #{userEmail}, user_role = #{userRole} where user_id = #{userId}"})
-  void updateUser(User user);
+  void updateUser(UserUpdate userUpdate);
 
   @Select("SELECT " +
       "user_id as userId, " +
