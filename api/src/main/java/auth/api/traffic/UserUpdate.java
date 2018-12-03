@@ -6,6 +6,7 @@ import javax.validation.constraints.Size;
 
 public class UserUpdate {
 
+  @NotBlank
   private Integer userId;
 
   @NotBlank
