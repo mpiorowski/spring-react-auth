@@ -50,7 +50,7 @@ public class SwaggerConfig {
   private Predicate<String> paths() {
     // Match all paths except /error
     return Predicates.and(
-        PathSelectors.regex("/api/**"),
+        PathSelectors.regex("/api/*"),
         Predicates.not(PathSelectors.regex("/error.*")
         ));
   }

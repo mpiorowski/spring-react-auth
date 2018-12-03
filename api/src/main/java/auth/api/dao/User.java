@@ -1,5 +1,7 @@
 package auth.api.dao;
 
+import auth.api.annotation.UniqueUsername;
+
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
@@ -10,6 +12,7 @@ public class User {
 
   @NotBlank
   @Size(min = 1, max = 60)
+  @UniqueUsername
   private String userName;
 
   @Email
@@ -62,5 +65,16 @@ public class User {
 
   public void setUserEmail(String userEmail) {
     this.userEmail = userEmail;
+  }
+
+  @Override
+  public String toString() {
+    return "User{" +
+        "userId=" + userId +
+        ", userName='" + userName + '\'' +
+        ", userEmail='" + userEmail + '\'' +
+        ", userPassword='" + userPassword + '\'' +
+        ", userRole='" + userRole + '\'' +
+        '}';
   }
 }

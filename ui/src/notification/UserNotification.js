@@ -15,11 +15,11 @@ export function userNotification(type) {
     case 'form':
       notificationMsg = {title: 'Wrong form', msg: 'Please check your form again.', type: 'warning'};
       break;
-    case 'wrong':
-      notificationMsg = {title: 'User already taken', msg: 'Please try another one.', type: 'error'};
+    case 'user':
+      notificationMsg = {title: 'User already taken', msg: 'Please try another one.', type: 'warning'};
       break;
-    case 'error':
-      notificationMsg = {title: 'Application error', msg: 'An error accrued during operations. Sorry!', type: 'error'};
+    case 'connect':
+      notificationMsg = {title: "Can't connect to server.", msg: 'Please try again later.', type: 'error'};
       break;
     default:
       notificationMsg = {title: 'Application error', msg: 'An error accrued during operations. Sorry!', type: 'error'};

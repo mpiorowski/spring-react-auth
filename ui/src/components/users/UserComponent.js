@@ -41,8 +41,8 @@ class UserComponent extends Component {
 
   submitModal = () => {
     const form = this.modalRef.props.form;
-    form.validateFields((err, values) => {
-      if (!err) {
+    form.validateFields((error, values) => {
+      if (!error) {
         addUser(values).then(response => {
           if (response) {
             form.resetFields();
@@ -50,12 +50,23 @@ class UserComponent extends Component {
             userNotification('success');
             this.add(values, response);
           }
-        }).catch(err => {
-          console.log(err);
-          userNotification('wrong');
+        }).catch(error => {
+          console.log(error);
+          if (error.status === 400) {
+            for (let val of error.errors) {
+              if (val.code === "UniqueUsername") {
+                userNotification('user');
+                return;
+              }
+            }
+            userNotification('form');
+          } else {
+            userNotification("connect");
+          }
+
         })
       } else {
-        console.log(err);
+        console.log(error);
         userNotification('form');
       }
     });
@@ -77,7 +88,7 @@ class UserComponent extends Component {
   submitEdit = (form, key) => {
     form.validateFields((error, row) => {
       if (error) {
-        userNotification("error");
+        userNotification("form");
         return;
       }
       const newData = [...this.state.tableData];
@@ -103,7 +114,7 @@ class UserComponent extends Component {
         }
       }).catch(err => {
         console.log(err);
-        userNotification("error");
+        userNotification("connect");
       });
 
     });
