@@ -80,4 +80,5 @@ Access via http://localhost:5000
 
 # Swagger
 For the development build there is an active swagger component for api documentation.  
-Access via ui link or by entering http://localhost:9000/swagger-ui.html.
+Access via ui link or by entering http://localhost:9000/swagger-ui.html.  
+You need to authorized it by clicking button "Authorize" and then passing your jwt token as this "Bearer your_jwt_token".

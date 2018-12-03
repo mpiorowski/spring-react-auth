@@ -24,8 +24,12 @@ class LoginComponent extends Component {
           }
         })
         .catch(error => {
-          authNotification('credential');
           console.log(error);
+          if (error.status === 401) {
+            authNotification('credential');
+          } else {
+            authNotification('connect');
+          }
         });
   };
 
