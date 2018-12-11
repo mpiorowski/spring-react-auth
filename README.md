@@ -1,4 +1,4 @@
-# Simple jwt authorization app with spring-boot, react and postgresql
+# Spring Boot + React + JWT Auth + Postgresql
 
 Simple application with separate frontend and backend, connected to postgresql database. Authorization via jwt tokens. Offers a basic ui to manage users and products data.
 
