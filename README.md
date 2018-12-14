@@ -5,15 +5,15 @@ Simple application with separate frontend and backend, connected to postgresql d
 Frontend  -> react + antd + babel  
 Backend   -> spring boot + flyway + mybatis + postgresql
 
-## Initial credentials
-http://localhost:3000 (dev) or http://localhost:5000 (prod)  
+## Initial access
+http://localhost:3000 (dev) or http://localhost (prod)  
 username: user  
 password: pass  
 
-# Installation
+# Deployment
 
 ## Prerequisites and Dependencies
-Prerequisites: node, npm, java, maven, docker
+Prerequisites: node, npm, java, maven, docker, docker-compose
 
 Dependencies (not needed for production installation using docker):
 ```
@@ -21,26 +21,7 @@ mvn -f ./api clean dependency:resolve; \
 npm --prefix ./ui install ./ui
 ```
 
-## Docker installation
-
-### dev
-Creates a "fat" containers, which are ready for development.  
-Frontend live-reloading available.
-```
-docker-compose -f ./docker/docker-compose.dev.yml up -d --build
-```
-Access via http://localhost:3000
-
-### prod
-This one line creates a production ready downsized containers.  
-Only docker is needed as prerequisites, no need to download any dependencies.  
-After the automatic startup, which may take a while, the application is ready to work.  
-```
-docker-compose -f ./docker/docker-compose.prod.yml up -d --build
-```
-Access via http://localhost:5000
-
-## Manual installation
+## Development deployment
 
 ### database
 PostgreSQL (configuration in application.yml):  
@@ -54,7 +35,7 @@ or You can use docker-compose to setup simple database container
 docker-compose -f ./docker/docker-compose.database.yml up -d --build
 ```
 
-### dev
+### frontend and backend
 Run two separate shell windows for frontend and backend.
 (Or just use your favorite IDE :) )
 ```
@@ -63,9 +44,25 @@ mvn -f ./api spring-boot:run
 ```
 npm --prefix ./ui start
 ```
+
 Access via http://localhost:3000
 
-### prod
+
+## Production deployment using docker-compose
+
+This one line creates a production ready downsized containers.  
+Only docker and docker-compose are needed as prerequisites.  
+After the automatic startup, which may take a while, the application is ready to work.  
+```
+docker-compose -f ./docker/docker-compose.prod.yml up -d --build
+```
+Access via http://localhost
+
+
+## Production manual deployment
+
+Database need to be manually setup up as in application.yml config file.
+
 Run two separate shell windows for frontend and backend.
 ```
 mvn -f ./api clean package; \ 
@@ -76,7 +73,7 @@ npm --prefix ./ui run build; \
 npm install -g serve; \
 serve -s ./ui/build
 ```
-Access via http://localhost:5000
+Access via http://localhost
 
 # Swagger
 For the development build there is an active swagger component for api documentation.  
