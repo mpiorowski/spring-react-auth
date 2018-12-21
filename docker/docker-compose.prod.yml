@@ -11,8 +11,6 @@ services:
       POSTGRES_DB: auth
     volumes:
       - ./database/_postgres_prod:/var/lib/postgresql/data
-    ports:
-      - "5432:5432"
     restart: always
 
   backend:
@@ -34,5 +32,5 @@ services:
       dockerfile: ../docker/ui/Dockerfile
       target: prod
     ports:
-      - "5000:80"
+      - "80:80"
     restart: always

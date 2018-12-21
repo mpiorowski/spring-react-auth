@@ -1,9 +1,8 @@
-import {API_BASE_URL} from "../config/config";
 import {request} from "./request";
 
 export const getAllProducts = () => {
   return request({
-    url: API_BASE_URL + "/product/all",
+    url: "api/product/all",
     method: "GET"
   })
 };
@@ -11,7 +10,7 @@ export const getAllProducts = () => {
 export const addProducts = (products) => {
   console.log(JSON.stringify(products));
   return request({
-    url: API_BASE_URL + "/product/add",
+    url: "api/product/add",
     method: "POST",
     body: JSON.stringify(products)
   })
@@ -21,7 +20,7 @@ export const addProducts = (products) => {
 export const deleteProducts = (products) => {
   console.log(JSON.stringify(products));
   return request({
-    url: API_BASE_URL + "/product/delete",
+    url: "api/product/delete",
     method: "DELETE",
     body: JSON.stringify(products)
   })
