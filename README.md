@@ -61,7 +61,8 @@ Access via http://localhost
 
 ## Production manual deployment
 
-Database need to be manually setup up as in application.yml config file.
+Database need to be manually setup up as in application.yml config file.  
+Server proxy need to be set for frontend /api/ url to backed 9000 port.
 
 Run two separate shell windows for frontend and backend.
 ```
