@@ -1,9 +1,8 @@
-import {API_BASE_URL} from "../config/config";
 import {request} from "./request";
 
 export const getAllUsers = () => {
   return request({
-    url: API_BASE_URL + "/user/all",
+    url: "api/user/all",
     method: "GET"
   })
 };
@@ -11,7 +10,7 @@ export const getAllUsers = () => {
 export const addUser = (user) => {
   console.log(user);
   return request({
-    url: API_BASE_URL + "/user/add",
+    url: "api/user/add",
     method: "POST",
     body: JSON.stringify(user)
   })
@@ -19,15 +18,16 @@ export const addUser = (user) => {
 
 export const deleteUser = (userId) => {
   return request({
-    url: API_BASE_URL + "/user/delete",
+    url: "api/user/delete",
     method: "DELETE",
     body: JSON.stringify(userId)
   })
 };
 
 export const updateUser = (user) => {
+  console.log(user);
   return request({
-    url: API_BASE_URL + "/user/update",
+    url: "api/user/update",
     method: "PUT",
     body: JSON.stringify(user)
   })

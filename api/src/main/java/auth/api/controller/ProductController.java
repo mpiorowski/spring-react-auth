@@ -13,7 +13,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("/product")
+@RequestMapping("api/product")
 @Api(value = "/product", produces = "application/json")
 public class ProductController {
 

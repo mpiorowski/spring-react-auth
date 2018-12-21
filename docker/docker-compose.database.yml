@@ -1,9 +1,9 @@
-version: '3.1'
+version: '3.4'
 
 services:
 
-  postgres:
-    container_name: auth-postgres
+  dev-postgres:
+    container_name: auth-dev-postgres
     image: postgres
     environment:
       POSTGRES_PASSWORD: admin
