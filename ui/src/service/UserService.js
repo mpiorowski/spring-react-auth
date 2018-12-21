@@ -8,7 +8,6 @@ export const getAllUsers = () => {
 };
 
 export const addUser = (user) => {
-  console.log(user);
   return request({
     url: "api/user/add",
     method: "POST",
