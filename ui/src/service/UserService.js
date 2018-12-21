@@ -25,6 +25,7 @@ export const deleteUser = (userId) => {
 };
 
 export const updateUser = (user) => {
+  console.log(user);
   return request({
     url: "api/user/update",
     method: "PUT",

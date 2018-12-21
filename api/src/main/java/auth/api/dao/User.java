@@ -20,6 +20,7 @@ public class User {
   private String userEmail;
 
   @NotBlank
+  @Size(min = 1, max = 60)
   private String userPassword;
 
   @NotBlank private String userRole;
