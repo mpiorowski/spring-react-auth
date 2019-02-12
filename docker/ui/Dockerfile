@@ -8,6 +8,7 @@ COPY src /usr/src/app/src
 COPY public /usr/src/app/public
 COPY config-overrides.js /usr/src/app/config-overrides.js
 COPY package.json /usr/src/app/package.json
+COPY package-lock.json /usr/src/app/package-lock.json
 RUN npm install
 RUN npm run build
 

@@ -1,7 +1,6 @@
 # JWT authorization app with spring-boot, react and postgresql
 
-
-Simple application with separate frontend and backend, connected to postgresql database. Authorization via jwt tokens. Offers a basic ui to manage users and products data.
+Sample application with separate frontend and backend, connected to postgresql database. Authorization via jwt tokens. Offers a basic ui to manage users and products data.
 
 Frontend  -> react + antd + babel  
 Backend   -> spring boot + flyway + mybatis + postgresql
