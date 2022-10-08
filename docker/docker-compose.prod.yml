@@ -1,0 +1,36 @@
+version: '3.4'
+
+services:
+
+  postgres:
+    container_name: auth-postgres
+    image: postgres
+    environment:
+      POSTGRES_PASSWORD: admin
+      POSTGRES_USER: admin
+      POSTGRES_DB: auth
+    volumes:
+      - ./database/_postgres_prod:/var/lib/postgresql/data
+    restart: always
+
+  backend:
+    container_name: auth-api
+    build:
+      context: ../api
+      dockerfile: ../docker/api/Dockerfile
+      target: prod
+    ports:
+      - "9001:9001"
+    environment:
+      - "SPRING_PROFILES_ACTIVE=prod"
+    restart: always
+
+  frontend:
+    container_name: auth-ui
+    build:
+      context: ../ui
+      dockerfile: ../docker/ui/Dockerfile
+      target: prod
+    ports:
+      - "80:80"
+    restart: always

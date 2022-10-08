@@ -1,0 +1,15 @@
+version: '3.4'
+
+services:
+
+  dev-postgres:
+    container_name: auth-dev-postgres
+    image: postgres
+    environment:
+      POSTGRES_PASSWORD: admin
+      POSTGRES_USER: admin
+      POSTGRES_DB: auth
+    volumes:
+      - ./database/_postgres_dev:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
